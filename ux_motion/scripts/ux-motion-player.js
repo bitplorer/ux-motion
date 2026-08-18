@@ -1,4 +1,4 @@
-/* ux-motion web.v1.1.0 player — vanilla JS, no framework.
+/* ux-motion web.v1.2.0 player — vanilla JS, no framework.
    Schedule contract: same as ux_motion.interpret.
    Supports: presence, share (FLIP), bind (scroll/drag), score (multi-hop),
    spring, offset-path, reduce_tree swap. */
@@ -510,7 +510,7 @@
     applyOp: applyOp,
     cancel: cancelAll,
     boot: bootEmbedded,
-    version: "1.1.0",
+    version: "1.2.0",
   };
 
   if (typeof document !== "undefined" && document.addEventListener) {

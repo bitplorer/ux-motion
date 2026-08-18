@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 CONTRACT = {
-    "api": "1.1.0",
-    "player": "1.1.0",
+    "api": "1.2.0",
+    "player": "1.2.0",
     "ir": "1",
     "facade": "ux_motion",
     "op.play": "transition.play",

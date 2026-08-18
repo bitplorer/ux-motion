@@ -54,7 +54,8 @@
 | `_ops.py` | Plan → ops list; invert for rewind; project update | Talk to network |
 | `_adapter.py` | `send.play/update/rewind/cancel` → Result | Alternate IR shapes |
 | `_player.py` | Deterministic schedule; explain; SVG frames | Touch real DOM |
-| `_patterns.py` | Multi-track choreographies | Introduce new IR kinds |
+| `_patterns.py` | Multi-track choreographies (selectors → plan) | Introduce new IR kinds |
+| `_hof.py` | Drop-in HOFs (trees → live Scene) | Stringify html; freeze |
 | `_schema.py` | JSON Schema document of IR | Runtime validation (IR does that) |
 | `_presence.py` | `stamp` / `region` / server-side Presence set | Animate |
 | `_wire.py` | JSON dumps/loads with validation on load | Pretty-print as semantic change |
@@ -71,6 +72,7 @@ _adapter → _freeze, _ops
 _ops → _freeze, _ir
 _player → _ir
 _patterns → _api, _recipes, _tokens
+_hof → _api, _ir, _recipes, _tokens
 _recipes → _tokens
 _schema → _contract
 _wire → _freeze, _ir

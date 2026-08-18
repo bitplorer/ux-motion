@@ -7,7 +7,23 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ---
 
+## 1.2.0 — 2026-08-18
+
+Drop-in higher-order functions. Trees in, Scene out.
+
+### Library
+
+- `appear(tree)`, `swap(host, tree)`, `leave(target)`, `sheet(overlay, panel)`, `notice(tree)`, `staggered(host, children)`, `hop.leave` / `hop.arrive`
+- Recipe families are callable: `rise(tree)` → Scene, `rise(ms=180)` → Recipe
+- `@motion` decorator wraps a view function as a Scene (`fn.view` is the original)
+- All HOFs return a live `Scene` (BUILD). Serialize still happens at `.play()` / `dumps` / `__render__`
+- `css_target` infers `#id` from a ux-dom tree
+- Existing `page` / `modal` / `toast` patterns unchanged (still return plans)
+
+---
+
 ## 1.1.0 — 2026-08-18
+
 
 ux-dom render-model integration. Trees stay trees until official serialize.
 

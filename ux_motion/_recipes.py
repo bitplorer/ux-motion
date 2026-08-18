@@ -169,6 +169,12 @@ class _Family:
             easing=easing or tokens.ease("exit"),
         )
 
+    def __call__(self, node=None, /, **kwargs):
+        """Drop-in HOF: ``rise(tree)`` → Scene. ``rise()`` / ``rise(ms=180)`` → Recipe."""
+        from ux_motion._hof import apply_family
+
+        return apply_family(self, node, **kwargs)
+
 
 fade = _Family("fade")
 slide = _Family("slide", enter={"x": tokens.dist("md")}, exit={"x": -tokens.dist("md")})

@@ -45,12 +45,12 @@ from ux_motion import (
 
 class CoreTests(unittest.TestCase):
     def test_versions(self) -> None:
-        self.assertEqual(API_VERSION, "1.1.0")
-        self.assertEqual(__version__, "1.1.0")
-        self.assertEqual(PLAYER_VERSION, "1.1.0")
+        self.assertEqual(API_VERSION, "1.2.0")
+        self.assertEqual(__version__, "1.2.0")
+        self.assertEqual(PLAYER_VERSION, "1.2.0")
         self.assertEqual(IR_VERSION, "1")
-        self.assertEqual(CONTRACT["api"], "1.1.0")
-        self.assertEqual(CONTRACT["player"], "1.1.0")
+        self.assertEqual(CONTRACT["api"], "1.2.0")
+        self.assertEqual(CONTRACT["player"], "1.2.0")
         self.assertEqual(CONTRACT["ir"], "1")
 
     def test_classic_wait(self) -> None:

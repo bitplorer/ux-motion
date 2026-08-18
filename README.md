@@ -1,4 +1,4 @@
-# ux_motion 1.1.0
+# ux_motion 1.2.0
 
 **Server-authored, composable presence and transition plans for Python + JSON channels.**
 
@@ -26,15 +26,16 @@ ux-dom tree on enter, frozen only on the wire:
 
 ```python
 from ux_dom.dom import section, h1
-from ux_motion import scene, fade, Motion
+from ux_motion import appear, rise, swap, Motion
 
-page = section(h1("Shop"), id="view")
-result = scene("nav").enter("#view", fade.enter(), html=page).play()
-# result.ops[0].plan.root.children[0].html is a string
+appear(section(h1("Shop"), id="view"), stagger=".tile").play()
+swap("#view", shop_view(), share="vein").play()
+rise(product_view(), ms=200)   # family as HOF → Scene
 
 # Optional: inject the player the same way XElement injects x_element.js
 # document.use(Motion())
 ```
+
 
 ## Documentation
 

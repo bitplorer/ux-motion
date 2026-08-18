@@ -8,7 +8,7 @@ Bump rules (see docs/13-VERSIONING.md):
 from __future__ import annotations
 
 # Public library release (Python package + docs + player alignment).
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 # Same as __version__. Kept as API_VERSION for facade clarity.
 API_VERSION = __version__

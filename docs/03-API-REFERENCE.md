@@ -8,7 +8,7 @@ All symbols below are exported from `ux_motion`. Signatures use Python 3.10+ typ
 
 | Symbol | Type | Value / role |
 |---|---|---|
-| `API_VERSION` | `str` | `"1.1.0"` |
+| `API_VERSION` | `str` | `"1.2.0"` |
 | `IR_VERSION` | `str` | `"1"` |
 | `CONTRACT` | `dict` | Laws, kinds, modes, roles, engines, op names |
 | `PlanError` | `Exception` | Raised on invalid IR / JSON |
@@ -220,6 +220,46 @@ multi_hop_arrive(*, score_id, arrive, name="hop-arrive") -> plan
 ```
 
 All return **validated plans** ready for `send.play`.
+
+---
+
+## Higher-order functions (trees → Scene)
+
+These stay in BUILD. Call `.play()` / `dumps` / `__render__` to serialize.
+
+```python
+appear(tree, *, into=None, using=None, stagger=None, gap_ms=None, name="appear") -> Scene
+swap(host, tree, *, using=None, stagger=None, gap_ms=None, share=None, name="swap") -> Scene
+leave(target, *, using=None, after="hide", name="leave") -> Scene
+sheet(overlay, panel="#sheet-panel", *, open_=True, name="sheet") -> Scene
+notice(tree, *, show=True, name="notice") -> Scene
+staggered(host, children=".tile", *, using=None, gap_ms=None, enter=True, name="list") -> Scene
+hop.leave(score_id, target, *, using=None) -> Scene
+hop.arrive(score_id, target, *, using=None) -> Scene
+css_target(node) -> str
+```
+
+`using=` is a Recipe or a family (`rise`, `fade`, …). `share=` is `"sku"` or `(id, leave, arrive)`.
+
+Recipe families are callable:
+
+```python
+rise(tree)                 # Scene — appear with rise.enter()
+rise(tree, ms=180, stagger=".tile")
+rise(ms=180)               # Recipe — same as rise.enter(ms=180)
+fade(tree, role="exit")    # Scene — leave
+```
+
+Decorator (do not decorate views that also render into a Document):
+
+```python
+@motion(into="#view", stagger=".tile")
+def shop():
+    return section(..., id="view")
+
+shop().play()
+shop.view()   # original callable
+```
 
 ---
 

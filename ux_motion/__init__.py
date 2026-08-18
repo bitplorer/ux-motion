@@ -14,6 +14,10 @@
     # Multi-hop across HTTP Results
     scene("leave").as_score("checkout", phase="hold").exit("#cart", fade.exit()).play()
 
+    # Drop-in HOF — tree stays a tree until the wire
+    appear(section(h1("Shop"), id="view"), stagger=".tile").play()
+    rise(product_view())
+
 IR major is ``v: "1"``. Additive fields only. Never reuse keys.
 """
 
@@ -21,6 +25,20 @@ from ux_motion._adapter import send
 from ux_motion._markup import as_html
 from ux_motion._render import render_markup
 from ux_motion._freeze import freeze_plan
+from ux_motion._hof import (
+    HOFS,
+    appear,
+    css_target,
+    hop,
+    hop_arrive,
+    hop_leave,
+    leave,
+    motion,
+    notice,
+    sheet,
+    staggered,
+    swap,
+)
 from ux_motion._api import (
     Motion,
     Scene,
@@ -61,6 +79,7 @@ __all__ = [
     "OP_PLAY",
     "OP_REWIND",
     "Event",
+    "HOFS",
     "Motion",
     "PATTERNS",
     "PlanError",
@@ -69,12 +88,14 @@ __all__ = [
     "Scene",
     "Tokens",
     "along",
+    "appear",
     "as_html",
     "as_update",
     "bind",
     "blur",
     "cancel",
     "compile_plan",
+    "css_target",
     "cue",
     "dumps",
     "explain",
@@ -82,13 +103,19 @@ __all__ = [
     "freeze_plan",
     "frames",
     "group",
+    "hop",
+    "hop_arrive",
+    "hop_leave",
     "interpret",
+    "leave",
     "list_stagger",
     "loads",
     "modal",
+    "motion",
     "multi_hop_arrive",
     "multi_hop_leave",
     "none",
+    "notice",
     "page",
     "parallel",
     "play",
@@ -105,12 +132,15 @@ __all__ = [
     "sequence",
     "share",
     "shared_page",
+    "sheet",
     "slide",
     "snap",
     "span_ms",
     "springy",
     "stagger",
+    "staggered",
     "stamp",
+    "swap",
     "to_result",
     "toast",
     "tokens",
@@ -118,3 +148,12 @@ __all__ = [
     "validate_plan",
     "wait",
 ]
+
+Motion.appear = staticmethod(appear)
+Motion.leave = staticmethod(leave)
+Motion.swap = staticmethod(swap)
+Motion.sheet = staticmethod(sheet)
+Motion.notice = staticmethod(notice)
+Motion.staggered = staticmethod(staggered)
+Motion.hop = hop
+Motion.motion = staticmethod(motion)
