@@ -7,6 +7,19 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ---
 
+## 1.2.1 — 2026-08-18
+
+Player: morph matching hosts instead of replacing them.
+
+### Library
+
+- `injectHtml` uses `Idiomorph.morph` when the incoming root and the live host share an `id`
+- Matching descendants (especially `img-{sku}`) keep their decoded bitmaps across `appear` / `swap` / `enter(..., html=)`
+- Falls back to `replaceChild` when Idiomorph is not on the page
+- IR stays `"1"`
+
+---
+
 ## 1.2.0 — 2026-08-18
 
 Drop-in higher-order functions. Trees in, Scene out.

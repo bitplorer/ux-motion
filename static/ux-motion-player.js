@@ -1,4 +1,4 @@
-/* ux-motion web.v1.2.0 player — vanilla JS, no framework.
+/* ux-motion web.v1.2.1 player — vanilla JS, no framework.
    Schedule contract: same as ux_motion.interpret.
    Supports: presence, share (FLIP), bind (scroll/drag), score (multi-hop),
    spring, offset-path, reduce_tree swap. */
@@ -151,8 +151,17 @@
       return host;
     }
     incoming.setAttribute("data-uxm-incoming", "1");
-    // If the incoming root is the same node (same id), replace the host.
-    // That lets Python pass a ux-dom section(id="view") as html= for #view.
+    // Prefer Idiomorph so matching ids (img-{sku}) keep decoded bitmaps.
+    if (
+      global.Idiomorph &&
+      typeof global.Idiomorph.morph === "function" &&
+      incoming.id &&
+      host.id &&
+      incoming.id === host.id
+    ) {
+      global.Idiomorph.morph(host, incoming);
+      return host;
+    }
     if (incoming.id && host.id && incoming.id === host.id && host.parentNode) {
       host.parentNode.replaceChild(incoming, host);
       return incoming;
@@ -510,7 +519,7 @@
     applyOp: applyOp,
     cancel: cancelAll,
     boot: bootEmbedded,
-    version: "1.2.0",
+    version: "1.2.1",
   };
 
   if (typeof document !== "undefined" && document.addEventListener) {
