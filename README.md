@@ -1,8 +1,11 @@
-# ux_motion 1.0.0
+# ux_motion 1.1.0
 
 **Server-authored, composable presence and transition plans for Python + JSON channels.**
 
 Pure Python facade. Vanilla JS player. No React. IR v1 additive.
+
+`html=` accepts ux-dom trees. They stay trees until official serialize
+(`stamp_tree` + `__render__`) at `dumps` / `send.play` / `Scene.__render__`.
 
 ## Install / use
 
@@ -17,6 +20,20 @@ python -c "from ux_motion import scene, fade; print(scene('x').enter('#a', fade.
 from ux_motion import scene, fade, rise
 
 scene("nav").exit("#old", fade.exit()).enter("#new", rise.enter()).play()
+```
+
+ux-dom tree on enter, frozen only on the wire:
+
+```python
+from ux_dom.dom import section, h1
+from ux_motion import scene, fade, Motion
+
+page = section(h1("Shop"), id="view")
+result = scene("nav").enter("#view", fade.enter(), html=page).play()
+# result.ops[0].plan.root.children[0].html is a string
+
+# Optional: inject the player the same way XElement injects x_element.js
+# document.use(Motion())
 ```
 
 ## Documentation
@@ -36,7 +53,8 @@ PYTHONPATH=. python -m unittest discover -s tests -v
 | Path | Role |
 |---|---|
 | `ux_motion/` | Importable Python package |
-| `static/ux-motion-player.js` | Browser player |
+| `ux_motion/scripts/ux-motion-player.js` | Package-owned player (`document.use(Motion())`) |
+| `static/ux-motion-player.js` | Same player, standalone URL |
 | `tests/` | Unit tests |
 | `docs/` | Exhaustive documentation |
 | `examples/minimal.py` | Runnable sample |

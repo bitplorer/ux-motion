@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ux-motion"
-version = "1.0.0"
+version = "1.1.0"
 description = "Server-authored, composable presence and transition plans for Python + JSON channels"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -38,4 +38,4 @@ Changelog = "CHANGELOG.md"
 include = ["ux_motion*"]
 
 [tool.setuptools.package-data]
-ux_motion = ["py.typed"]
+ux_motion = ["py.typed", "scripts/*.js"]

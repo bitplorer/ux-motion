@@ -51,6 +51,25 @@ Clears queue and running animations.
 | `set_attr` | `target`, `attrs` object |
 | `noop` | `meta: { as: "update", empty: true }` |
 
+## When html becomes a string
+
+Authoring keeps ux-dom trees on `track.html`. The wire IR is strings only.
+The conversion is ux-dom's official serialize, not an extra stringify:
+
+```
+HTMLResponse          stamp_tree → content.__render__()
+Channel UxDomRenderer value.__render__()
+Motion freeze / dumps / send.play / Scene.__render__
+                      stamp_tree (if nonce) → html.__render__(pretty=False)
+```
+
+`Scene.__render__` emits `<script type="application/ux-motion+json">` with
+the frozen plan (all fields, including serialized markup). The player boots
+those scripts on `DOMContentLoaded` unless `data-play="false"`.
+
+`document.use(Motion())` injects the player at
+`/ux-pkg/ux-motion/static/ux-motion-player.js`.
+
 ## Client integration snippet
 
 ```html

@@ -18,6 +18,9 @@ IR major is ``v: "1"``. Additive fields only. Never reuse keys.
 """
 
 from ux_motion._adapter import send
+from ux_motion._markup import as_html
+from ux_motion._render import render_markup
+from ux_motion._freeze import freeze_plan
 from ux_motion._api import (
     Motion,
     Scene,
@@ -66,6 +69,7 @@ __all__ = [
     "Scene",
     "Tokens",
     "along",
+    "as_html",
     "as_update",
     "bind",
     "blur",
@@ -75,6 +79,7 @@ __all__ = [
     "dumps",
     "explain",
     "fade",
+    "freeze_plan",
     "frames",
     "group",
     "interpret",
@@ -88,6 +93,7 @@ __all__ = [
     "parallel",
     "play",
     "region",
+    "render_markup",
     "rewind",
     "rewind_plan",
     "rise",

@@ -174,7 +174,13 @@ def _validate_track(node: Mapping[str, Any], ctx: str) -> dict[str, Any]:
         raise PlanError(f"{ctx}.recipe is required")
     html = node.get("html")
     if html is not None and not isinstance(html, str):
-        raise PlanError(f"{ctx}.html must be a string")
+        if not (
+            callable(getattr(html, "__render__", None))
+            or callable(getattr(html, "__html__", None))
+        ):
+            raise PlanError(
+                f"{ctx}.html must be a string or a renderable (__render__ / __html__)"
+            )
     out: dict[str, Any] = {
         "kind": KIND_TRACK,
         "target": target,

@@ -45,8 +45,10 @@
 | `__init__.py` | Re-export public API; document intent | Contain logic |
 | `_contract.py` | `CONTRACT` dict: laws, enums, op names | Change without release note |
 | `_ir.py` | Validate + canonicalize every node kind | Know about HTTP or DOM |
-| `_compile.py` | Alias `compile_plan` → `validate_plan` | Transform semantics |
-| `_api.py` | Fluent `Scene` + functional `track`/`share`/… | Emit channel ops itself (except via send) |
+| `_compile.py` | BUILD: `compile_plan` validates; trees stay trees | Stringify html |
+| `_render.py` | Official serialize (`stamp_tree` + `__render__`) | A second stringify |
+| `_freeze.py` | SERIALIZE: walk `html` fields through `_render` | Mutate the authoring plan |
+| `_api.py` | Fluent `Scene` + functional `track`/`share`/…; `Scene.__render__` | Emit channel ops itself (except via send) |
 | `_recipes.py` | Named Recipe factories | Validate full plans |
 | `_tokens.py` | Design-system numbers | Hard-code into IR as required fields |
 | `_ops.py` | Plan → ops list; invert for rewind; project update | Talk to network |
@@ -65,16 +67,45 @@ __init__
   → everything public
 
 _api → _adapter, _compile, _ir, _ops, _recipes
-_adapter → _compile, _ops
-_ops → _ir
+_adapter → _freeze, _ops
+_ops → _freeze, _ir
 _player → _ir
 _patterns → _api, _recipes, _tokens
 _recipes → _tokens
 _schema → _contract
-_wire → _ir
-_compile → _ir
+_wire → _freeze, _ir
+_compile → _freeze, _ir
+_freeze → _ir, _render
+_dom → _freeze, _wire   (optional; requires ux-dom)
 
 Forbidden cycles: _ir must not import _api, _ops, _player, _adapter.
+```
+
+## Two phases (same words as ux-dom)
+
+ux-dom's final render is one function: `dom_tag.__render__`
+(`HTMLResponse` stamps a CSP nonce first, then calls it; Channel's
+`UxDomRenderer` calls it; `str(tag)` calls it).
+
+Motion uses that path. It does **not** stringify at `enter()`.
+
+```
+BUILD       scene.enter(..., html=tree)   tree stays a tree
+            scene.plan()                  dict; html fields may be trees
+SERIALIZE   freeze_plan / dumps / send.play / Scene.__render__
+            stamp_tree (if nonce) + tree.__render__(pretty=False)
+            wire IR is strings only
+```
+
+`Scene` implements `__render__` / `__html__` / `__str__`, so HTMLResponse
+and Channel encode get a `<script type="application/ux-motion+json">`
+carrying the **full** plan (markup + recipes + identity).
+
+`document.use(Motion())` is the Document runtime (player.js), same
+plugin shape as `XElement`.
+
+`div(scene)` works because `Scene.__iter__` yields a Component face
+(`_dom.motion_tag`). ux-dom `add()` is not patched.
 ```
 
 ## Data flow: authoring → wire → play

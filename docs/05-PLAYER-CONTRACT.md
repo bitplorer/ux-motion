@@ -27,7 +27,8 @@ UxMotion.play(plan)           // Promise
 UxMotion.applyOp(op)          // Promise
 UxMotion.applyOps(ops)        // sequential Promise chain
 UxMotion.cancel()             // hard stop + clear queue
-UxMotion.version              // "1.0.0"
+UxMotion.boot()               // play embedded application/ux-motion+json scripts
+UxMotion.version              // "1.1.0"
 ```
 
 ### Must match reference player

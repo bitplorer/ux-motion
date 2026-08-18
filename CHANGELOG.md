@@ -7,6 +7,32 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ---
 
+## 1.1.0 — 2026-08-18
+
+ux-dom render-model integration. Trees stay trees until official serialize.
+
+### Library
+
+- `enter(..., html=tree)` / `track(..., html=tree)` keep ux-dom Components through BUILD
+- `freeze_plan` / `render_markup` serialize at the wire only (`stamp_tree` + `__render__`)
+- `dumps`, `send.play` / `update` / `rewind`, and `Scene.__render__` freeze automatically
+- `Scene` implements `__render__` / `__html__` / `__str__` / `__iter__` so HTMLResponse, Channel, and `div(scene)` emit a `<script type="application/ux-motion+json">` carrying the full plan
+- `document.use(Motion())` injects the player the same way `XElement` does (`/ux-pkg/ux-motion/static/ux-motion-player.js`)
+- Player boots embedded plan scripts on `DOMContentLoaded` (`UxMotion.boot`)
+- Package data includes `ux_motion/scripts/ux-motion-player.js` for `SafeStaticFile`
+
+### Docs / tests
+
+- Architecture and wire protocol document the two-phase model
+- `tests/test_render_model.py` covers fake trees, real ux-dom trees, and Document runtime
+
+### Compatibility
+
+- IR stays `"1"`. Wire `html` is still a string. Authoring may now hold a renderable until serialize.
+- `as_html` is an alias of `render_markup` (no longer called at `enter()`)
+
+---
+
 ## 1.0.0 — 2026-08-18
 
 First public release of **ux_motion** as a complete library.

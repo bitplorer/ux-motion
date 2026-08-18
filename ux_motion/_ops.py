@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Sequence
 
+from ux_motion._freeze import freeze_plan
 from ux_motion._ir import (
     KIND_BIND,
     KIND_CUE,
@@ -35,7 +36,7 @@ def _op(op_type: str, **fields: Any) -> dict[str, Any]:
 
 
 def play(plan: Mapping[str, Any], *, meta: Mapping[str, Any] | None = None) -> list[dict[str, Any]]:
-    frozen = validate_plan(plan)
+    frozen = freeze_plan(plan)
     return [_op(OP_PLAY, plan=frozen, meta=dict(meta) if meta else None)]
 
 
@@ -95,7 +96,7 @@ def _invert_node(node: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def rewind_plan(plan: Mapping[str, Any]) -> dict[str, Any]:
-    frozen = validate_plan(plan)
+    frozen = freeze_plan(plan)
     inverted = dict(frozen)
     inverted["id"] = f"{frozen['id']}__rewind"
     inverted["root"] = _invert_node(frozen["root"])
@@ -140,7 +141,7 @@ def _walk(node: Mapping[str, Any], acc: list[dict[str, Any]]) -> None:
 
 def as_update(plan: Mapping[str, Any]) -> list[dict[str, Any]]:
     """Same scene, no motion — just the DOM change."""
-    frozen = validate_plan(plan)
+    frozen = freeze_plan(plan)
     tracks: list[dict[str, Any]] = []
     _walk(frozen["root"], tracks)
     ops: list[dict[str, Any]] = []

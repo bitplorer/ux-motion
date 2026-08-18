@@ -1,4 +1,4 @@
-# ux_motion 1.0.0 — Complete Overview
+# ux_motion 1.1.0 — Complete Overview
 
 **Nothing in this document is optional context.** This is the full product description of the library: what it is, what problem it solves, what it deliberately does not solve, and how every piece fits.
 
@@ -50,9 +50,9 @@ Many server-driven stacks (HTMX-like, LiveView-like, or custom `ux-channel` / `u
 
 | Symbol | Value | Meaning |
 |---|---|---|
-| `API_VERSION` | `"1.0.0"` | Public Python facade version |
+| `API_VERSION` | `"1.1.0"` | Public Python facade version |
 | `IR_VERSION` / plan field `v` | `"1"` | Wire plan shape major. Additive fields only inside v1. |
-| Player JS `UxMotion.version` | `"1.0.0"` | Web player version aligned with API |
+| Player JS `UxMotion.version` | `"1.1.0"` | Web player version aligned with API |
 
 **Breaking change rule:** only a new `v` on the plan is allowed to break receivers. Unknown fields must be ignored by receivers. Keys are never reused with new meanings.
 
@@ -71,6 +71,7 @@ from ux_motion import (
     send, play, cancel, rewind, as_update, to_result,
     # inspect
     interpret, explain, frames, span_ms, validate_plan, compile_plan,
+    freeze_plan, render_markup, as_html,
     # design system
     tokens, schema, CONTRACT,
     # patterns
@@ -78,6 +79,8 @@ from ux_motion import (
     multi_hop_leave, multi_hop_arrive,
     # presence helpers
     stamp, region, Presence,
+    # document runtime
+    Motion,
     # wire
     dumps, loads,
 )

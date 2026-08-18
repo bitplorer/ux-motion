@@ -8,7 +8,7 @@ All symbols below are exported from `ux_motion`. Signatures use Python 3.10+ typ
 
 | Symbol | Type | Value / role |
 |---|---|---|
-| `API_VERSION` | `str` | `"1.0.0"` |
+| `API_VERSION` | `str` | `"1.1.0"` |
 | `IR_VERSION` | `str` | `"1"` |
 | `CONTRACT` | `dict` | Laws, kinds, modes, roles, engines, op names |
 | `PlanError` | `Exception` | Raised on invalid IR / JSON |
@@ -34,19 +34,23 @@ Create a fluent scene. If `sid` is omitted, a random `scene-<hex10>` id is assig
 | `also(*nodes)` | Append pre-built nodes |
 | `named(name, mode="wait")` | Open a named group; subsequent tracks go inside until next mode/also/named/plan |
 | `exit(target, recipe, *, after="remove", html=None)` | Add exit track |
-| `enter(target, recipe, *, after="keep", html=None)` | Add enter track |
+| `enter(target, recipe, *, after="keep", html=None)` | Add enter track. `html` may be a ux-dom tree; it stays a tree until serialize |
 | `stay(target, recipe)` | Add stay track |
 | `stagger_in(selector, recipe, *, gap_ms=40)` | Stagger enter |
 | `stagger_out(selector, recipe, *, gap_ms=30)` | Stagger exit |
 | `share(sid, *, leave, arrive, recipe=None)` | Shared element |
 | `bind_to(input, target, *, until=None, axis=None)` | Wrap entire scene root in bind |
 | `as_score(sid, *, phase="now")` | Wrap entire scene root in score |
-| `plan() -> dict` | Compile + validate; raises if empty |
+| `plan() -> dict` | Compile + validate (BUILD; trees stay); raises if empty |
 | `ops() -> list` | `transition.play` ops only |
-| `play(*, also_update=False, action=None) -> dict` | Result via `send.play` |
+| `play(*, also_update=False, action=None) -> dict` | Result via `send.play` (freezes on the wire) |
 | `update(*, action=None) -> dict` | Result via `send.update` |
 | `rewind(*, action=None) -> dict` | Result via `send.rewind` |
 | `cancel_ops() -> list` | `transition.cancel` for this id |
+| `iter_markup()` | Live `html` values still on this scene (trees or strings) |
+| `tag()` | ux-dom Component face (soft-dep; does not re-parent trees) |
+| `__render__` / `__html__` / `__str__` | Official serialize: frozen plan as `<script type="application/ux-motion+json">` |
+| `__iter__` | Yields `tag()` so `div(scene)` works without patching ux-dom |
 
 ---
 
@@ -172,15 +176,20 @@ to_result(ops, *, ok=True, action=None) -> Result
 
 ```python
 validate_plan(plan) -> dict
-compile_plan(plan) -> dict          # same as validate
+compile_plan(plan, *, freeze=False) -> dict   # BUILD; freeze=True → freeze_plan
+freeze_plan(plan) -> dict      # SERIALIZE: stamp_tree + __render__, then string IR
+render_markup(node, *, pretty=False) -> str   # official serialize of one tree
+as_html(node) -> str           # alias of render_markup
 interpret(plan, *, counts=None) -> list[Event]
 span_ms(plan, *, counts=None) -> int
 explain(plan, *, counts=None) -> str
 frames(plan, *, width=640, height=120, counts=None) -> str  # SVG
 schema() -> dict                    # JSON Schema
-dumps(plan, *, indent=2) -> str
+dumps(plan, *, indent=2) -> str     # freeze then JSON
 loads(text) -> dict
 ```
+
+`html` on a track may be a ux-dom Component (or any object with `__render__` / `__html__`) until `freeze_plan` / `dumps` / `send.play` / `Scene.__render__`. The wire IR is strings only.
 
 ### `Event`
 
@@ -224,9 +233,16 @@ Presence().mark(uid) / .drop(uid) / .is_present(uid) / .clear() / .all()
 
 ---
 
-## Motion namespace
+## Motion namespace / Document runtime
 
 `Motion.scene`, `Motion.track`, `Motion.share`, … mirror the functional API for hosts that prefer `Motion.*` style. `Motion.play` is `send.play`.
+
+`document.use(Motion())` is a ux-dom contribution runtime:
+
+- `document_head()` injects `<script src="/ux-pkg/ux-motion/static/ux-motion-player.js" defer>`
+- `served_files()` exposes the package-owned player via `SafeStaticFile`
+
+ux-dom is a soft dependency. Scene authoring and `Scene.__render__` work without it.
 
 ---
 

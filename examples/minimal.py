@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Minimal runnable sample for ux_motion 1.0.0."""
+"""Minimal runnable sample for ux_motion 1.1.0."""
 
 from __future__ import annotations
 

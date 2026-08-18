@@ -18,6 +18,7 @@ from ux_motion._ir import (
     KIND_TRACK,
     PlanError,
 )
+from ux_motion._markup import as_html
 from ux_motion._ops import cancel as emit_cancel
 from ux_motion._ops import play as emit_play
 from ux_motion._ops import rewind_plan
@@ -30,13 +31,20 @@ def _as_recipe(recipe: Mapping[str, Any] | Recipe) -> dict[str, Any]:
     return dict(recipe)
 
 
+def _as_markup(html: Any) -> Any | None:
+    """Keep trees as trees. Strings pass through. Nothing is serialized here."""
+    if html is None:
+        return None
+    return html
+
+
 def track(
     target: str,
     recipe: Mapping[str, Any],
     *,
     role: str = "enter",
     after: str | None = None,
-    html: str | None = None,
+    html: Any = None,
     name: str | None = None,
 ) -> dict[str, Any]:
     node: dict[str, Any] = {
@@ -51,8 +59,9 @@ def track(
         node["after"] = "remove"
     else:
         node["after"] = "keep"
-    if html is not None:
-        node["html"] = html
+    markup = _as_markup(html)
+    if markup is not None:
+        node["html"] = markup
     if name:
         node["name"] = name
     return node
@@ -234,7 +243,7 @@ class Scene:
         recipe: Mapping[str, Any],
         *,
         after: str = "remove",
-        html: str | None = None,
+        html: Any = None,
     ) -> "Scene":
         self._add(track(target, recipe, role="exit", after=after, html=html))
         return self
@@ -245,8 +254,9 @@ class Scene:
         recipe: Mapping[str, Any],
         *,
         after: str = "keep",
-        html: str | None = None,
+        html: Any = None,
     ) -> "Scene":
+        """``html`` stays a ux-dom tree until official serialize (``__render__`` / wire)."""
         self._add(track(target, recipe, role="enter", after=after, html=html))
         return self
 
@@ -303,6 +313,54 @@ class Scene:
             self._nodes.append(group(self._open_group, *self._pending, mode=self._group_mode))
         self._open_group = None
         self._pending = []
+
+    def iter_markup(self):
+        """Live ``html`` values still on this scene (trees or strings)."""
+        from ux_motion._freeze import iter_markup as _iter
+
+        return _iter(self.plan())
+
+    def tag(self):
+        """ux-dom Component face so ``div(scene)`` / ``document`` accept this scene.
+
+        The face serializes through official ``__render__`` (script with the
+        full frozen plan). Html trees are not re-parented; ``render_markup``
+        stamps them the same way HTMLResponse does.
+        """
+        n = len(self._nodes) + len(self._pending)
+        face = getattr(self, "_tag_face", None)
+        if face is None or getattr(self, "_tag_gen", None) != n:
+            from ux_motion._dom import motion_tag
+
+            face = motion_tag(self)
+            self._tag_face = face
+            self._tag_gen = n
+        return face
+
+    def __iter__(self):
+        """Flatten into a ux-dom Component so ``dom_tag.add`` accepts a Scene.
+
+        ux-dom ``_add_unlocked`` only takes tags / strings / iterables. Yielding
+        the Component face lets ``div(scene)`` work without patching ux-dom.
+        """
+        yield self.tag()
+
+    def __render__(self, indent: str = "  ", pretty: bool = True, xhtml: bool = False) -> str:
+        """Official serialize — same method HTMLResponse / UxDomRenderer call.
+
+        Freezes html trees through ``__render__``, then emits a script tag
+        carrying the full plan (markup + recipes + identity). Nothing is lost.
+        """
+        from ux_motion._freeze import freeze_plan
+        from ux_motion._wire import encode_plan_script
+
+        return encode_plan_script(freeze_plan(self), pretty=pretty)
+
+    def __html__(self) -> str:
+        return self.__render__(pretty=False)
+
+    def __str__(self) -> str:
+        return self.__render__(pretty=False)
 
     def __repr__(self) -> str:
         return f"Scene(id={self._id!r}, mode={self._mode!r}, parts={len(self._nodes)})"
@@ -366,7 +424,17 @@ def scene(sid: str | None = None) -> Scene:
 
 
 class Motion:
-    """Namespace facade for hosts that prefer ``Motion.scene`` style."""
+    """Document runtime + namespace facade.
+
+    ``document.use(Motion())`` injects the player the same way
+    ``document.use(XElement())`` injects ``x_element.js``.
+
+    ``Motion.scene`` / ``Motion.track`` stay as the fluent namespace.
+    """
+
+    plugin_kind = "contribution"
+    name = "ux_motion"
+    PLAYER_URL = "/ux-pkg/ux-motion/static/ux-motion-player.js"
 
     scene = staticmethod(scene)
     track = staticmethod(track)
@@ -385,3 +453,40 @@ class Motion:
     rewind = staticmethod(send.rewind)
     cancel = staticmethod(emit_cancel)
     send = send
+    as_html = staticmethod(as_html)
+
+    def __init__(self, *, src: str | None = None, serve: str = "package_mount") -> None:
+        self.serve = serve
+        self.src = src or (
+            self.PLAYER_URL if serve == "package_mount" else "/static/ux-motion-player.js"
+        )
+
+    def document_head(self):
+        try:
+            from ux_dom.dom import script
+        except ImportError:
+            return ()
+        return (script(src=self.src, defer=True),)
+
+    def document_body(self):
+        return ()
+
+    def served_files(self):
+        if self.serve != "package_mount":
+            return ()
+        try:
+            from ux_dom.plugins.safe_static import SafeStaticFile
+        except ImportError:
+            return ()
+        return (
+            SafeStaticFile.from_package(
+                "ux_motion.scripts",
+                "ux-motion-player.js",
+                url=self.PLAYER_URL,
+                plugin=self.name,
+                content_type="application/javascript",
+            ),
+        )
+
+    def artifacts(self):
+        return ()

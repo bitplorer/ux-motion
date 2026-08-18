@@ -45,12 +45,12 @@ from ux_motion import (
 
 class CoreTests(unittest.TestCase):
     def test_versions(self) -> None:
-        self.assertEqual(API_VERSION, "1.0.0")
-        self.assertEqual(__version__, "1.0.0")
-        self.assertEqual(PLAYER_VERSION, "1.0.0")
+        self.assertEqual(API_VERSION, "1.1.0")
+        self.assertEqual(__version__, "1.1.0")
+        self.assertEqual(PLAYER_VERSION, "1.1.0")
         self.assertEqual(IR_VERSION, "1")
-        self.assertEqual(CONTRACT["api"], "1.0.0")
-        self.assertEqual(CONTRACT["player"], "1.0.0")
+        self.assertEqual(CONTRACT["api"], "1.1.0")
+        self.assertEqual(CONTRACT["player"], "1.1.0")
         self.assertEqual(CONTRACT["ir"], "1")
 
     def test_classic_wait(self) -> None:
@@ -154,6 +154,29 @@ class CoreTests(unittest.TestCase):
     def test_motion_namespace(self) -> None:
         node = Motion.share("h", leave="#a", arrive="#b")
         self.assertEqual(node["kind"], "share")
+
+    def test_as_html_coerces_renderable(self) -> None:
+        from ux_motion import as_html
+
+        class FakeDom:
+            def __render__(self, pretty=True):
+                return "<section id=\"view\">ok</section>"
+
+        self.assertEqual(as_html(None), "")
+        self.assertEqual(as_html("<b>x</b>"), "<b>x</b>")
+        self.assertIn('id="view"', as_html(FakeDom()))
+        tree = FakeDom()
+        plan = scene("dom").enter("#view", fade.enter(ms=40), html=tree).plan()
+        live = plan["root"]["children"][0]["html"]
+        self.assertIs(live, tree)
+        from ux_motion import freeze_plan, dumps
+
+        frozen = freeze_plan(plan)
+        html = frozen["root"]["children"][0]["html"]
+        self.assertIsInstance(html, str)
+        self.assertIn("<section", html)
+        self.assertIn("<section", dumps(plan))
+        self.assertIs(plan["root"]["children"][0]["html"], tree)
 
     def test_unknown_kind_rejected(self) -> None:
         with self.assertRaises(PlanError):
