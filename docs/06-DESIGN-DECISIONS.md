@@ -129,3 +129,32 @@ Every non-trivial choice is recorded here so maintainers do not re-litigate sett
 **Decision:** `plan()` raises if no tracks.
 
 **Reasoning:** An empty plan is almost always a builder bug. Fail loud.
+
+---
+
+## D16 — MotionChannel is a contribution, not Glue / Bridge / Adapter (1.3.0)
+
+**Decision:** `document.use(Motion(), MotionChannel())` injects
+`ux-motion-channel.js`. The hook peels `transition.*` on
+`channel:beforeApply` and plays them on `channel:afterApply`. Channel
+never learns those ops. Player `applyOp("morph")` uses `injectHtml`.
+IR stays `"1"`.
+
+**Reasoning:** A Result may carry authority morph and motion. Channel
+`applyOp` must stay ignorant of plans so Motion is droppable. Playing
+motion *before* morph, or injecting HTML for a just-morphed target,
+remounts identified images. A Host file named `glue.js` steals a
+reserved word (Glue = `ux_channel_ux_dom`). A new repo for 40 lines of
+JS is package explosion. Owner belongs in `name="ux_motion.channel"`.
+
+**Rejected:** Teaching Channel `transition.*`; Host `glue.js`; calling
+it a Bridge; JS in `ux_app.adapter`; `ux_channel_ux_motion` as a repo;
+player `innerHTML` for `morph`.
+
+**Reopen:** only if the hook grows a Python interop surface (then a
+glue package named after both peers is legal), or Channel adds a
+first-class compositor that makes the contribution redundant. Never
+rename to glue/Bridge/Adapter. Never play before authority morph.
+
+See [14-CHANNEL-COMPOSITOR.md](14-CHANNEL-COMPOSITOR.md).
+

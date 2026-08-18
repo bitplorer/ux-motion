@@ -20,6 +20,8 @@ Channel compositor as a Document contribution. IR stays `"1"`.
 - Player `applyOp("morph")` uses `injectHtml` (Idiomorph when host id
   matches) instead of `innerHTML`
 - Not Glue (`ux_channel_ux_dom`), not a Bridge, not an Adapter
+- Binding reasons + how to change later:
+  [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) · D16
 
 ---
 

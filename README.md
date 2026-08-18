@@ -45,6 +45,7 @@ ops. Do not also pass `html=` on a target you just morphed
 
 Start at **[docs/00-OVERVIEW.md](docs/00-OVERVIEW.md)**.  
 Visual index: **[docs/12-DIAGRAMS.md](docs/12-DIAGRAMS.md)** (Mermaid, every concept).  
+Channel compositor: **[docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md)** (read before changing `MotionChannel`).  
 Full map of every design decision, IR field, API symbol, composition rule, and flow diagram is under `docs/`.
 
 ## Tests

@@ -180,3 +180,4 @@ python -c "from ux_motion import scene, fade; print(scene('x').enter('#a', fade.
 | `11-GLOSSARY.md` | Terms with precise meanings |
 | `12-DIAGRAMS.md` | Mermaid at-a-glance diagrams for every concept |
 | `13-VERSIONING.md` | Semver policy, IR vs API, release checklist |
+| `14-CHANNEL-COMPOSITOR.md` | MotionChannel: why, rejected alts, **how to change later** |
