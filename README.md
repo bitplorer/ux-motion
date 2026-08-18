@@ -1,4 +1,4 @@
-# ux_motion 1.2.1
+# ux_motion 1.2.2
 
 **Server-authored, composable presence and transition plans for Python + JSON channels.**
 

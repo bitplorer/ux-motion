@@ -7,6 +7,17 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ---
 
+## 1.2.2 — 2026-08-18
+
+Player: close two `injectHtml` edges after the Idiomorph switch.
+
+- Re-resolve the live host if a tag-name change replaces the node (never animate a detached element)
+- Cancel any `fill: both` animation on the target *before* morphing (replaceChild used to drop it by destroying the node)
+- `restoreFocus: false` so a morph does not steal an input caret
+- Morph errors fall back to `replaceChild`
+
+---
+
 ## 1.2.1 — 2026-08-18
 
 Player: morph matching hosts instead of replacing them.

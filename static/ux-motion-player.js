@@ -1,4 +1,4 @@
-/* ux-motion web.v1.2.1 player — vanilla JS, no framework.
+/* ux-motion web.v1.2.2 player — vanilla JS, no framework.
    Schedule contract: same as ux_motion.interpret.
    Supports: presence, share (FLIP), bind (scroll/drag), score (multi-hop),
    spring, offset-path, reduce_tree swap. */
@@ -152,6 +152,9 @@
     }
     incoming.setAttribute("data-uxm-incoming", "1");
     // Prefer Idiomorph so matching ids (img-{sku}) keep decoded bitmaps.
+    // Scope: only when the incoming root is the same node as the live host.
+    // Idiomorph's id map is the old host + its pantry — it does not steal
+    // nodes from the rest of the document.
     if (
       global.Idiomorph &&
       typeof global.Idiomorph.morph === "function" &&
@@ -159,8 +162,24 @@
       host.id &&
       incoming.id === host.id
     ) {
-      global.Idiomorph.morph(host, incoming);
-      return host;
+      try {
+        global.Idiomorph.morph(host, incoming, {
+          morphStyle: "outerHTML",
+          restoreFocus: false,
+        });
+      } catch (err) {
+        if (host.parentNode) {
+          host.parentNode.replaceChild(incoming, host);
+          return incoming;
+        }
+        host.innerHTML = "";
+        host.appendChild(incoming);
+        return incoming;
+      }
+      // Tag-name change replaces the node. Never animate a detached host.
+      if (host.isConnected) return host;
+      var live = host.id ? document.getElementById(host.id) : null;
+      return live || incoming;
     }
     if (incoming.id && host.id && incoming.id === host.id && host.parentNode) {
       host.parentNode.replaceChild(incoming, host);
@@ -223,6 +242,9 @@
 
     var el = q(node.target);
     if (node.role === "enter" && node.html) {
+      // Drop any fill:both leftover on the live host *before* morph.
+      // replaceChild used to do this by throwing the node away.
+      if (el) cancelTarget(node.target);
       if (el) el = injectHtml(el, node.html);
     }
     if (!el) return Promise.resolve();
@@ -519,7 +541,7 @@
     applyOp: applyOp,
     cancel: cancelAll,
     boot: bootEmbedded,
-    version: "1.2.1",
+    version: "1.2.2",
   };
 
   if (typeof document !== "undefined" && document.addEventListener) {
