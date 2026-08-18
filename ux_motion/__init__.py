@@ -1,0 +1,114 @@
+"""ux_motion — server-authored, composable presence + transition plans.
+
+    from ux_motion import scene, fade, send, share, tokens, patterns
+
+    # Classic presence
+    result = scene("nav").exit("#old", fade.exit()).enter("#new", fade.enter()).play()
+
+    # Shared element (FLIP)
+    scene("pdp").share("hero", leave="#grid-img", arrive="#pdp-img").play()
+
+    # Scroll-scrubbed tape
+    scene("essay").bind_to("scroll", "#article").enter("#fig", rise.enter()).play()
+
+    # Multi-hop across HTTP Results
+    scene("leave").as_score("checkout", phase="hold").exit("#cart", fade.exit()).play()
+
+IR major is ``v: "1"``. Additive fields only. Never reuse keys.
+"""
+
+from ux_motion._adapter import send
+from ux_motion._api import (
+    Motion,
+    Scene,
+    bind,
+    cue,
+    group,
+    parallel,
+    scene,
+    score,
+    sequence,
+    share,
+    stagger,
+    track,
+    wait,
+)
+from ux_motion._compile import compile_plan
+from ux_motion._contract import CONTRACT
+from ux_motion._ir import PlanError, validate_plan
+from ux_motion._version import API_VERSION, IR_VERSION, PLAYER_VERSION, __version__
+from ux_motion._ops import OP_CANCEL, OP_PLAY, OP_REWIND, as_update, cancel, play, rewind, rewind_plan, to_result
+from ux_motion._patterns import PATTERNS, list_stagger, modal, multi_hop_arrive, multi_hop_leave, page, shared_page, toast
+from ux_motion._player import Event, explain, frames, interpret, span_ms
+from ux_motion._presence import Presence, region, stamp
+from ux_motion._recipes import Recipe, along, blur, fade, none, rise, scale, slide, snap, springy
+from ux_motion._schema import schema
+from ux_motion._tokens import Tokens, tokens
+from ux_motion._wire import dumps, loads
+
+
+
+__all__ = [
+    "API_VERSION",
+    "PLAYER_VERSION",
+    "__version__",
+    "CONTRACT",
+    "IR_VERSION",
+    "OP_CANCEL",
+    "OP_PLAY",
+    "OP_REWIND",
+    "Event",
+    "Motion",
+    "PATTERNS",
+    "PlanError",
+    "Presence",
+    "Recipe",
+    "Scene",
+    "Tokens",
+    "along",
+    "as_update",
+    "bind",
+    "blur",
+    "cancel",
+    "compile_plan",
+    "cue",
+    "dumps",
+    "explain",
+    "fade",
+    "frames",
+    "group",
+    "interpret",
+    "list_stagger",
+    "loads",
+    "modal",
+    "multi_hop_arrive",
+    "multi_hop_leave",
+    "none",
+    "page",
+    "parallel",
+    "play",
+    "region",
+    "rewind",
+    "rewind_plan",
+    "rise",
+    "scale",
+    "scene",
+    "schema",
+    "score",
+    "send",
+    "sequence",
+    "share",
+    "shared_page",
+    "slide",
+    "snap",
+    "span_ms",
+    "springy",
+    "stagger",
+    "stamp",
+    "to_result",
+    "toast",
+    "tokens",
+    "track",
+    "validate_plan",
+    "wait",
+]
