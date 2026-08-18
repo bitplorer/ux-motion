@@ -14,6 +14,7 @@ from ux_motion import (
     OP_PLAY,
     OP_REWIND,
     Motion,
+    MotionChannel,
     PlanError,
     along,
     as_update,
@@ -45,13 +46,20 @@ from ux_motion import (
 
 class CoreTests(unittest.TestCase):
     def test_versions(self) -> None:
-        self.assertEqual(API_VERSION, "1.2.2")
-        self.assertEqual(__version__, "1.2.2")
-        self.assertEqual(PLAYER_VERSION, "1.2.2")
+        self.assertEqual(API_VERSION, "1.3.0")
+        self.assertEqual(__version__, "1.3.0")
+        self.assertEqual(PLAYER_VERSION, "1.3.0")
         self.assertEqual(IR_VERSION, "1")
-        self.assertEqual(CONTRACT["api"], "1.2.2")
-        self.assertEqual(CONTRACT["player"], "1.2.2")
+        self.assertEqual(CONTRACT["api"], "1.3.0")
+        self.assertEqual(CONTRACT["player"], "1.3.0")
         self.assertEqual(CONTRACT["ir"], "1")
+
+    def test_motion_channel_is_a_contribution(self) -> None:
+        hook = MotionChannel()
+        self.assertEqual(hook.name, "ux_motion.channel")
+        self.assertEqual(hook.plugin_kind, "contribution")
+        self.assertTrue(hook.src.endswith("ux-motion-channel.js"))
+        self.assertIs(MotionChannel, MotionChannel)
 
     def test_classic_wait(self) -> None:
         plan = scene("nav").exit("#old", fade.exit(ms=100)).enter("#new", fade.enter(ms=100)).plan()

@@ -7,6 +7,22 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ---
 
+## 1.3.0 — 2026-08-18
+
+Channel compositor as a Document contribution. IR stays `"1"`.
+
+### Library
+
+- `MotionChannel()` — `document.use(Motion(), MotionChannel())`
+  injects `ux-motion-channel.js`
+- The hook peels `transition.*` on `channel:beforeApply` and plays them
+  on `channel:afterApply` so Channel idiomorph wins the slot first
+- Player `applyOp("morph")` uses `injectHtml` (Idiomorph when host id
+  matches) instead of `innerHTML`
+- Not Glue (`ux_channel_ux_dom`), not a Bridge, not an Adapter
+
+---
+
 ## 1.2.2 — 2026-08-18
 
 Player: close two `injectHtml` edges after the Idiomorph switch.

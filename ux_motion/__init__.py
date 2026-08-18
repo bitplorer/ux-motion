@@ -39,6 +39,7 @@ from ux_motion._hof import (
     staggered,
     swap,
 )
+from ux_motion._channel import MotionChannel
 from ux_motion._api import (
     Motion,
     Scene,
@@ -81,6 +82,7 @@ __all__ = [
     "Event",
     "HOFS",
     "Motion",
+    "MotionChannel",
     "PATTERNS",
     "PlanError",
     "Presence",

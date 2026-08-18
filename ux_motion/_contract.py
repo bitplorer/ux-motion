@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 CONTRACT = {
-    "api": "1.2.2",
-    "player": "1.2.2",
+    "api": "1.3.0",
+    "player": "1.3.0",
     "ir": "1",
     "facade": "ux_motion",
     "op.play": "transition.play",
@@ -29,6 +29,7 @@ CONTRACT = {
         "Duration is capped at 120s.",
         "The reference player is the schedule contract.",
         "Reduced motion may swap an entire alternate tree, not only shorten ms.",
+        "transition.* rides a Channel Result; MotionChannel plays them after authority morph.",
     ),
     "kinds": (
         "plan",

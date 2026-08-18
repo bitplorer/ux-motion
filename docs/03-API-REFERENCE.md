@@ -8,7 +8,7 @@ All symbols below are exported from `ux_motion`. Signatures use Python 3.10+ typ
 
 | Symbol | Type | Value / role |
 |---|---|---|
-| `API_VERSION` | `str` | `"1.2.2"` |
+| `API_VERSION` | `str` | `"1.3.0"` |
 | `IR_VERSION` | `str` | `"1"` |
 | `CONTRACT` | `dict` | Laws, kinds, modes, roles, engines, op names |
 | `PlanError` | `Exception` | Raised on invalid IR / JSON |
@@ -281,6 +281,17 @@ Presence().mark(uid) / .drop(uid) / .is_present(uid) / .clear() / .all()
 
 - `document_head()` injects `<script src="/ux-pkg/ux-motion/static/ux-motion-player.js" defer>`
 - `served_files()` exposes the package-owned player via `SafeStaticFile`
+
+`document.use(MotionChannel())` is a second contribution (`name="ux_motion.channel"`):
+
+- Injects `ux-motion-channel.js`
+- `channel:beforeApply` peels `transition.*` into `result._uxMotion`
+- `channel:afterApply` calls `UxMotion.applyOps` so Channel idiomorph wins the slot first
+- Does not import `ux_channel`. Event names are public Channel API
+- Not Glue (`ux_channel_ux_dom`), not a Bridge, not an Adapter
+
+Use `MotionChannel` only when Channel applies the Result. Motion without
+Channel still plays via `UxMotion.applyOps` / embedded plan scripts.
 
 ux-dom is a soft dependency. Scene authoring and `Scene.__render__` work without it.
 

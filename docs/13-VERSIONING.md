@@ -1,6 +1,6 @@
 # Versioning policy
 
-ux_motion is at **1.2.2**. Three version numbers exist on purpose. Do not collapse them.
+ux_motion is at **1.3.0**. Three version numbers exist on purpose. Do not collapse them.
 
 ---
 
@@ -8,13 +8,13 @@ ux_motion is at **1.2.2**. Three version numbers exist on purpose. Do not collap
 
 | Name | Where | Current | What it means |
 |---|---|---|---|
-| **Library / API** | `__version__`, `API_VERSION`, `CONTRACT["api"]`, `pyproject.toml`, JS `UxMotion.version`, `PLAYER_VERSION` | **1.2.2** | Python facade + aligned browser player |
+| **Library / API** | `__version__`, `API_VERSION`, `CONTRACT["api"]`, `pyproject.toml`, JS `UxMotion.version`, `PLAYER_VERSION` | **1.3.0** | Python facade + aligned browser player |
 | **Plan IR** | `IR_VERSION`, plan field `v`, `CONTRACT["ir"]` | **1** | JSON wire shape for plans |
-| **Package release** | Git tag / zip name / PyPI | **1.2.2** | Same as library for this project |
+| **Package release** | Git tag / zip name / PyPI | **1.3.0** | Same as library for this project |
 
 ```mermaid
 flowchart TB
-  subgraph Library["Library semver 1.2.2"]
+  subgraph Library["Library semver 1.3.0"]
     API["API_VERSION"]
     PY["__version__"]
     PL["PLAYER_VERSION"]
@@ -36,7 +36,7 @@ flowchart TB
 File: **`ux_motion/_version.py`**
 
 ```python
-__version__ = "1.2.2"
+__version__ = "1.3.0"
 API_VERSION = __version__
 IR_VERSION = "1"
 PLAYER_VERSION = __version__

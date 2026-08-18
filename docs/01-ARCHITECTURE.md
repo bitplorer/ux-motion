@@ -59,7 +59,9 @@
 | `_schema.py` | JSON Schema document of IR | Runtime validation (IR does that) |
 | `_presence.py` | `stamp` / `region` / server-side Presence set | Animate |
 | `_wire.py` | JSON dumps/loads with validation on load | Pretty-print as semantic change |
+| `_channel.py` | `MotionChannel` Document contribution (Channel hook) | Import ux_channel; own toast/img policy |
 | `static/ux-motion-player.js` | Execute plans in browser | Invent schedule order different from `_player.py` |
+| `scripts/ux-motion-channel.js` | Peel `transition.*`, play after Channel morph | Pin img src; toast TTL; call itself Glue |
 
 ## Dependency graph (allowed imports)
 
@@ -79,6 +81,7 @@ _wire → _freeze, _ir
 _compile → _freeze, _ir
 _freeze → _ir, _render
 _dom → _freeze, _wire   (optional; requires ux-dom)
+_channel → (none)      (Document contribution; soft ux_dom in methods)
 
 Forbidden cycles: _ir must not import _api, _ops, _player, _adapter.
 ```
@@ -104,7 +107,8 @@ and Channel encode get a `<script type="application/ux-motion+json">`
 carrying the **full** plan (markup + recipes + identity).
 
 `document.use(Motion())` is the Document runtime (player.js), same
-plugin shape as `XElement`.
+plugin shape as `XElement`. `document.use(MotionChannel())` is the
+Channel compositor hook. Use both when Channel applies the Result.
 
 `div(scene)` works because `Scene.__iter__` yields a Component face
 (`_dom.motion_tag`). ux-dom `add()` is not patched.

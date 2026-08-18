@@ -1,4 +1,4 @@
-/* ux-motion web.v1.2.2 player — vanilla JS, no framework.
+/* ux-motion web.v1.3.0 player — vanilla JS, no framework.
    Schedule contract: same as ux_motion.interpret.
    Supports: presence, share (FLIP), bind (scroll/drag), score (multi-hop),
    spring, offset-path, reduce_tree swap. */
@@ -490,7 +490,7 @@
     }
     if (op.op === "morph" && op.target && op.html != null) {
       var el = q(op.target);
-      if (el) el.innerHTML = op.html;
+      if (el) injectHtml(el, op.html);
       return Promise.resolve();
     }
     if (op.op === "remove" && op.target) {
@@ -541,7 +541,7 @@
     applyOp: applyOp,
     cancel: cancelAll,
     boot: bootEmbedded,
-    version: "1.2.2",
+    version: "1.3.0",
   };
 
   if (typeof document !== "undefined" && document.addEventListener) {

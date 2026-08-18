@@ -1,4 +1,4 @@
-# ux_motion 1.2.2
+# ux_motion 1.3.0
 
 **Server-authored, composable presence and transition plans for Python + JSON channels.**
 
@@ -10,7 +10,7 @@ Pure Python facade. Vanilla JS player. No React. IR v1 additive.
 ## Install / use
 
 ```bash
-export PYTHONPATH=/path/to/this/directory
+export PYTHONPATH=/path/to/this-directory
 python -c "from ux_motion import scene, fade; print(scene('x').enter('#a', fade.enter()).plan()['id'])"
 ```
 
@@ -26,16 +26,20 @@ ux-dom tree on enter, frozen only on the wire:
 
 ```python
 from ux_dom.dom import section, h1
-from ux_motion import appear, rise, swap, Motion
+from ux_motion import appear, rise, swap, Motion, MotionChannel
 
 appear(section(h1("Shop"), id="view"), stagger=".tile").play()
 swap("#view", shop_view(), share="vein").play()
 rise(product_view(), ms=200)   # family as HOF → Scene
 
-# Optional: inject the player the same way XElement injects x_element.js
-# document.use(Motion())
+# Player. Add MotionChannel only when Channel applies the Result:
+# document.use(Motion(), MotionChannel())
 ```
 
+`MotionChannel` peels `transition.*` off the Result, lets Channel
+idiomorph the slot, then plays the plan. Channel never learns those
+ops. Do not also pass `html=` on a target you just morphed
+(`morph(T)` XOR `scene.enter(T, html=…)`).
 
 ## Documentation
 
@@ -55,7 +59,9 @@ PYTHONPATH=. python -m unittest discover -s tests -v
 |---|---|
 | `ux_motion/` | Importable Python package |
 | `ux_motion/scripts/ux-motion-player.js` | Package-owned player (`document.use(Motion())`) |
+| `ux_motion/scripts/ux-motion-channel.js` | Channel hook (`document.use(MotionChannel())`) |
 | `static/ux-motion-player.js` | Same player, standalone URL |
+| `static/ux-motion-channel.js` | Same hook, standalone URL |
 | `tests/` | Unit tests |
 | `docs/` | Exhaustive documentation |
 | `examples/minimal.py` | Runnable sample |
