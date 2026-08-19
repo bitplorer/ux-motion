@@ -10,9 +10,13 @@ Pure Python facade. Vanilla JS player. No React. IR v1 additive.
 ## Install / use
 
 ```bash
-export PYTHONPATH=/path/to/this-directory
+pip install ux-motion
+# or from this tree:
+pip install -e .
 python -c "from ux_motion import scene, fade; print(scene('x').enter('#a', fade.enter()).plan()['id'])"
 ```
+
+Repo: [bitplorer/ux-motion](https://github.com/bitplorer/ux-motion)
 
 ## 30-second example
 
@@ -69,4 +73,4 @@ PYTHONPATH=. python -m unittest discover -s tests -v
 
 ## License
 
-Set your license in `LICENSE`. Default placeholder is included.
+MIT

@@ -64,7 +64,8 @@ apply        Channel idiomorph wins the slot (ids reused)
 afterApply   UxMotion.applyOps on the stashed list
 ```
 
-XOR (enforced in `ux_app.adapter.compose`, not in this hook):
+XOR (enforced at Python fold time — historically `ux_app.adapter.compose`,
+now `ux_behavior.wire.compose`; not in this hook):
 
 ```text
 on one Result:  morph(T, tree)  XOR  scene.enter(T, html=tree)

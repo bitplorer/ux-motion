@@ -31,8 +31,10 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Documentation = "docs/00-OVERVIEW.md"
-Changelog = "CHANGELOG.md"
+Homepage = "https://github.com/bitplorer/ux-motion"
+Repository = "https://github.com/bitplorer/ux-motion"
+Documentation = "https://github.com/bitplorer/ux-motion/tree/main/docs"
+Changelog = "https://github.com/bitplorer/ux-motion/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 include = ["ux_motion*"]

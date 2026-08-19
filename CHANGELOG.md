@@ -7,6 +7,17 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ---
 
+## Unreleased
+
+### Completeness (2026-08-19)
+
+- README / OVERVIEW: MIT (not a placeholder), current package layout (HOF + MotionChannel + scripts).
+- `pip install ux-motion`; GitHub URLs on the package metadata.
+- XOR cite updated to `ux_behavior.wire.compose` (historical `ux_app.adapter.compose`).
+- Tests: `static/` JS must equal `ux_motion/scripts/` JS; player version string matches Python.
+
+---
+
 ## 1.3.0 — 2026-08-18
 
 Channel compositor as a Document contribution. IR stays `"1"`.

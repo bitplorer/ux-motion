@@ -9,6 +9,7 @@ All symbols below are exported from `ux_motion`. Signatures use Python 3.10+ typ
 | Symbol | Type | Value / role |
 |---|---|---|
 | `API_VERSION` | `str` | `"1.3.0"` |
+| `PLAYER_VERSION` | `str` | `"1.3.0"` (must equal `API_VERSION`) |
 | `IR_VERSION` | `str` | `"1"` |
 | `CONTRACT` | `dict` | Laws, kinds, modes, roles, engines, op names |
 | `PlanError` | `Exception` | Raised on invalid IR / JSON |

@@ -106,30 +106,32 @@ Product code must **not** import private modules (`ux_motion._ir`, etc.) except 
 ## Directory layout in this package
 
 ```
-ux_motion-1.0.0-complete/
-├── README.md                 # entry + quick start
-├── LICENSE                   # (placeholder — set your license)
+ux-motion/
+├── README.md
+├── LICENSE                   # MIT
 ├── docs/                     # THIS documentation set
 ├── ux_motion/                # Python package (importable)
 │   ├── __init__.py           # frozen public facade
 │   ├── _contract.py          # laws + enumerated surfaces
 │   ├── _ir.py                # validator + all kinds
 │   ├── _api.py               # Scene + functional constructors
+│   ├── _hof.py               # appear / swap / leave / @motion
 │   ├── _recipes.py           # fade/rise/slide/scale/blur/along/springy
 │   ├── _tokens.py            # named duration/easing/distance/spring
 │   ├── _ops.py               # play / update / rewind / cancel
 │   ├── _adapter.py           # send facade
+│   ├── _channel.py           # MotionChannel Document contribution
 │   ├── _player.py            # reference interpret / explain / frames
 │   ├── _patterns.py          # page/modal/toast/list/shared/multi-hop
 │   ├── _schema.py            # JSON Schema of IR v1
 │   ├── _presence.py          # stamp / region / Presence map
 │   ├── _compile.py           # compile_plan → validate_plan
+│   ├── _freeze.py / _render.py / _markup.py / _dom.py
 │   ├── _wire.py              # dumps / loads
+│   ├── scripts/              # package-owned player + channel hook
 │   └── py.typed
-├── static/
-│   └── ux-motion-player.js   # browser runtime
+├── static/                   # same JS, standalone URL
 ├── tests/
-│   └── test_core.py
 └── examples/
     └── minimal.py
 ```
