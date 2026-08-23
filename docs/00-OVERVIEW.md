@@ -1,4 +1,4 @@
-# ux_motion 1.3.0 — Complete Overview
+# ux-motion 1.3.0 — Complete Overview
 
 **5-minute path:** [../START_HERE.md](../START_HERE.md) · **Map:** [INDEX.md](INDEX.md)
 
@@ -8,7 +8,7 @@
 
 ## One-sentence definition
 
-**ux_motion** is a pure-Python, server-authored system for composing presence and transition plans that travel over a JSON channel (`ux-channel`-style Result documents) and are executed by a reference player (Python) and a web player (vanilla JavaScript). It is **not** a React library, **not** a CSS framework, and **not** a client-side animation DSL that the browser invents on its own.
+**ux-motion** is a pure-Python, server-authored system for composing presence and transition plans that travel over a JSON channel (`ux-channel`-style Result documents) and are executed by a reference player (Python) and a web player (vanilla JavaScript). It is **not** a React library, **not** a CSS framework, and **not** a client-side animation DSL that the browser invents on its own.
 
 ---
 
@@ -26,7 +26,7 @@ Many server-driven stacks (HTMX-like, LiveView-like, or custom `ux-channel` / `u
 2. The server does not have a live React fiber tree.
 3. The developer wants to author motion in **Python**, next to domain logic.
 
-**ux_motion** turns the Framer Motion insight — *delay unmount until exit finishes; compose enter/exit/stay; interrupt intelligently* — into **data**:
+**ux-motion** turns the Framer Motion insight — *delay unmount until exit finishes; compose enter/exit/stay; interrupt intelligently* — into **data**:
 
 - Server builds a **Plan** (JSON IR v1).
 - Plan is emitted as channel ops: `transition.play`, `transition.cancel`, `transition.rewind`.
@@ -160,7 +160,7 @@ dom_only = scene("nav").exit("#old", fade.exit()).enter("#new", rise.enter()).up
 Install for local use:
 
 ```bash
-export PYTHONPATH=/path/to/ux_motion-1.0.0-complete
+pip install -e .
 python -c "from ux_motion import scene, fade; print(scene('x').enter('#a', fade.enter()).plan()['id'])"
 ```
 

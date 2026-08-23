@@ -1,4 +1,4 @@
-# ux_motion 1.3.0
+# ux-motion
 
 **Server-authored, composable presence and transition plans for Python + JSON channels.**
 
@@ -11,6 +11,15 @@ Pure Python facade. Vanilla JS player. No React. IR v1 additive.
 > **Map:** [docs/INDEX.md](docs/INDEX.md)
 > **Overview:** [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md)
 > **Contributor / agent:** [CONTRIBUTING.md](CONTRIBUTING.md) · [AGENTS.md](AGENTS.md)
+
+### Brand lines
+
+| Layer | Name |
+|-------|------|
+| **PyPI / pip** | `ux-motion` |
+| **Import** | `ux_motion` |
+| **CLI** | *none (library)* |
+| **Version** | `1.3.0` |
 
 This layer **owns presence/transition plans as data**. It does not own product
 behavior or DOM construction.

@@ -2,6 +2,8 @@
 
 Orientation for humans and agents continuing this package.
 
+**First-time:** [START_HERE.md](START_HERE.md). **Map:** [docs/INDEX.md](docs/INDEX.md).
+
 Read [START_HERE.md](START_HERE.md) then [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md)
 then [docs/INDEX.md](docs/INDEX.md). Public names: `ux_motion/__init__.py` `__all__`.
 Read [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) before changing
@@ -13,11 +15,11 @@ The UX stack is a **layered system of specialists**, not a monolith.
 
 | Layer | Owns | Must **not** own |
 |-------|------|------------------|
-| **ux-dom** | HTML/CSS/JS trees, Document, serialize | Intent, Cap, Result, motion IR |
-| **ux-channel** | Intent / Result / Cap / wire / peers | HTML trees, CSS, `transition.*` semantics |
-| **ux-behavior** | Product behavior, Morph/Ref, `@action` | Motion IR, DOM construction |
-| **ux-motion** (this repo) | Presence / transition **plans as data** (IR v1), players, `Motion` / `MotionChannel` | Product behavior, raw HTML construction, Cap crypto, product CLI |
-| **ux-compose** | Author composition + `uxcompose` | Re-implementing this IR |
+| **ux-dom** | HTML/CSS/JS trees, `Document`, serialize, pure discovery, `uxdom` | Intent, Cap, Result ops, MorphState, motion IR, product CLI |
+| **ux-channel** | Intent / Result / Cap / wire / peers / host runtime | HTML trees, CSS |
+| **ux-behavior** | Product behavior, Morph/Ref, `@action`, validation | Raw HTML construction, wire codecs |
+| **ux-motion** (this repo) | Presence / transition plans as data (IR v1) | Product behavior, DOM construction |
+| **ux-compose** | Author composition + product CLI (`uxcompose`) | Re-implementing any specialist |
 
 Channel never learns `transition.*`. `MotionChannel` peels those ops off the Result.
 XOR: `morph(T)` XOR `scene.enter(T, html=…)`.
