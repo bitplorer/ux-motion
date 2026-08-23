@@ -1,5 +1,7 @@
 # ux_motion 1.3.0 — Complete Overview
 
+**5-minute path:** [../START_HERE.md](../START_HERE.md) · **Map:** [INDEX.md](INDEX.md)
+
 **Nothing in this document is optional context.** This is the full product description of the library: what it is, what problem it solves, what it deliberately does not solve, and how every piece fits.
 
 ---
