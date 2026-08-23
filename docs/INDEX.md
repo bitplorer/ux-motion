@@ -69,7 +69,10 @@ It does **not** own product behavior or DOM construction.
 
 | Package | Role |
 |---------|------|
-| [ux-dom](https://github.com/bitplorer/ux-dom) | Render / Document (`html=` trees) |
-| [ux-channel](https://github.com/bitplorer/ux-channel) | Intent → Result (does not learn `transition.*`) |
-| [ux-behavior](https://github.com/bitplorer/ux-behavior) | Product behavior; XOR with morph |
-| [ux-compose](https://github.com/bitplorer/ux-compose) | `App.use_motion()` |
+| [ux-dom](https://github.com/bitplorer/ux-dom) | Render / Document |
+| [ux-channel](https://github.com/bitplorer/ux-channel) | Intent → Cap → Result |
+| [ux-behavior](https://github.com/bitplorer/ux-behavior) | Product behavior → Ops |
+| [ux-compose](https://github.com/bitplorer/ux-compose) | Composition + product CLI |
+
+Do not flatten these layers into this repo.
+

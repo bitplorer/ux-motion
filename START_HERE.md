@@ -1,11 +1,11 @@
-# Start here — ux-motion 1.3.0
+# Start here — ux-motion
 
 **Audience:** first-time users of this package.
 **Promise:** one Plan on the wire in five minutes.
-**Time:** ~5 minutes.
+**Time:** ~5 minutes. Facade **1.3.0**, IR v1.
 
 Full product description: [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md).
-Map: [docs/INDEX.md](docs/INDEX.md). Runnable sample: [examples/minimal.py](examples/minimal.py).
+**Map:** [docs/INDEX.md](docs/INDEX.md). Runnable sample: [examples/minimal.py](examples/minimal.py).
 
 ---
 
