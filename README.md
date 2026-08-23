@@ -7,6 +7,14 @@ Pure Python facade. Vanilla JS player. No React. IR v1 additive.
 `html=` accepts ux-dom trees. They stay trees until official serialize
 (`stamp_tree` + `__render__`) at `dumps` / `send.play` / `Scene.__render__`.
 
+> **New here?** [START_HERE.md](START_HERE.md) (5 minutes).
+> **Map:** [docs/INDEX.md](docs/INDEX.md)
+> **Overview:** [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md)
+> **Contributor / agent:** [CONTRIBUTING.md](CONTRIBUTING.md) · [AGENTS.md](AGENTS.md)
+
+This layer **owns presence/transition plans as data**. It does not own product
+behavior or DOM construction.
+
 ## Install / use
 
 ```bash
@@ -17,6 +25,25 @@ python -c "from ux_motion import scene, fade; print(scene('x').enter('#a', fade.
 ```
 
 Repo: [bitplorer/ux-motion](https://github.com/bitplorer/ux-motion)
+
+### Ownership
+
+| Owns | Does **not** own |
+|------|------------------|
+| Plan IR v1, recipes, Scene builder | Product `@action` / MorphState (`ux-behavior`) |
+| `transition.play` / `cancel` / `rewind` ops | HTML construction / Document (`ux-dom`) |
+| Reference player + JS player | Cap crypto / Intent (`ux-channel`) |
+| `Motion` / `MotionChannel` Document contributions | Product CLI (`ux-compose`) |
+
+### Audience
+
+| You are… | Start |
+|----------|--------|
+| **New** | [START_HERE.md](START_HERE.md) |
+| **Need every concept** | [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md) · [docs/12-DIAGRAMS.md](docs/12-DIAGRAMS.md) |
+| **Changing MotionChannel** | [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) |
+| **Contributor / agent** | [CONTRIBUTING.md](CONTRIBUTING.md) · [AGENTS.md](AGENTS.md) |
+| **Need a map** | [docs/INDEX.md](docs/INDEX.md) |
 
 ## 30-second example
 
@@ -47,10 +74,12 @@ ops. Do not also pass `html=` on a target you just morphed
 
 ## Documentation
 
-Start at **[docs/00-OVERVIEW.md](docs/00-OVERVIEW.md)**.  
-Visual index: **[docs/12-DIAGRAMS.md](docs/12-DIAGRAMS.md)** (Mermaid, every concept).  
-Channel compositor: **[docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md)** (read before changing `MotionChannel`).  
-Full map of every design decision, IR field, API symbol, composition rule, and flow diagram is under `docs/`.
+Start at **[START_HERE.md](START_HERE.md)**. Numbered set begins at
+**[docs/00-OVERVIEW.md](docs/00-OVERVIEW.md)**.
+Visual index: **[docs/12-DIAGRAMS.md](docs/12-DIAGRAMS.md)**.
+Channel compositor: **[docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md)**
+(read before changing `MotionChannel`).
+Full map: **[docs/INDEX.md](docs/INDEX.md)**.
 
 ## Tests
 
