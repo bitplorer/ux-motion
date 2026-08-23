@@ -1,5 +1,8 @@
 # ux-motion 1.3.0 — Complete Overview
 
+> **Diátaxis:** explanation · **Canonical:** `docs/00-OVERVIEW.md` · **Layer:** ux-motion  
+> Map: [INDEX.md](INDEX.md).
+
 **5-minute path:** [../START_HERE.md](../START_HERE.md) · **Map:** [INDEX.md](INDEX.md)
 
 **Nothing in this document is optional context.** This is the full product description of the library: what it is, what problem it solves, what it deliberately does not solve, and how every piece fits.
@@ -60,37 +63,14 @@ Many server-driven stacks (HTMX-like, LiveView-like, or custom `ux-channel` / `u
 
 ---
 
-## Public surface (import only from `ux_motion`)
+## Public surface
 
-```python
-from ux_motion import (
-    # authoring
-    scene, track, group, stagger, share, bind, score, cue,
-    wait, sequence, parallel,
-    # recipes
-    fade, rise, slide, scale, blur, none, snap, along, springy,
-    # send
-    send, play, cancel, rewind, as_update, to_result,
-    # inspect
-    interpret, explain, frames, span_ms, validate_plan, compile_plan,
-    freeze_plan, render_markup, as_html,
-    # design system
-    tokens, schema, CONTRACT,
-    # patterns
-    page, modal, toast, list_stagger, shared_page,
-    multi_hop_leave, multi_hop_arrive,
-    # presence helpers
-    stamp, region, Presence,
-    # document runtime
-    Motion, MotionChannel,
-    # drop-in HOFs (trees → Scene)
-    hop, appear, swap, leave, sheet, notice, staggered, motion,
-    # wire
-    dumps, loads,
-)
-```
+Import only from `ux_motion`. The full symbol list, signatures, and effects live in
+**[03-API-REFERENCE.md](03-API-REFERENCE.md)** (reference). Do not treat this overview
+as the API laundry list.
 
-Product code must **not** import private modules (`ux_motion._ir`, etc.) except in tests that intentionally exercise internals.
+Product code must **not** import private modules (`ux_motion._ir`, etc.) except in
+tests that intentionally exercise internals.
 
 ---
 
@@ -140,29 +120,11 @@ ux-motion/
 
 ---
 
-## Quick start (copy-paste)
+## Quick start
 
-```python
-from ux_motion import scene, fade, rise, send
-
-result = (
-    scene("nav")
-    .exit("#old", fade.exit())
-    .enter("#new", rise.enter())
-    .play()
-)
-# result == {"ok": True, "ops": [{"op": "transition.play", "plan": {...}}]}
-
-# Client with no motion player:
-dom_only = scene("nav").exit("#old", fade.exit()).enter("#new", rise.enter()).update()
-```
-
-Install for local use:
-
-```bash
-pip install -e .
-python -c "from ux_motion import scene, fade; print(scene('x').enter('#a', fade.enter()).plan()['id'])"
-```
+The copy-paste path is **[../START_HERE.md](../START_HERE.md)** (tutorial).
+This file stays the full product description (explanation). Do not duplicate the
+5-minute path here.
 
 ---
 

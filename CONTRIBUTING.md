@@ -36,9 +36,15 @@ See [AGENTS.md](AGENTS.md) and [docs/06-DESIGN-DECISIONS.md](docs/06-DESIGN-DECI
 | `README.md` | Gate | Full API laundry list as primary form |
 | `START_HERE.md` | 5-minute first success | Exhaustive IR field list |
 | `docs/00`–`14` | Numbered systematic set | Duplicate the gate |
+| `docs/guides/` | How-to slot (points at numbered sources) | A second copy of 00–14 |
+| `docs/reference/` | Reference slot (points at numbered sources) | A second copy of 00–14 |
+| `docs/internals/` | Explanation + C4 | Step lists as primary form |
+| `docs/examples/` | Example slot | Law |
+| `docs/adr/` | ADR slot (points at 06 / 14 / 13) | Mixed how-to |
 | `docs/INDEX.md` | Audience + Diátaxis routing | Empty new folder trees |
 
-Keep the numbered docs. Assign mode in INDEX; do not rename in Phase 1.
+Keep the numbered docs. Assign mode in INDEX; do not un-number them.
+Phase 2 folders are slots that **point at** 00–14, not replacements.
 
 ## Pull requests
 
