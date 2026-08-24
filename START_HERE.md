@@ -6,6 +6,7 @@
 
 Full product description: [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md).
 **Map:** [docs/INDEX.md](docs/INDEX.md). Runnable sample: [examples/minimal.py](examples/minimal.py).
+**Cookbook:** [docs/guides/SNIPPETS.md](docs/guides/SNIPPETS.md) — Scene, recipes, HOFs, dumps/loads, XOR with morph.
 
 ---
 

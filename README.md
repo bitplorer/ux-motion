@@ -1,18 +1,15 @@
 # ux-motion
 
-**Server-authored, composable presence and transition plans for Python + JSON channels.**
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+Server-authored, composable presence and transition plans for Python + JSON channels.
 
 Pure Python facade. Vanilla JS player. No React. IR v1 additive.
 
-`html=` accepts ux-dom trees. They stay trees until official serialize
-(`stamp_tree` + `__render__`) at `dumps` / `send.play` / `Scene.__render__`.
+`html=` accepts ux-dom trees. They stay trees until official serialize (`stamp_tree` + `__render__`) at `dumps` / `send.play` / `Scene.__render__`.
 
-> **New here?** [START_HERE.md](START_HERE.md) (5 minutes).
-> **Map:** [docs/INDEX.md](docs/INDEX.md)
-> **Overview:** [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md)
-> **Contributor / agent:** [CONTRIBUTING.md](CONTRIBUTING.md) · [AGENTS.md](AGENTS.md)
-
-### Brand lines
+This layer **owns presence/transition plans as data**. It does not own product behavior or DOM construction.
 
 | Layer | Name |
 |-------|------|
@@ -20,11 +17,24 @@ Pure Python facade. Vanilla JS player. No React. IR v1 additive.
 | **Import** | `ux_motion` |
 | **CLI** | *none (library)* |
 | **Version** | `1.3.0` |
+| **Python** | ≥ 3.10 |
+| **License** | [MIT](LICENSE) |
 
-This layer **owns presence/transition plans as data**. It does not own product
-behavior or DOM construction.
+## Table of Contents
 
-## Install / use
+- [Install](#install)
+- [Usage](#usage)
+- [Ownership](#ownership)
+- [Audience](#audience)
+- [Documentation](#documentation)
+- [API](#api)
+- [Package contents](#package-contents)
+- [Tests](#tests)
+- [Security](#security)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Install
 
 ```bash
 pip install ux-motion
@@ -35,31 +45,19 @@ python -c "from ux_motion import scene, fade; print(scene('x').enter('#a', fade.
 
 Repo: [bitplorer/ux-motion](https://github.com/bitplorer/ux-motion)
 
-### Ownership
-
-| Owns | Does **not** own |
-|------|------------------|
-| Plan IR v1, recipes, Scene builder | Product `@action` / MorphState (`ux-behavior`) |
-| `transition.play` / `cancel` / `rewind` ops | HTML construction / Document (`ux-dom`) |
-| Reference player + JS player | Cap crypto / Intent (`ux-channel`) |
-| `Motion` / `MotionChannel` Document contributions | Product CLI (`ux-compose`) |
-
-### Audience
-
-| You are… | Start |
-|----------|--------|
-| **New** | [START_HERE.md](START_HERE.md) |
-| **Need every concept** | [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md) · [docs/12-DIAGRAMS.md](docs/12-DIAGRAMS.md) |
-| **Changing MotionChannel** | [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) |
-| **Contributor / agent** | [CONTRIBUTING.md](CONTRIBUTING.md) · [AGENTS.md](AGENTS.md) |
-| **Need a map** | [docs/INDEX.md](docs/INDEX.md) |
-
-## 30-second example
+## Usage
 
 ```python
 from ux_motion import scene, fade, rise
 
-scene("nav").exit("#old", fade.exit()).enter("#new", rise.enter()).play()
+result = (
+    scene("nav")
+    .exit("#old", fade.exit())
+    .enter("#new", rise.enter())
+    .play()
+)
+# result == {"ok": True, "ops": [{"op": "transition.play", "plan": {...}}]}
+print(result["ops"][0]["op"])
 ```
 
 ux-dom tree on enter, frozen only on the wire:
@@ -76,25 +74,68 @@ rise(product_view(), ms=200)   # family as HOF → Scene
 # document.use(Motion(), MotionChannel())
 ```
 
-`MotionChannel` peels `transition.*` off the Result, lets Channel
-idiomorph the slot, then plays the plan. Channel never learns those
-ops. Do not also pass `html=` on a target you just morphed
-(`morph(T)` XOR `scene.enter(T, html=…)`).
+`MotionChannel` peels `transition.*` off the Result, lets Channel idiomorph the slot, then plays the plan. Channel never learns those ops. Do not also pass `html=` on a target you just morphed (`morph(T)` XOR `scene.enter(T, html=…)`).
+
+Clients that cannot animate:
+
+```python
+dom_only = scene("nav").exit("#old", fade.exit()).enter("#new", rise.enter()).update()
+```
+
+Runnable sample: [examples/minimal.py](examples/minimal.py). Five-minute path: [START_HERE.md](START_HERE.md).
+
+## Ownership
+
+| Owns | Does **not** own |
+|------|------------------|
+| Plan IR v1, recipes, Scene builder | Product `@action` / MorphState (`ux-behavior`) |
+| `transition.play` / `cancel` / `rewind` ops | HTML construction / Document (`ux-dom`) |
+| Reference player + JS player | Cap crypto / Intent (`ux-channel`) |
+| `Motion` / `MotionChannel` Document contributions | Product CLI (`ux-compose`) |
+
+## Audience
+
+| You are… | Start |
+|----------|--------|
+| **New** | [START_HERE.md](START_HERE.md) |
+| **Need every concept** | [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md) · [docs/12-DIAGRAMS.md](docs/12-DIAGRAMS.md) |
+| **Changing MotionChannel** | [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) |
+| **Contributor / agent** | [CONTRIBUTING.md](CONTRIBUTING.md) · [AGENTS.md](AGENTS.md) |
+| **Need a map** | [docs/INDEX.md](docs/INDEX.md) |
+| **Security reviewer** | [SECURITY.md](SECURITY.md) |
+| **Questions** | [SUPPORT.md](SUPPORT.md) |
 
 ## Documentation
 
-Start at **[START_HERE.md](START_HERE.md)**. Numbered set begins at
-**[docs/00-OVERVIEW.md](docs/00-OVERVIEW.md)**.
-Visual index: **[docs/12-DIAGRAMS.md](docs/12-DIAGRAMS.md)**.
-Channel compositor: **[docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md)**
-(read before changing `MotionChannel`).
-Full map: **[docs/INDEX.md](docs/INDEX.md)**.
+Family contract: [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md).
 
-## Tests
+Start at **[START_HERE.md](START_HERE.md)**. Numbered set begins at **[docs/00-OVERVIEW.md](docs/00-OVERVIEW.md)**. Full map: **[docs/INDEX.md](docs/INDEX.md)**.
 
-```bash
-PYTHONPATH=. python -m unittest discover -s tests -v
-```
+| Diátaxis | Canonical |
+|----------|-----------|
+| Tutorial | [START_HERE.md](START_HERE.md) · [docs/10-EXAMPLES.md](docs/10-EXAMPLES.md) |
+| How-to | [docs/guides/SNIPPETS.md](docs/guides/SNIPPETS.md) · [docs/09-TESTING.md](docs/09-TESTING.md) · [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) · [docs/07-ENHANCEMENTS.md](docs/07-ENHANCEMENTS.md) |
+| Reference | [docs/02-IR-SPEC.md](docs/02-IR-SPEC.md) · [docs/03-API-REFERENCE.md](docs/03-API-REFERENCE.md) · [docs/08-WIRE-PROTOCOL.md](docs/08-WIRE-PROTOCOL.md) |
+| Explanation | [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md) · [docs/01-ARCHITECTURE.md](docs/01-ARCHITECTURE.md) · [docs/06-DESIGN-DECISIONS.md](docs/06-DESIGN-DECISIONS.md) |
+
+Do not cite `Moved (Phase 2 Diátaxis)` stubs as canonical.
+
+## API
+
+Public names are `ux_motion.__all__`. The names product code should hold:
+
+| Export | Role |
+|--------|------|
+| `scene`, `Scene` | Fluent plan builder |
+| `fade`, `rise`, `slide`, `scale`, `blur`, `snap`, `springy`, `along`, `none` | Recipes |
+| `appear`, `leave`, `swap`, `sheet`, `notice`, `staggered`, `hop` | Higher-order helpers |
+| `play`, `cancel`, `rewind`, `to_result` | Ops onto a Result |
+| `Motion`, `MotionChannel` | Document contributions |
+| `dumps`, `loads`, `compile_plan`, `validate_plan`, `freeze_plan` | Wire / IR |
+| `explain`, `interpret`, `frames` | Inspect a plan without a browser |
+| `share`, `bind`, `score`, `cue`, `stagger`, `sequence`, `parallel` | Composition |
+
+IR major is `v: "1"`. Additive fields only. Never reuse keys. Full signatures: [docs/03-API-REFERENCE.md](docs/03-API-REFERENCE.md).
 
 ## Package contents
 
@@ -109,6 +150,20 @@ PYTHONPATH=. python -m unittest discover -s tests -v
 | `docs/` | Exhaustive documentation |
 | `examples/minimal.py` | Runnable sample |
 
+## Tests
+
+```bash
+PYTHONPATH=. python -m unittest discover -s tests -v
+```
+
+## Security
+
+Plans are data. HTML in `html=` is the host’s escaping / CSP problem. This layer does not mint Caps. See [SECURITY.md](SECURITY.md).
+
+## Contributing
+
+PRs are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Questions: [SUPPORT.md](SUPPORT.md). Governance: [GOVERNANCE.md](GOVERNANCE.md). History: [CHANGELOG.md](CHANGELOG.md).
+
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE). Copyright ux_motion contributors.
