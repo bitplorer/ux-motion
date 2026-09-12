@@ -81,7 +81,7 @@ taught path per job.
 ## 2. Feature inventory (this tip)
 
 API **1.3.0** · IR **`v: "1"`** · Player JS **`UxMotion.version` 1.3.0**.
-Zero hard deps. `requires-python >= 3.10`. Public surface is 78 names
+Zero hard deps. `requires-python >= 3.14`. Public surface is 78 names
 on `ux_motion/__init__.py` `__all__`.
 
 ### 2.1 Capabilities (one taught path each)
@@ -306,7 +306,7 @@ pattern layer · `as_html` alias · dual JS copies · `Motion` +
 `transition.*` · leftover `stamp`/`region`/`Presence` · compose
 `update_with` · compose `_normalize_plan_ops` probe · numbered
 `docs/00`–`14` · Phase 2 folder slots · IR v1 additive ·
-`requires-python >= 3.10` floor split vs compose 3.14.
+`requires-python >= 3.14` matching compose / ux-dom.
 
 ### DEAD (doors gone, teaching stays)
 

@@ -4,7 +4,7 @@
 
 ## Setup
 
-Python **3.10+**. Layout: top-level `ux_motion/` (not `src/`).
+Python **≥ 3.14**. Layout: top-level `ux_motion/` (not `src/`).
 
 ```bash
 pip install -e .
