@@ -9,6 +9,10 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Python floor (2026-09-12)
+
+- `requires-python >= 3.14` (matches compose and ux-dom). Classifiers drop 3.10–3.12.
+
 ### Completeness (2026-08-19)
 
 - README / OVERVIEW: MIT (not a placeholder), current package layout (HOF + MotionChannel + scripts).

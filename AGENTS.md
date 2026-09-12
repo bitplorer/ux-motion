@@ -9,6 +9,9 @@ then [docs/INDEX.md](docs/INDEX.md). Public names: `ux_motion/__init__.py` `__al
 Read [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) before changing
 `MotionChannel`.
 
+**Floor:** Python **≥ 3.14** (`requires-python` / classifiers). Matches compose
+and ux-dom.
+
 ## Layer ownership (hard cut)
 
 The UX stack is a **layered system of specialists**, not a monolith.

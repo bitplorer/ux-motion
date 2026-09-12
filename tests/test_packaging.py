@@ -29,6 +29,14 @@ class PackagingTests(unittest.TestCase):
         self.assertIn(f"web.v{PLAYER_VERSION}", js)
         self.assertTrue(js.rstrip().endswith(");"))
 
+    def test_python_floor_is_314(self) -> None:
+        text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+        self.assertIn('requires-python = ">=3.14"', text)
+        self.assertIn("Programming Language :: Python :: 3.14", text)
+        self.assertNotIn("Programming Language :: Python :: 3.10", text)
+        self.assertNotIn("Programming Language :: Python :: 3.11", text)
+        self.assertNotIn("Programming Language :: Python :: 3.12", text)
+
     def test_channel_hook_is_complete(self) -> None:
         js = (ROOT / "static" / "ux-motion-channel.js").read_text(encoding="utf-8")
         self.assertIn("channel:beforeApply", js)

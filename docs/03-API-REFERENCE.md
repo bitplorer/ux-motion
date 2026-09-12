@@ -1,6 +1,6 @@
 # API Reference (public facade)
 
-All symbols below are exported from `ux_motion`. Signatures use Python 3.10+ typing.
+All symbols below are exported from `ux_motion`. Signatures use Python 3.14+ typing.
 
 ---
 

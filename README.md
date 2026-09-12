@@ -1,6 +1,6 @@
 # ux-motion
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.14+](https://img.shields.io/badge/python-3.14%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Server-authored, composable presence and transition plans for Python + JSON channels.
@@ -17,7 +17,7 @@ This layer **owns presence/transition plans as data**. It does not own product b
 | **Import** | `ux_motion` |
 | **CLI** | *none (library)* |
 | **Version** | `1.3.0` |
-| **Python** | ≥ 3.10 |
+| **Python** | ≥ 3.14 |
 | **License** | [MIT](LICENSE) |
 
 ## Table of Contents
