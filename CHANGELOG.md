@@ -9,6 +9,19 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Docs Soft — Soft 1–3 teaching (2026-09-13)
+
+- Human-readable Soft 1 (`scrub` / `UxMotion.scrub`), Soft 2 (`morph_d` /
+  `morph.d`), Soft 3 (`partition_wait` / `wait_clocks`) under Diátaxis:
+  README front door, START_HERE §§3b–3d, OWNERSHIP leftover teaching,
+  SNIPPETS how-to, numbered 00 / 03 / 05 / 07 / 09 / 10.
+- Honest Soft LOCK: hover/tap/press/pan/drag and Framer `while*` are
+  Channel Intent / Behavior `@action`. Not this layer. No gesture Soft.
+- Leftover (HOLD): Framer variants dump, drag-as-gesture, motion values /
+  React API. Soft 1–3 KEEP. `bind.input === "drag"` remains one-shot play.
+- Leftover how-to: `docs/09-TESTING.md` no longer `cd`s a ghost tarball
+  path (`ux_motion-1.0.0-complete`).
+
 ### Soft 3 — wait completeness (2026-09-13)
 
 - Lock wait orchestration: direct `exits` then `stays` then `enters`;
@@ -19,10 +32,10 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
   `partition_wait`. Missing role is enter. `stagger_ms` does not apply
   to wait bags.
 - Soft 1 scrub KEEP. Soft 2 `morph.d` KEEP.
-- Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag` /
-  hover-tap-press-pan-drag listeners. Cap Host not invented.
-- **Leftover (HOLD):** Framer variants dump, reorder, motion values
-  React API, drag/hover/tap, `whileInView`-as-gesture.
+- Soft LOCK: no gesture Soft. Hover/tap/press/pan/drag and Framer
+  `while*` are Channel Intent / Behavior `@action`. Cap Host not invented.
+- **Leftover (HOLD):** Framer variants dump, reorder, motion values /
+  React API, drag-as-gesture. Teaching: [OWNERSHIP.md](OWNERSHIP.md).
   `bind.input === "drag"` remains one-shot play.
 
 ### Soft 2 — SVG path d morph (2026-09-13)
@@ -32,11 +45,10 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
   `CONTRACT["morph.d"]`. `path` stays offset-path (`along`). Keys not reused.
 - Player: thin WAAPI `d: path("…")` interpolation plus `setAttribute("d")`
   commit. Soft 1 scrub KEEP (`UxMotion.scrub` / `applyTape`).
-- Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag` /
-  hover-tap-press-pan-drag listeners. Cap Host not invented.
-- **Leftover (HOLD):** Soft 3 wait completeness (shipped above), Framer
-  variants dump, reorder, motion values React API, drag/hover/tap,
-  `whileInView`-as-gesture. `bind.input === "drag"` remains one-shot play.
+- Soft LOCK: no gesture Soft. Gestures are Channel Intent / Behavior
+  `@action`. Cap Host not invented.
+- Soft 3 wait completeness shipped above. Leftover teaching:
+  [OWNERSHIP.md](OWNERSHIP.md). `bind.input === "drag"` remains one-shot.
 
 ### Soft 1 — scroll-scrub lock (2026-09-13)
 
@@ -45,13 +57,10 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
   loop drives `currentTime`). `data-uxm-progress` still written.
 - Frozen scrub names: Python `scrub(plan, progress)` → `ScrubFrame`;
   JS `UxMotion.scrub(planId, progress)`. `CONTRACT["scrub"]` / `player_exports`.
-- Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag` /
-  hover-tap-press-pan-drag listeners. Cap Host not invented; channel stays
-  `transition.*`.
-- **Leftover (HOLD):** Soft 2 path-morph (shipped above), Soft 3 wait
-  completeness, Framer variants dump, reorder, motion values React API,
-  drag/hover/tap, `whileInView`-as-gesture. `bind.input === "drag"` remains
-  one-shot play.
+- Soft LOCK: no gesture Soft. Gestures are Channel Intent / Behavior
+  `@action`. Cap Host not invented; channel stays `transition.*`.
+- Soft 2 / Soft 3 shipped above. Leftover teaching:
+  [OWNERSHIP.md](OWNERSHIP.md). `bind.input === "drag"` remains one-shot.
 
 ### Python floor (2026-09-12)
 

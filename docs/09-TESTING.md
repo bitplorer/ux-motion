@@ -2,9 +2,18 @@
 
 ## Run
 
+From the repo root:
+
 ```bash
-cd ux_motion-1.0.0-complete
 PYTHONPATH=. python -m unittest discover -s tests -v
+```
+
+Soft samples (print `transition.play` / tape / clocks; no browser):
+
+```bash
+PYTHONPATH=. python examples/scroll_scrub.py
+PYTHONPATH=. python examples/path_morph.py
+PYTHONPATH=. python examples/wait_complete.py
 ```
 
 ## What tests guarantee

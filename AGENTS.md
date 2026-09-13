@@ -27,6 +27,9 @@ The UX stack is a **layered system of specialists**, not a monolith.
 Channel never learns `transition.*`. `MotionChannel` peels those ops off the Result.
 XOR: `morph(T)` XOR `scene.enter(T, html=…)`.
 
+Soft 1–3 KEEP (`scrub`, `morph.d`, wait bags/clocks). Gestures are Channel
+Intent / Behavior `@action`. Leftover teaching: [OWNERSHIP.md](OWNERSHIP.md).
+
 ## What not to invent
 
 - Teaching Channel `transition.*` as immortal ops

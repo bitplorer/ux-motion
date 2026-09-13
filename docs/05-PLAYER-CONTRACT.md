@@ -66,7 +66,8 @@ For any plan **without** bind/scroll side effects:
 - `input==="progress"`: arms the same tape at 0; host seeks via `UxMotion.scrub`.
 - `input==="drag"`: leftover one-shot child play (no pointer listeners).
 - Frozen seek: `UxMotion.scrub(planId, progress)` and Python `scrub(plan, p)`.
-- Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag`.
+- Soft LOCK: no gesture Soft. Hover/tap/press/pan/drag and Framer `while*`
+  are Channel Intent / Behavior `@action`. Leftover: [../OWNERSHIP.md](../OWNERSHIP.md).
 
 ### Wait (Soft 3)
 

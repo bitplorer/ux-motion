@@ -24,22 +24,27 @@ scene("pdp").share("hero", leave="#grid-img", arrive="#pdp-img").play()
 
 ## 2. bind — scrubbable time
 
-**Problem:** Fire-and-forget timelines cannot link to scroll or drag.
+**Problem:** Fire-and-forget timelines cannot link to a 0..1 input tape.
 
-**IR:** `kind: "bind"`, fields `input`, `target`, `child`, optional `until`, `axis`.
+**IR:** `kind: "bind"`, fields `input`, `target`, `child`, optional `until`, `axis`. KEEP — no new keys.
 
-**Authoring:**
+**Authoring** (`examples/scroll_scrub.py`):
 
 ```python
-scene("essay").bind_to("scroll", "#article").enter("#fig", rise.enter()).play()
+from ux_motion import rise, scrub, scene
+
+plan = scene("essay").bind_to("scroll", "#article").enter("#fig", rise.enter()).plan()
+mid = scrub(plan, 0.5)
 ```
 
 **Client (Soft 1):** `input=scroll` arms a paused WAAPI tape and a rAF scroll
 loop. Progress (0..1) seeks `currentTime` and writes `data-uxm-progress`.
 Hosts may also call `UxMotion.scrub(planId, progress)`. Python `scrub(plan, p)`
-is the logical seek. `drag` remains one-shot (HOLD). No gesture APIs.
+is the logical seek (`t = round(progress * span)`). `progress` input arms the
+same tape at 0. `drag` remains one-shot (HOLD leftover). No gesture Soft —
+hover/tap/press/pan/drag are Channel Intent / Behavior `@action`.
 
-**Inputs:** `scroll` | `drag` | `progress`.
+**Inputs:** `scroll` | `drag` | `progress`. Teaching: [../OWNERSHIP.md](../OWNERSHIP.md).
 
 ---
 
@@ -99,37 +104,50 @@ Not SVG path `d` morph — that is `morph_d` (Soft 2).
 
 ## 5b. morph_d (Soft 2)
 
+From `examples/path_morph.py`:
+
 ```python
-morph_d("M0,0 L20,0 L20,20 Z", "M0,20 L20,0 L0,0 Z", ms=320)
-fade.enter().with_morph_d(from_d, to_d)
+from ux_motion import fade, morph_d, scene
+
+rec = morph_d(
+    "M0,0 L20,0 L20,20 L0,20 Z",
+    "M10,0 L20,10 L10,20 L0,10 Z",
+    ms=320,
+)
+scene("icon").enter("#blob", rec).play()
+fade.enter().with_morph_d(rec["morph"]["d"]["from"], rec["morph"]["d"]["to"])
 ```
 
 **IR:** `recipe.morph.d.from` / `recipe.morph.d.to` (similar path strings).
-Recipe name `"morph.d"`. `path` is not reused.
+Recipe name `"morph.d"`. `path` is not reused (`along` stays offset-path).
+Unknown morph keys ignored; incomplete `morph.d` → `PlanError`.
 
 **Client:** WAAPI interpolates CSS `d`; commits the `d` attribute.
-Soft 1 scrub KEEP. No gesture APIs. No Cap Host.
+Soft 1 scrub KEEP. No gesture Soft. No Cap Host.
 
 ---
 
 ## 5c. wait completeness (Soft 3)
 
+From `examples/wait_complete.py`:
+
 ```python
-from ux_motion import scene, fade, partition_wait, wait_clocks
+from ux_motion import scene, fade, wait_clocks
 
 plan = scene("nav").exit("#old", fade.exit(ms=100)).enter("#new", fade.enter(ms=80)).plan()
 clock = wait_clocks(plan)
-# clock.exit_end == 100; clock.enter_t == 100
+# clock.exit_end == 100; clock.enter_t == 100; clock.end == 180
 ```
 
 **IR:** `phase.mode` / `group.mode` stay `"wait"`. No new keys.
 
 **Bags:** `exits` / `stays` / `enters` / `nested` (`partition_wait` /
 JS `partitionWait`). **Clocks:** `exit_end` / `stay_end` / `enter_t`.
-Missing role is enter. Nested groups are not flattened. Not an
+Missing role is enter. `layout` joins stays. Nested groups are not
+flattened. Phase `stagger_ms` does not apply to wait. Not an
 AnimatePresence dump.
 
-Soft 1 scrub KEEP. Soft 2 `morph.d` KEEP. No gesture APIs. No Cap Host.
+Soft 1 scrub KEEP. Soft 2 `morph.d` KEEP. No gesture Soft. No Cap Host.
 
 ---
 

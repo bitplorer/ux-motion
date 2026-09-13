@@ -123,6 +123,7 @@ Wraps a child node as a progress tape.
 | `axis` | Optional; scroll honors `x` vs `y` (default `y`). Drag leftover (HOLD). |
 
 Soft 1 player: `input=scroll` is a live 0..1 tape (`UxMotion.scrub`). Keys above are KEEP — do not reuse.
+Gestures are Channel Intent / Behavior `@action`. Leftover: [../OWNERSHIP.md](../OWNERSHIP.md).
 
 ### `score`
 

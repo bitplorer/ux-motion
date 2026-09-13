@@ -31,6 +31,7 @@ It does **not** own product behavior or DOM construction.
 |----------|-----------------------------------|
 | **New** | [../START_HERE.md](../START_HERE.md) |
 | **Need the whole product description** | [00-OVERVIEW.md](00-OVERVIEW.md) |
+| **Soft leftover / layer cut** | [../OWNERSHIP.md](../OWNERSHIP.md) |
 | **Implementing / changing IR** | [02-IR-SPEC.md](02-IR-SPEC.md) · [03-API-REFERENCE.md](03-API-REFERENCE.md) |
 | **Changing MotionChannel** | [14-CHANNEL-COMPOSITOR.md](14-CHANNEL-COMPOSITOR.md) |
 | **Maintainer / agent** | [../AGENTS.md](../AGENTS.md) · [../CONTRIBUTING.md](../CONTRIBUTING.md) |
@@ -43,7 +44,7 @@ It does **not** own product behavior or DOM construction.
 
 | Doc | Contents |
 |-----|----------|
-| [../START_HERE.md](../START_HERE.md) | 5-minute path |
+| [../START_HERE.md](../START_HERE.md) | 5-minute path (Soft 1–3 in §§3b–3d) |
 | [examples/README.md](examples/README.md) | Example slot |
 | [10-EXAMPLES.md](10-EXAMPLES.md) | End-to-end recipes |
 | [../examples/minimal.py](../examples/minimal.py) | Runnable sample |
@@ -53,6 +54,7 @@ It does **not** own product behavior or DOM construction.
 | Doc | Contents |
 |-----|----------|
 | [guides/README.md](guides/README.md) | How-to slot → numbered 07 / 09 / 13 / 14 |
+| [guides/SNIPPETS.md](guides/SNIPPETS.md) | Cookbook: Scene, Soft 1–3, XOR, dumps/loads |
 | [09-TESTING.md](09-TESTING.md) | How to run tests; what they guarantee |
 | [13-VERSIONING.md](13-VERSIONING.md) | Semver policy, IR vs API, release checklist |
 | [07-ENHANCEMENTS.md](07-ENHANCEMENTS.md) | share, bind, score, spring, along, morph.d, tokens, rewind, patterns |
@@ -77,6 +79,7 @@ It does **not** own product behavior or DOM construction.
 |-----|----------|
 | [internals/README.md](internals/README.md) | Explanation slot → 00 / 01 / 12 |
 | [internals/c4.md](internals/c4.md) | C4-style context / containers |
+| [../OWNERSHIP.md](../OWNERSHIP.md) | Layer cut + Soft leftover (HOLD) |
 | [00-OVERVIEW.md](00-OVERVIEW.md) | Full product description |
 | [01-ARCHITECTURE.md](01-ARCHITECTURE.md) | Layers, modules, dependency graph, data flow |
 | [adr/README.md](adr/README.md) | ADR slot → 06 / 14 / 13 |

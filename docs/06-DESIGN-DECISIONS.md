@@ -158,3 +158,23 @@ rename to glue/Bridge/Adapter. Never play before authority morph.
 
 See [14-CHANNEL-COMPOSITOR.md](14-CHANNEL-COMPOSITOR.md).
 
+---
+
+## D17 — Soft LOCK: plans here, gestures elsewhere (Soft 1–3)
+
+**Decision:** Soft 1–3 KEEP (`scrub`, `morph.d`, wait bags/clocks). This
+layer does not own hover/tap/press/pan/drag listeners or Framer `while*` /
+variants / motion-value APIs. Those are Channel Intent / Behavior
+`@action` if they ship at all.
+
+**Reasoning:** A Plan is data on a Result. Pointer recognition is product
+Intent. Teaching Channel `transition.*` or growing a React/Framer surface
+here would collapse the layer cut. `bind.input === "drag"` stays an IR
+name and one-shot child play — leftover, not a gesture Soft.
+
+**Rejected:** Gesture Soft dump; Framer variants dump; Cap Host; reusing
+`path` for morph; flattening wait nested units into a global
+AnimatePresence bag.
+
+**Reopen:** never as a motion Soft. See [../OWNERSHIP.md](../OWNERSHIP.md).
+

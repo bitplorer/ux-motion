@@ -17,6 +17,7 @@
 | **share** | Named identity continuity with client measurement (FLIP) |
 | **bind** | Progress-driven tape wrapper |
 | **scrub** | Seek a bind tape to progress 0..1 (`scrub` / `UxMotion.scrub`) |
+| **Soft LOCK** | No gesture Soft here. Hover/tap/press/pan/drag → Channel Intent / Behavior `@action`. Leftover: [../OWNERSHIP.md](../OWNERSHIP.md) |
 | **score** | Multi-hop hold key across Results |
 | **cue** | Resolve a score |
 | **send.play** | Emit transition.play Result |

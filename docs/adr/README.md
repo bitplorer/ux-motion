@@ -10,3 +10,4 @@
 | [../13-VERSIONING.md](../13-VERSIONING.md) | IR vs API semver |
 
 Numbered sources stay. This folder is the Diátaxis ADR slot.
+Soft leftover / layer cut: [../../OWNERSHIP.md](../../OWNERSHIP.md) (D17 in 06).
