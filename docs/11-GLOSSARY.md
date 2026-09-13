@@ -13,6 +13,7 @@
 | **after** | End-of-track DOM fate: keep / remove / hide |
 | **share** | Named identity continuity with client measurement (FLIP) |
 | **bind** | Progress-driven tape wrapper |
+| **scrub** | Seek a bind tape to progress 0..1 (`scrub` / `UxMotion.scrub`) |
 | **score** | Multi-hop hold key across Results |
 | **cue** | Resolve a score |
 | **send.play** | Emit transition.play Result |

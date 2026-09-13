@@ -92,6 +92,11 @@ Runnable sample: [examples/minimal.py](examples/minimal.py). Five-minute path: [
 | `transition.play` / `cancel` / `rewind` ops | HTML construction / Document (`ux-dom`) |
 | Reference player + JS player | Cap crypto / Intent (`ux-channel`) |
 | `Motion` / `MotionChannel` Document contributions | Product CLI (`ux-compose`) |
+| Soft 1: scroll→progress tape (`scrub` / `UxMotion.scrub`) | Gestures: `whileHover` / `whileTap` / `whileFocus` / `whileDrag`, hover/tap/press/pan/drag listeners |
+
+**Soft 1 leftover (HOLD):** path-morph, wait completeness, Framer variants,
+drag-as-gesture, motion values / React API. `bind.input` names `drag` |
+`progress` stay on IR; only `scroll` is a live scrub.
 
 ## Audience
 
@@ -132,7 +137,7 @@ Public names are `ux_motion.__all__`. The names product code should hold:
 | `play`, `cancel`, `rewind`, `to_result` | Ops onto a Result |
 | `Motion`, `MotionChannel` | Document contributions |
 | `dumps`, `loads`, `compile_plan`, `validate_plan`, `freeze_plan` | Wire / IR |
-| `explain`, `interpret`, `frames` | Inspect a plan without a browser |
+| `explain`, `interpret`, `frames`, `scrub` | Inspect / seek a plan without a browser |
 | `share`, `bind`, `score`, `cue`, `stagger`, `sequence`, `parallel` | Composition |
 
 IR major is `v: "1"`. Additive fields only. Never reuse keys. Full signatures: [docs/03-API-REFERENCE.md](docs/03-API-REFERENCE.md).

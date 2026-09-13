@@ -112,7 +112,11 @@ def bind(
     until: str | None = None,
     axis: str | None = None,
 ) -> dict[str, Any]:
-    """Turn a subtree into a 0..1 tape driven by scroll, drag, or progress."""
+    """Turn a subtree into a 0..1 tape driven by scroll, drag, or progress.
+
+    ``input="scroll"`` is a live tape: the player scrubs WAAPI from scroll
+    and hosts may seek with ``UxMotion.scrub(planId, progress)``.
+    """
     node: dict[str, Any] = {
         "kind": KIND_BIND,
         "input": input_name,
@@ -291,7 +295,7 @@ class Scene:
         until: str | None = None,
         axis: str | None = None,
     ) -> "Scene":
-        """Mark this whole scene as a scrubbable tape."""
+        """Mark this whole scene as a scrubbable tape (scroll is a live player seek)."""
         self._bind = {"input": input_name, "target": target, "until": until, "axis": axis}
         return self
 

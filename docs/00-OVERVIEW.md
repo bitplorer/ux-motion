@@ -44,7 +44,7 @@ Many server-driven stacks (HTMX-like, LiveView-like, or custom `ux-channel` / `u
 |---|---|
 | Own the React tree | There is no React requirement. |
 | Run Python in the browser | Plan is JSON; player is JS or a headless reference. |
-| Gesture recognition on the server | Server has no pointer. `bind` only *names* the input; client measures. |
+| Gesture recognition / Framer `while*` | `bind` names the input; the player measures scroll and seeks the tape. Hover/tap/press/pan/drag listeners and `whileHover` / `whileTap` / `whileFocus` / `whileDrag` are Channel Intent / Behavior `@action`. |
 | Replace CSS for static styling | Motion is transitions and presence, not layout design. |
 | Guarantee pixel-identical physics across engines | Spring duration is estimated; CSS cubic is approximate. Schedule *order* is the contract. |
 | Sanitize user-supplied HTML in `html=` | HTML is trusted server markup (same model as morph). Hosts must not pass raw user HTML. |

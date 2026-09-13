@@ -183,6 +183,7 @@ render_markup(node, *, pretty=False) -> str   # official serialize of one tree
 as_html(node) -> str           # alias of render_markup
 interpret(plan, *, counts=None) -> list[Event]
 span_ms(plan, *, counts=None) -> int
+scrub(plan, progress, *, counts=None) -> ScrubFrame  # Soft 1: seek 0..1 tape
 explain(plan, *, counts=None) -> str
 frames(plan, *, width=640, height=120, counts=None) -> str  # SVG
 schema() -> dict                    # JSON Schema
@@ -205,6 +206,22 @@ class Event:
 ```
 
 `counts` maps stagger selectors → element count for the reference player.
+
+### `ScrubFrame`
+
+```python
+@dataclass(frozen=True)
+class ScrubFrame:
+    progress: float           # clamped 0..1
+    t: int                    # round(progress * span)
+    span: int                 # span_ms
+    started: tuple[Event, ...]
+    ended: tuple[Event, ...]
+    active: tuple[Event, ...] # started and not yet ended
+```
+
+`scrub` is the logical tape. The web player seeks the same 0..1 with
+`UxMotion.scrub(planId, progress)` after `bind.input` is `scroll` or `progress`.
 
 ---
 

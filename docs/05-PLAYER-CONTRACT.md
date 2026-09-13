@@ -26,8 +26,9 @@ Global: `window.UxMotion`
 UxMotion.play(plan)           // Promise
 UxMotion.applyOp(op)          // Promise
 UxMotion.applyOps(ops)        // sequential Promise chain
-UxMotion.cancel()             // hard stop + clear queue
+UxMotion.cancel()             // hard stop + clear queue + release bind tapes
 UxMotion.boot()               // play embedded application/ux-motion+json scripts
+UxMotion.scrub(planId, p)     // Soft 1: seek a bound tape; progress 0..1
 UxMotion.version              // "1.3.0"
 ```
 
@@ -54,9 +55,14 @@ For any plan **without** bind/scroll side effects:
 
 ### Bind
 
-- Sets `data-uxm-bind` and listens to scroll when `input==="scroll"`.
-- Writes `data-uxm-progress`.
-- Still plays child fully on one-shot `play()`; continuous scrub is host-driven via progress attribute.
+- Sets `data-uxm-bind` on the host (`target`, else `documentElement`).
+- `input==="scroll"`: arms paused WAAPI for the child tape; rAF-coalesced
+  scroll loop measures progress (overflow host or viewport-crossing) and
+  seeks `animation.currentTime`. Writes `data-uxm-progress`.
+- `input==="progress"`: arms the same tape at 0; host seeks via `UxMotion.scrub`.
+- `input==="drag"`: leftover one-shot child play (no pointer listeners).
+- Frozen seek: `UxMotion.scrub(planId, progress)` and Python `scrub(plan, p)`.
+- Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag`.
 
 ### Score / cue
 

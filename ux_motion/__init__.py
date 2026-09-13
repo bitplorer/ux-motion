@@ -61,7 +61,7 @@ from ux_motion._ir import PlanError, validate_plan
 from ux_motion._version import API_VERSION, IR_VERSION, PLAYER_VERSION, __version__
 from ux_motion._ops import OP_CANCEL, OP_PLAY, OP_REWIND, as_update, cancel, play, rewind, rewind_plan, to_result
 from ux_motion._patterns import PATTERNS, list_stagger, modal, multi_hop_arrive, multi_hop_leave, page, shared_page, toast
-from ux_motion._player import Event, explain, frames, interpret, span_ms
+from ux_motion._player import Event, ScrubFrame, explain, frames, interpret, scrub, span_ms
 from ux_motion._presence import Presence, region, stamp
 from ux_motion._recipes import Recipe, along, blur, fade, none, rise, scale, slide, snap, springy
 from ux_motion._schema import schema
@@ -87,6 +87,7 @@ __all__ = [
     "PlanError",
     "Presence",
     "Recipe",
+    "ScrubFrame",
     "Scene",
     "Tokens",
     "along",
@@ -130,6 +131,7 @@ __all__ = [
     "scene",
     "schema",
     "score",
+    "scrub",
     "send",
     "sequence",
     "share",

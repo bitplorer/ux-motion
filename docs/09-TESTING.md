@@ -14,6 +14,7 @@ PYTHONPATH=. python -m unittest discover -s tests -v
 | Classic wait | Enter starts after exit ends |
 | share | IR kind present; schedule has share-leave/arrive; as_update projects |
 | bind | Root kind bind; bookkeeping events |
+| Soft 1 scrub | `scrub(plan, p)` seeks 0..1; player exports `UxMotion.scrub`; no gesture APIs |
 | spring / along | Recipe carries spring/path |
 | tokens | Presets resolve |
 | rewind | Roles invert; op is transition.rewind |

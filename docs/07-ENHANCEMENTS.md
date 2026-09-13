@@ -34,7 +34,10 @@ scene("pdp").share("hero", leave="#grid-img", arrive="#pdp-img").play()
 scene("essay").bind_to("scroll", "#article").enter("#fig", rise.enter()).play()
 ```
 
-**Client:** Marks host; scroll listener writes `data-uxm-progress`. Child still has a full schedule for one-shot play.
+**Client (Soft 1):** `input=scroll` arms a paused WAAPI tape and a rAF scroll
+loop. Progress (0..1) seeks `currentTime` and writes `data-uxm-progress`.
+Hosts may also call `UxMotion.scrub(planId, progress)`. Python `scrub(plan, p)`
+is the logical seek. `drag` remains one-shot (HOLD). No gesture APIs.
 
 **Inputs:** `scroll` | `drag` | `progress`.
 

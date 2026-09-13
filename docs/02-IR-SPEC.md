@@ -120,7 +120,9 @@ Wraps a child node as a progress tape.
 | `target` | Required — element that owns the input (scroll container, drag handle) |
 | `child` | Required — the subtree whose schedule is the tape |
 | `until` | Optional host-defined end condition token (e.g. `"dismiss"`) |
-| `axis` | Optional for drag |
+| `axis` | Optional; scroll honors `x` vs `y` (default `y`). Drag leftover (HOLD). |
+
+Soft 1 player: `input=scroll` is a live 0..1 tape (`UxMotion.scrub`). Keys above are KEEP — do not reuse.
 
 ### `score`
 

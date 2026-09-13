@@ -11,7 +11,7 @@ Every block is meant to run (or to be the exact fragment you drop into a running
 
 ### Public names in this cookbook
 
-`scene`, `fade`, `rise`, `explain`, `interpret`, `send`, `appear`, `swap`, `slide`, `scale`, `springy`, `blur`, `along`, `page`, `modal`, `toast`, `list_stagger`, `play`, `cancel`, `rewind`, `dumps`, `loads`, `validate_plan`, `freeze_plan`, `PlanError`, `sequence`, `parallel`, `wait`, `tokens`, `snap`, `none`, `frames`, `span_ms`, `Document`, `Motion`, `MotionChannel`, `morph`
+`scene`, `fade`, `rise`, `explain`, `interpret`, `scrub`, `send`, `appear`, `swap`, `slide`, `scale`, `springy`, `blur`, `along`, `page`, `modal`, `toast`, `list_stagger`, `play`, `cancel`, `rewind`, `dumps`, `loads`, `validate_plan`, `freeze_plan`, `PlanError`, `sequence`, `parallel`, `wait`, `tokens`, `snap`, `none`, `frames`, `span_ms`, `Document`, `Motion`, `MotionChannel`, `morph`
 
 ## Contents
 
@@ -84,6 +84,8 @@ from ux_motion import scene, fade, rise
 scene("pdp").share("hero", leave="#grid-img", arrive="#pdp-img").play()
 
 scene("essay").bind_to("scroll", "#article").enter("#fig", rise.enter()).play()
+# Player scrubs the tape from scroll. Hosts may call UxMotion.scrub(planId, p).
+# from ux_motion import scrub; scrub(plan, 0.5)
 
 scene("leave").as_score("checkout", phase="hold").exit("#cart", fade.exit()).play()
 # later Result:
