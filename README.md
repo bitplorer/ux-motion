@@ -83,6 +83,9 @@ dom_only = scene("nav").exit("#old", fade.exit()).enter("#new", rise.enter()).up
 ```
 
 Runnable sample: [examples/minimal.py](examples/minimal.py). Five-minute path: [START_HERE.md](START_HERE.md).
+Soft 1–3 samples: [examples/scroll_scrub.py](examples/scroll_scrub.py) ·
+[examples/path_morph.py](examples/path_morph.py) ·
+[examples/wait_complete.py](examples/wait_complete.py).
 
 ## Ownership
 
@@ -92,14 +95,14 @@ Runnable sample: [examples/minimal.py](examples/minimal.py). Five-minute path: [
 | `transition.play` / `cancel` / `rewind` ops | HTML construction / Document (`ux-dom`) |
 | Reference player + JS player | Cap crypto / Intent (`ux-channel`) |
 | `Motion` / `MotionChannel` Document contributions | Product CLI (`ux-compose`) |
-| Soft 1: scroll→progress tape (`scrub` / `UxMotion.scrub`) | Gestures: `whileHover` / `whileTap` / `whileFocus` / `whileDrag`, hover/tap/press/pan/drag listeners |
-| Soft 2: SVG path `d` morph (`morph_d` / `morph.d`) | Reusing `path` for morph |
+| Soft 1: scroll→progress tape (`scrub` / `UxMotion.scrub`) | Gesture listeners / Framer `while*` (Channel Intent / Behavior `@action`) |
+| Soft 2: SVG path `d` morph (`morph_d` / `morph.d`) | Reusing `path` for morph (`along` is offset-path) |
 | Soft 3: wait bags/clocks (`partition_wait` / `wait_clocks`) | Framer variants / AnimatePresence dump |
 
-**Soft leftover (HOLD):** Framer variants, drag-as-gesture, motion values /
-React API. Soft 1–3 KEEP (`scrub`, `morph.d`, wait clocks).
+**Soft leftover (HOLD):** pointer gestures, Framer variants / `while*`,
+motion values / React API. Soft 1–3 KEEP. Teaching: [OWNERSHIP.md](OWNERSHIP.md).
 `bind.input` names `drag` | `progress` stay on IR; only `scroll` is a live
-scrub.
+tape. Gestures are Channel Intent / Behavior `@action`.
 
 ## Audience
 
@@ -107,6 +110,7 @@ scrub.
 |----------|--------|
 | **New** | [START_HERE.md](START_HERE.md) |
 | **Need every concept** | [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md) · [docs/12-DIAGRAMS.md](docs/12-DIAGRAMS.md) |
+| **Soft leftover / layer cut** | [OWNERSHIP.md](OWNERSHIP.md) |
 | **Changing MotionChannel** | [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) |
 | **Contributor / agent** | [CONTRIBUTING.md](CONTRIBUTING.md) · [AGENTS.md](AGENTS.md) |
 | **Need a map** | [docs/INDEX.md](docs/INDEX.md) |
@@ -124,7 +128,7 @@ Start at **[START_HERE.md](START_HERE.md)**. Numbered set begins at **[docs/00-O
 | Tutorial | [START_HERE.md](START_HERE.md) · [docs/10-EXAMPLES.md](docs/10-EXAMPLES.md) |
 | How-to | [docs/guides/SNIPPETS.md](docs/guides/SNIPPETS.md) · [docs/09-TESTING.md](docs/09-TESTING.md) · [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) · [docs/07-ENHANCEMENTS.md](docs/07-ENHANCEMENTS.md) |
 | Reference | [docs/02-IR-SPEC.md](docs/02-IR-SPEC.md) · [docs/03-API-REFERENCE.md](docs/03-API-REFERENCE.md) · [docs/08-WIRE-PROTOCOL.md](docs/08-WIRE-PROTOCOL.md) |
-| Explanation | [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md) · [docs/01-ARCHITECTURE.md](docs/01-ARCHITECTURE.md) · [docs/06-DESIGN-DECISIONS.md](docs/06-DESIGN-DECISIONS.md) |
+| Explanation | [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md) · [docs/01-ARCHITECTURE.md](docs/01-ARCHITECTURE.md) · [docs/06-DESIGN-DECISIONS.md](docs/06-DESIGN-DECISIONS.md) · [OWNERSHIP.md](OWNERSHIP.md) |
 
 Do not cite `Moved (Phase 2 Diátaxis)` stubs as canonical.
 
@@ -141,6 +145,7 @@ Public names are `ux_motion.__all__`. The names product code should hold:
 | `Motion`, `MotionChannel` | Document contributions |
 | `dumps`, `loads`, `compile_plan`, `validate_plan`, `freeze_plan` | Wire / IR |
 | `explain`, `interpret`, `frames`, `scrub` | Inspect / seek a plan without a browser |
+| `partition_wait`, `wait_clocks`, `WaitBags`, `WaitClock` | Soft 3 wait bags + clocks |
 | `share`, `bind`, `score`, `cue`, `stagger`, `sequence`, `parallel` | Composition |
 
 IR major is `v: "1"`. Additive fields only. Never reuse keys. Full signatures: [docs/03-API-REFERENCE.md](docs/03-API-REFERENCE.md).
@@ -157,6 +162,9 @@ IR major is `v: "1"`. Additive fields only. Never reuse keys. Full signatures: [
 | `tests/` | Unit tests |
 | `docs/` | Exhaustive documentation |
 | `examples/minimal.py` | Runnable sample |
+| `examples/scroll_scrub.py` | Soft 1 scroll tape |
+| `examples/path_morph.py` | Soft 2 `morph.d` |
+| `examples/wait_complete.py` | Soft 3 wait clocks |
 
 ## Tests
 

@@ -15,7 +15,7 @@ See the same contract in any sister repo under `docs/DOCUMENTATION.md`.
 
 ## Audiences
 
-First-time user → `START_HERE.md`. Experienced → how-to + reference. Contributor → `CONTRIBUTING.md`. Security → `SECURITY.md`. Operator → doctor / verify. Agent → `docs/INDEX.md` + `__all__`.
+First-time user → `START_HERE.md`. Experienced → how-to + reference. Contributor → `CONTRIBUTING.md`. Security → `SECURITY.md`. Operator → doctor / verify. Agent → `docs/INDEX.md` + `__all__`. Soft leftover → `OWNERSHIP.md`.
 
 ## Accuracy
 

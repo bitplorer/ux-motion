@@ -170,7 +170,7 @@ There are **two clocks**:
 1. **Logical schedule clock** — discrete milliseconds in `interpret()`. Pure function of the Plan (+ optional stagger counts). This is the **contract**.
 2. **Physical clock** — WAAPI / rAF / scroll position in the browser. May differ in absolute timing under load; **order of starts/ends for a given plan must match** the logical schedule for non-bind plans.
 
-`bind` plans are scrubbed by input progress (0..1), not wall-clock. The logical schedule still defines the *shape* of the tape (which targets exist and their relative spans).
+`bind` plans are scrubbed by input progress (0..1), not wall-clock. The logical schedule still defines the *shape* of the tape (which targets exist and their relative spans). Soft 1: `input=scroll` is a live tape (`UxMotion.scrub` / Python `scrub`). `drag` is leftover one-shot play. Gestures are Channel Intent / Behavior `@action` — [../OWNERSHIP.md](../OWNERSHIP.md).
 
 **Never mix clocks in product code.** Do not assume wall-clock equality with `span_ms(plan)`.
 

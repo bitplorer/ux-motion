@@ -7,7 +7,7 @@ Presence and transitions as data (IR v1). Scene builder + JS player.
 
 Every block is meant to run (or to be the exact fragment you drop into a running app). Names are public exports. If code and this page disagree, **code wins**.
 
-**13 snippets** covering install, core usage, fail-closed errors, live/async, CLI, and the usage patterns that keep layers from leaking.
+**16 snippets** covering install, Scene, Soft 1–3, HOFs, patterns, wire, and the usage patterns that keep layers from leaking.
 
 ### Public names in this cookbook
 
@@ -17,7 +17,10 @@ Every block is meant to run (or to be the exact fragment you drop into a running
 
 - [Install](#mo-install)
 - [Scene: exit, enter, play](#mo-scene)
-- [Shared element (FLIP) + scroll bind + score/cue](#mo-share)
+- [Shared element (FLIP) + score/cue](#mo-share)
+- [Soft 1: scroll tape (`scrub`)](#mo-soft1)
+- [Soft 2: SVG path `d` morph](#mo-soft2)
+- [Soft 3: wait bags / clocks](#mo-soft3)
 - [HOF: appear, swap, recipes](#mo-hof)
 - [Named patterns: page, modal, toast, list_stagger](#mo-patterns)
 - [cancel / rewind ops](#mo-cancel)
@@ -72,7 +75,7 @@ for event in interpret(plan):
 dom_only = scene("nav").exit("#old", fade.exit()).enter("#new", rise.enter()).update()
 ```
 
-### Shared element (FLIP) + scroll bind + score/cue
+### Shared element (FLIP) + score/cue
 
 <a id="mo-share"></a>
 
@@ -83,14 +86,94 @@ from ux_motion import scene, fade, rise
 
 scene("pdp").share("hero", leave="#grid-img", arrive="#pdp-img").play()
 
-scene("essay").bind_to("scroll", "#article").enter("#fig", rise.enter()).play()
-# Player scrubs the tape from scroll. Hosts may call UxMotion.scrub(planId, p).
-# from ux_motion import scrub; scrub(plan, 0.5)
-
 scene("leave").as_score("checkout", phase="hold").exit("#cart", fade.exit()).play()
 # later Result:
 # scene("arrive").cue("checkout").enter("#paid", rise.enter()).play()
 ```
+
+### Soft 1: scroll tape (`scrub`)
+
+<a id="mo-soft1"></a>
+
+`bind_to("scroll", …)` is a 0..1 tape, not a gesture. Player seeks WAAPI from
+scroll. Python `scrub` is the logical tape. Gestures are Channel Intent /
+Behavior `@action`. Leftover: [../../OWNERSHIP.md](../../OWNERSHIP.md).
+
+From `examples/scroll_scrub.py` / `tests/test_soft1_scrub.py`:
+
+```python
+from ux_motion import rise, scrub, scene, span_ms
+
+plan = (
+    scene("essay")
+    .bind_to("scroll", "#article")
+    .enter("#fig", rise.enter(ms=80))
+    .plan()
+)
+start = scrub(plan, 0)
+mid = scrub(plan, 0.5)
+end = scrub(plan, 1)
+# mid.progress == 0.5; mid.t == round(0.5 * mid.span); end.t == span_ms(plan)
+# scrub(plan, -2).progress == 0.0; scrub(plan, 4).progress == 1.0
+```
+
+JS: `UxMotion.scrub(planId, progress)`. `CONTRACT["scrub"] == "UxMotion.scrub"`.
+`bind.input === "drag"` is leftover one-shot play (IR name KEEP).
+
+### Soft 2: SVG path `d` morph
+
+<a id="mo-soft2"></a>
+
+`morph_d` writes recipe `"morph.d"` and `morph.d.{from,to}`. `along` keeps
+`path.d` (offset-path). Do not reuse `path`.
+
+From `examples/path_morph.py` / `tests/test_soft2_path_morph.py`:
+
+```python
+from ux_motion import along, fade, morph_d, scene
+
+SQUARE = "M0,0 L20,0 L20,20 L0,20 Z"
+DIAMOND = "M10,0 L20,10 L10,20 L0,10 Z"
+
+rec = morph_d(SQUARE, DIAMOND, ms=240)
+# rec["name"] == "morph.d"; "path" not in rec
+fade.enter(ms=80).with_morph_d(SQUARE, DIAMOND)  # name stays fade.enter
+along("M0,0 C50,100 150,100 200,0", ms=400)      # path.d; no morph
+scene("icon").enter("#blob", rec).plan()
+```
+
+Unknown morph keys are ignored. Incomplete `morph.d` (missing from or to)
+raises `PlanError`. Rewind swaps from/to.
+
+### Soft 3: wait bags / clocks
+
+<a id="mo-soft3"></a>
+
+Direct track/stagger siblings partition into `exits` / `stays` / `enters`.
+Nested kinds start at `t0`. Missing role is enter. `stagger_ms` does not
+apply to wait. Not an AnimatePresence dump.
+
+From `examples/wait_complete.py` / `tests/test_soft3_wait.py`:
+
+```python
+from ux_motion import fade, partition_wait, scene, wait_clocks
+
+plan = scene("nav").exit("#old", fade.exit(ms=100)).enter("#new", fade.enter(ms=80)).plan()
+clock = wait_clocks(plan)
+# clock.bags.exits[0]["target"] == "#old"
+# clock.exit_end == clock.enter_t == 100; clock.end == 180
+
+bags = partition_wait(
+    (
+        {"kind": "track", "target": "#x", "recipe": fade.enter(ms=10)},
+        {"kind": "track", "target": "#y", "role": "exit", "recipe": fade.exit(ms=10)},
+    )
+)
+# bags.enters[0]["target"] == "#x"; bags.exits[0]["target"] == "#y"
+```
+
+JS name: `partitionWait`. `CONTRACT["wait.bags"]` /
+`CONTRACT["wait.clocks"]` / `CONTRACT["partition_wait"]`.
 
 ### HOF: appear, swap, recipes
 

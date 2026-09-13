@@ -305,6 +305,9 @@ flowchart TB
   Scrub --> Tape
 ```
 
+Soft 1 KEEP. `drag` is leftover one-shot play. Gestures are Channel Intent /
+Behavior `@action`. Leftover: [../OWNERSHIP.md](../OWNERSHIP.md).
+
 ---
 
 ## 12. Score + cue multi-hop

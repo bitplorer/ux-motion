@@ -4,6 +4,7 @@
 > Map: [INDEX.md](INDEX.md).
 
 **5-minute path:** [../START_HERE.md](../START_HERE.md) · **Map:** [INDEX.md](INDEX.md)
+**Soft leftover:** [../OWNERSHIP.md](../OWNERSHIP.md).
 
 **Nothing in this document is optional context.** This is the full product description of the library: what it is, what problem it solves, what it deliberately does not solve, and how every piece fits.
 
@@ -115,7 +116,10 @@ ux-motion/
 ├── static/                   # same JS, standalone URL
 ├── tests/
 └── examples/
-    └── minimal.py
+    ├── minimal.py
+    ├── scroll_scrub.py      # Soft 1
+    ├── path_morph.py        # Soft 2
+    └── wait_complete.py     # Soft 3
 ```
 
 ---
@@ -132,6 +136,7 @@ This file stays the full product description (explanation). Do not duplicate the
 
 | File | Contents |
 |---|---|
+| `../OWNERSHIP.md` | Layer cut + Soft leftover (KEEP vs HOLD) |
 | `00-OVERVIEW.md` | This file |
 | `01-ARCHITECTURE.md` | Layers, modules, dependency graph, data flow |
 | `02-IR-SPEC.md` | Every IR field, kind, enum, validation rule |

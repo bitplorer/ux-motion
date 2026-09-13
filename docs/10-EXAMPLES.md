@@ -55,7 +55,8 @@ scene("story").bind_to("scroll", "#article").enter("#figure", rise.enter(ms=400)
 ```
 
 Thin runnable: [../examples/scroll_scrub.py](../examples/scroll_scrub.py).
-Not a gesture API — no `whileHover` / `whileTap`.
+Not a gesture API. Hover/tap/press/pan/drag are Channel Intent /
+Behavior `@action`. Leftover: [../OWNERSHIP.md](../OWNERSHIP.md).
 
 ## Multi-hop checkout
 

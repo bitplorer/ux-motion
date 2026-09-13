@@ -58,6 +58,7 @@ Missing `role` on a track/stagger is **enter** (IR default), never stay.
 
 This is exit-before-enter as data: **exits complete before enters**, without
 flattening nested choreography. Not a Framer AnimatePresence dump.
+Leftover teaching: [../OWNERSHIP.md](../OWNERSHIP.md).
 
 ---
 

@@ -229,6 +229,8 @@ class ScrubFrame:
 
 `scrub` is the logical tape. The web player seeks the same 0..1 with
 `UxMotion.scrub(planId, progress)` after `bind.input` is `scroll` or `progress`.
+`drag` is leftover one-shot play. Gestures are Channel Intent / Behavior
+`@action`. Leftover teaching: [../OWNERSHIP.md](../OWNERSHIP.md).
 
 ### `WaitBags` / `WaitClock`
 

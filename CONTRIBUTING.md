@@ -28,6 +28,8 @@ See [AGENTS.md](AGENTS.md) and [docs/06-DESIGN-DECISIONS.md](docs/06-DESIGN-DECI
 - `MotionChannel` changes require reading [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md).
 - XOR with morph stays enforced. Do not teach Channel `transition.*`.
 - This layer does not own product behavior or DOM construction.
+- Soft 1–3 KEEP. Gestures are Channel Intent / Behavior `@action`.
+  Leftover teaching: [OWNERSHIP.md](OWNERSHIP.md).
 
 ## Docs
 
