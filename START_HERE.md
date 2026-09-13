@@ -90,8 +90,16 @@ This layer does **not** own hover / tap / press / pan / drag listeners or
 Framer `whileHover` / `whileTap` / `whileFocus` / `whileDrag`. Gestures are
 Channel Intent / Behavior `@action`.
 
-**HOLD leftover:** path-morph, wait completeness, Framer variants, drag bind
+**HOLD leftover:** Soft 3 wait completeness, Framer variants, drag bind
 as a pointer gesture, motion values / React API.
+
+---
+
+## 3c. Path morph (Soft 2 — not offset-path)
+
+`morph_d(from_d, to_d)` writes recipe `morph.d.{from,to}` and interpolates
+similar SVG path `d` strings. `along(...)` still owns `path.d` (offset-path).
+Do not reuse `path` for morph.
 
 ---
 

@@ -55,7 +55,7 @@ It does **not** own product behavior or DOM construction.
 | [guides/README.md](guides/README.md) | How-to slot → numbered 07 / 09 / 13 / 14 |
 | [09-TESTING.md](09-TESTING.md) | How to run tests; what they guarantee |
 | [13-VERSIONING.md](13-VERSIONING.md) | Semver policy, IR vs API, release checklist |
-| [07-ENHANCEMENTS.md](07-ENHANCEMENTS.md) | share, bind, score, spring, along, tokens, rewind, patterns |
+| [07-ENHANCEMENTS.md](07-ENHANCEMENTS.md) | share, bind, score, spring, along, morph.d, tokens, rewind, patterns |
 | [14-CHANNEL-COMPOSITOR.md](14-CHANNEL-COMPOSITOR.md) | How to change MotionChannel later |
 
 ### Reference

@@ -2,7 +2,7 @@
 
 ux-motion owns server-authored presence + transition plans (IR v1).
 It is not a product CLI and not an app host. MotionChannel is a contribution.
-Soft LOCK: not a gesture library. Soft 1 leftover: scroll-scrub only.
+Soft LOCK: not a gesture library. Soft 1 KEEP scrub. Soft 2 leftover: path morph.d.
 """
 from __future__ import annotations
 
@@ -14,8 +14,10 @@ from ux_motion import (
     CONTRACT,
     IR_VERSION,
     MotionChannel,
+    along,
     fade,
     interpret,
+    morph_d,
     scene,
     validate_plan,
 )
@@ -142,3 +144,17 @@ class TestSoftLockNoGestureLibrary(unittest.TestCase):
 
         self.assertIn("scrub", ux_motion.__all__)
         self.assertIn("ScrubFrame", ux_motion.__all__)
+
+    def test_soft2_path_morph_is_owned_here(self):
+        self.assertEqual(CONTRACT["morph.d"], "morph.d")
+        import ux_motion
+
+        self.assertIn("morph_d", ux_motion.__all__)
+        along_rec = along("M0,0 L10,0")
+        self.assertIn("path", along_rec)
+        self.assertNotIn("morph", along_rec)
+        morph = morph_d("M0,0 L10,0", "M0,10 L10,10")
+        self.assertEqual(morph["name"], "morph.d")
+        self.assertEqual(morph["morph"]["d"]["from"], "M0,0 L10,0")
+        self.assertNotIn("path", morph)
+        self.assertNotIn("whileHover", ux_motion.__all__)

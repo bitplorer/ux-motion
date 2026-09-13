@@ -93,6 +93,22 @@ along("M0,80 C40,0 120,160 200,80", ms=600)
 ```
 
 Sets recipe `path.d` and animates `offset` 0→1. JS sets `offset-path`.
+Not SVG path `d` morph — that is `morph_d` (Soft 2).
+
+---
+
+## 5b. morph_d (Soft 2)
+
+```python
+morph_d("M0,0 L20,0 L20,20 Z", "M0,20 L20,0 L0,0 Z", ms=320)
+fade.enter().with_morph_d(from_d, to_d)
+```
+
+**IR:** `recipe.morph.d.from` / `recipe.morph.d.to` (similar path strings).
+Recipe name `"morph.d"`. `path` is not reused.
+
+**Client:** WAAPI interpolates CSS `d`; commits the `d` attribute.
+Soft 1 scrub KEEP. No gesture APIs. No Cap Host.
 
 ---
 

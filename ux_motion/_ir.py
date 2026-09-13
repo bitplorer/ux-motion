@@ -133,6 +133,19 @@ def validate_recipe(recipe: Mapping[str, Any], ctx: str = "recipe") -> dict[str,
         if not isinstance(path, Mapping) or not isinstance(path.get("d"), str):
             raise PlanError(f"{ctx}.path.d must be a string")
         out["path"] = {"d": path["d"], "rotate": str(path.get("rotate", "auto"))}
+    if "morph" in recipe:
+        morph = recipe["morph"]
+        if not isinstance(morph, Mapping):
+            raise PlanError(f"{ctx}.morph must be an object")
+        d = morph.get("d")
+        if d is not None:
+            if not isinstance(d, Mapping):
+                raise PlanError(f"{ctx}.morph.d must be an object")
+            frm = d.get("from")
+            to = d.get("to")
+            if not isinstance(frm, str) or not frm.strip() or not isinstance(to, str) or not to.strip():
+                raise PlanError(f"{ctx}.morph.d.from and morph.d.to must be non-empty strings")
+            out["morph"] = {"d": {"from": frm, "to": to}}
     if "engine" in recipe and recipe["engine"] in ENGINES:
         out["engine"] = recipe["engine"]
     return out

@@ -342,7 +342,8 @@ flowchart LR
     to["to {…}"]
     dur["duration / delay / easing"]
     spring["spring?"]
-    path["path.d?"]
+    path["path.d? (along / offset-path)"]
+    morph["morph.d? (Soft 2 path morph)"]
   end
 
   subgraph WAAPI
@@ -351,12 +352,14 @@ flowchart LR
     OP["opacity"]
     FL["filter: blur"]
     OD["offsetDistance"]
+    PD["d: path(...)"]
   end
 
   from --> KF
   to --> KF
-  KF --> TR & OP & FL & OD
+  KF --> TR & OP & FL & OD & PD
   path --> OD
+  morph --> PD
   spring --> dur
 ```
 

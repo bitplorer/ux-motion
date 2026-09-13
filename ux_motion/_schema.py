@@ -54,6 +54,19 @@ def schema() -> dict[str, Any]:
                             "rotate": {"type": "string"},
                         },
                     },
+                    "morph": {
+                        "type": "object",
+                        "properties": {
+                            "d": {
+                                "type": "object",
+                                "required": ["from", "to"],
+                                "properties": {
+                                    "from": {"type": "string", "minLength": 1},
+                                    "to": {"type": "string", "minLength": 1},
+                                },
+                            },
+                        },
+                    },
                     "engine": {"enum": list(CONTRACT["engines"])},
                 },
             },

@@ -27,6 +27,7 @@ CONTRACT = {
         "layout is stay until measurement is requested via share.",
         "engine=view uses View Transitions when present; engine=spring uses physics.",
         "Recipe names do what they say.",
+        "Recipe morph.d interpolates similar SVG path d; path stays offset-path (along).",
         "Duration is capped at 120s.",
         "The reference player is the schedule contract.",
         "Reduced motion may swap an entire alternate tree, not only shorten ms.",
@@ -50,4 +51,5 @@ CONTRACT = {
     "bind_inputs": ("scroll", "drag", "progress"),
     "player_exports": ("play", "applyOp", "applyOps", "cancel", "boot", "scrub", "version"),
     "scrub": "UxMotion.scrub",
+    "morph.d": "morph.d",
 }

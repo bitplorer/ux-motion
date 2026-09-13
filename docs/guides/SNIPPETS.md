@@ -11,7 +11,7 @@ Every block is meant to run (or to be the exact fragment you drop into a running
 
 ### Public names in this cookbook
 
-`scene`, `fade`, `rise`, `explain`, `interpret`, `scrub`, `send`, `appear`, `swap`, `slide`, `scale`, `springy`, `blur`, `along`, `page`, `modal`, `toast`, `list_stagger`, `play`, `cancel`, `rewind`, `dumps`, `loads`, `validate_plan`, `freeze_plan`, `PlanError`, `sequence`, `parallel`, `wait`, `tokens`, `snap`, `none`, `frames`, `span_ms`, `Document`, `Motion`, `MotionChannel`, `morph`
+`scene`, `fade`, `rise`, `explain`, `interpret`, `scrub`, `send`, `appear`, `swap`, `slide`, `scale`, `springy`, `blur`, `along`, `morph_d`, `page`, `modal`, `toast`, `list_stagger`, `play`, `cancel`, `rewind`, `dumps`, `loads`, `validate_plan`, `freeze_plan`, `PlanError`, `sequence`, `parallel`, `wait`, `tokens`, `snap`, `none`, `frames`, `span_ms`, `Document`, `Motion`, `MotionChannel`, `morph`
 
 ## Contents
 
@@ -99,13 +99,13 @@ scene("leave").as_score("checkout", phase="hold").exit("#cart", fade.exit()).pla
 Do not pass html= on a target you just morphed (morph(T) XOR scene.enter(T, html=…)).
 
 ```python
-from ux_motion import appear, swap, rise, fade, slide, scale, springy, blur, along
+from ux_motion import appear, swap, rise, fade, slide, scale, springy, blur, along, morph_d
 
 appear(section, stagger=".tile").play()          # tree stays a tree
 swap("#view", shop_view(), share="vein").play()
 rise(product_view(), ms=200)
 
-# Recipe families: fade / rise / slide / scale / snap / springy / blur / along / none
+# Recipe families: fade / rise / slide / scale / snap / springy / blur / along / morph_d / none
 scene("x").enter("#a", fade.enter().with_duration(160).with_easing("ease-out")).play()
 ```
 
@@ -194,7 +194,7 @@ scene("x").enter("#a", fade.enter().with_duration(tokens.ms("fast"))).play()
 Recipes are data. HOFs (appear/rise/swap) wrap them. Do not invent CSS transition strings in product code.
 
 ```python
-from ux_motion import scene, fade, rise, slide, scale, snap, springy, blur, along, none
+from ux_motion import scene, fade, rise, slide, scale, snap, springy, blur, along, morph_d, none
 
 scene("x").enter("#a", fade.enter())
 scene("x").enter("#a", rise.enter(y=16, ms=200))
@@ -203,8 +203,9 @@ scene("x").enter("#a", scale.enter(scale=0.96))
 scene("x").enter("#a", snap.enter())
 scene("x").enter("#a", springy.enter())
 scene("x").enter("#a", blur.enter())
-scene("x").enter("#a", along.enter())
-scene("x").enter("#a", none.enter())   # presence without animation
+scene("x").enter("#a", along("M0,0 L40,20"))
+scene("x").enter("#a", morph_d("M0,0 L20,0 Z", "M0,20 L20,0 Z"))
+scene("x").enter("#a", none())   # presence without animation
 ```
 
 ### explain / interpret / frames / span_ms

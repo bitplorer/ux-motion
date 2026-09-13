@@ -5,7 +5,8 @@
 | **Plan** | Root IR document (`v`, `id`, `root`, …) |
 | **Node** | Any IR object with a `kind` |
 | **Track** | One target + role + recipe |
-| **Recipe** | from/to + timing (+ optional spring/path) |
+| **Recipe** | from/to + timing (+ optional spring/path/morph.d) |
+| **morph.d** | Soft 2: interpolate similar SVG path `d` (`morph_d`). Not `path` / along. |
 | **Phase** | Mode container for children |
 | **Group** | Named phase-like bag under `tracks` |
 | **wait** | Mode: exits before enters for *direct* tracks |

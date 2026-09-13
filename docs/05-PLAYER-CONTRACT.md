@@ -43,6 +43,9 @@ For any plan **without** bind/scroll side effects:
 ### WAAPI path
 
 - Keyframes from recipe `from` / `to` via transform + opacity + filter + offsetDistance.
+- Soft 2: recipe `morph.d` adds CSS `d: path("…")` on the same animation
+  (similar path strings). On finish (or if WAAPI rejects `d`), `setAttribute("d", to)`.
+- `path.d` remains offset-path (`offsetPath` / `offsetRotate`).
 - On finish: `commitStyles()` then `cancel()` to freeze computed style.
 - Spring recipes: duration estimated from mass/stiffness/damping; easing softened.
 

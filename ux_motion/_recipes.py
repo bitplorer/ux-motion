@@ -38,6 +38,12 @@ class Recipe(dict):
         out["path"] = {"d": d, "rotate": rotate}
         return out
 
+    def with_morph_d(self, from_d: str, to_d: str) -> "Recipe":
+        """Interpolate SVG path ``d`` (similar paths). Does not reuse ``path``."""
+        out = Recipe(self)
+        out["morph"] = {"d": {"from": from_d, "to": to_d}}
+        return out
+
 
 def _recipe(
     name: str,
@@ -210,6 +216,27 @@ def along(
         easing=easing or tokens.ease("soft"),
     )
     return rec.with_path(path_d, rotate=rotate)
+
+
+def morph_d(
+    from_d: str,
+    to_d: str,
+    *,
+    ms: int | None = None,
+    delay: int = 0,
+    easing: str | None = None,
+    opacity_from: float = 1,
+) -> Recipe:
+    """Morph SVG path ``d`` between similar paths. Not offset-path (see ``along``)."""
+    rec = _recipe(
+        "morph.d",
+        frm={"opacity": opacity_from},
+        to={"opacity": 1},
+        duration=ms if ms is not None else tokens.ms("enter"),
+        delay=delay,
+        easing=easing or tokens.ease("enter"),
+    )
+    return rec.with_morph_d(from_d, to_d)
 
 
 def springy(
