@@ -47,10 +47,15 @@ scene("inbox").stagger_in(".row", rise.enter(), gap_ms=40).play()
 ## Scroll-linked figure
 
 ```python
-from ux_motion import scene, rise
+from ux_motion import scene, rise, scrub
 
+plan = scene("story").bind_to("scroll", "#article").enter("#figure", rise.enter(ms=400)).plan()
+mid = scrub(plan, 0.5)  # logical tape; player seeks via UxMotion.scrub
 scene("story").bind_to("scroll", "#article").enter("#figure", rise.enter(ms=400)).play()
 ```
+
+Thin runnable: [../examples/scroll_scrub.py](../examples/scroll_scrub.py).
+Not a gesture API — no `whileHover` / `whileTap`.
 
 ## Multi-hop checkout
 

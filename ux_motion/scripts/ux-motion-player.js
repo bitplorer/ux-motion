@@ -10,6 +10,7 @@
   var queued = [];
   var scores = new Map(); // scoreId -> { nodes: Element[], resolve: fn }
   var shares = new Map(); // shareId -> first rect
+  var tapes = new Map(); // planId -> live bind tape (Soft 1 scroll/progress)
 
   function prefersReduced() {
     return !!(global.matchMedia && global.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -64,6 +65,300 @@
       cancelTarget(key);
     });
     playing.clear();
+    var tapeIds = [];
+    tapes.forEach(function (_tape, planId) {
+      tapeIds.push(planId);
+    });
+    tapeIds.forEach(releaseTape);
+  }
+
+  function clamp01(n) {
+    n = Number(n);
+    if (!(n > 0)) return 0;
+    if (n > 1) return 1;
+    return n;
+  }
+
+  function recipeDuration(recipe, reducedPolicy) {
+    recipe = recipe || {};
+    var reduced = prefersReduced();
+    var skip = reduced && reducedPolicy === "skip";
+    var simplify = reduced && reducedPolicy === "simplify";
+    if (recipe.spring || recipe.engine === "spring") {
+      return skip ? 0 : simplify ? 80 : springDuration(recipe.spring);
+    }
+    return skip ? 0 : simplify ? Math.min(recipe.duration || 0, 80) : recipe.duration || 240;
+  }
+
+  function measureScrollProgress(host, axis) {
+    var x = axis === "x";
+    if (host && host !== document.documentElement && host !== document.body) {
+      if (x && host.scrollWidth > host.clientWidth + 1) {
+        var maxX = host.scrollWidth - host.clientWidth;
+        return maxX <= 0 ? 0 : clamp01(host.scrollLeft / maxX);
+      }
+      if (!x && host.scrollHeight > host.clientHeight + 1) {
+        var maxY = host.scrollHeight - host.clientHeight;
+        return maxY <= 0 ? 0 : clamp01(host.scrollTop / maxY);
+      }
+    }
+    var rect = host && host.getBoundingClientRect ? host.getBoundingClientRect() : { top: 0, left: 0, height: 1, width: 1 };
+    if (x) {
+      var vw = global.innerWidth || 1;
+      var w = rect.width || 1;
+      return 1 - clamp01((rect.left + w) / (vw + w));
+    }
+    var vh = global.innerHeight || 1;
+    var h = rect.height || 1;
+    return 1 - clamp01((rect.top + h) / (vh + h));
+  }
+
+  function collectTape(node, t0, items, reduced) {
+    if (!node) return t0;
+    var kind = node.kind;
+    if (kind === "track") {
+      var rec = node.recipe || {};
+      var start = t0 + (rec.delay || 0);
+      var duration = recipeDuration(rec, reduced);
+      items.push({
+        kind: "track",
+        target: node.target,
+        role: node.role || "enter",
+        after: node.after,
+        html: node.html,
+        recipe: rec,
+        start: start,
+        duration: duration,
+      });
+      return start + duration;
+    }
+    if (kind === "stagger") {
+      var recs = node.recipe || {};
+      var durationS = recipeDuration(recs, reduced);
+      var gap = node.gap_ms || 40;
+      var n = qa(node.selector).length || 3;
+      var endS = t0;
+      for (var i = 0; i < n; i++) {
+        var startS = t0 + (recs.delay || 0) + i * gap;
+        items.push({
+          kind: "stagger",
+          selector: node.selector,
+          index: i,
+          role: node.role || "enter",
+          after: node.after,
+          recipe: recs,
+          start: startS,
+          duration: durationS,
+        });
+        endS = Math.max(endS, startS + durationS);
+      }
+      return endS;
+    }
+    if (kind === "share") {
+      var recShare = node.recipe || {};
+      return t0 + recipeDuration(recShare, reduced) + (recShare.delay || 0);
+    }
+    if (kind === "group") {
+      return collectPhase(
+        { kind: "phase", mode: node.mode || "wait", children: node.tracks || [] },
+        t0,
+        items,
+        reduced
+      );
+    }
+    if (kind === "phase") return collectPhase(node, t0, items, reduced);
+    if (kind === "bind" || kind === "score" || kind === "cue") {
+      return collectTape(node.child, t0, items, reduced);
+    }
+    return t0;
+  }
+
+  function collectPhase(phase, t0, items, reduced) {
+    var kids = phase.children || [];
+    var mode = phase.mode || "parallel";
+    var staggerMs = phase.stagger_ms || 0;
+    if (!kids.length) return t0;
+    if (mode === "sequence") {
+      var t = t0;
+      kids.forEach(function (child, i) {
+        var start = t;
+        if (i && staggerMs) start = t + staggerMs;
+        t = collectTape(child, start, items, reduced);
+      });
+      return t;
+    }
+    if (mode === "wait") {
+      var exits = [];
+      var stays = [];
+      var enters = [];
+      var nested = [];
+      kids.forEach(function (n) {
+        if (n.kind === "track" || n.kind === "stagger") {
+          if (n.role === "exit") exits.push(n);
+          else if (n.role === "enter") enters.push(n);
+          else stays.push(n);
+        } else {
+          nested.push(n);
+        }
+      });
+      var exitEnd = t0;
+      exits.forEach(function (child) {
+        exitEnd = Math.max(exitEnd, collectTape(child, t0, items, reduced));
+      });
+      var stayEnd = exitEnd;
+      stays.forEach(function (child) {
+        stayEnd = Math.max(stayEnd, collectTape(child, exitEnd, items, reduced));
+      });
+      var nestedEnd = t0;
+      nested.forEach(function (child) {
+        nestedEnd = Math.max(nestedEnd, collectTape(child, t0, items, reduced));
+      });
+      var enterT = exits.length || stays.length ? stayEnd : t0;
+      var enterEnd = enterT;
+      enters.forEach(function (child) {
+        enterEnd = Math.max(enterEnd, collectTape(child, enterT, items, reduced));
+      });
+      return Math.max(stayEnd, nestedEnd, enterEnd);
+    }
+    var endP = t0;
+    kids.forEach(function (child, i) {
+      endP = Math.max(endP, collectTape(child, t0 + i * staggerMs, items, reduced));
+    });
+    return endP;
+  }
+
+  function armEl(el, recipe, key, reducedPolicy) {
+    if (!el) return null;
+    var duration = recipeDuration(recipe, reducedPolicy);
+    if (recipe && recipe.path && recipe.path.d) {
+      try {
+        el.style.offsetPath = 'path("' + recipe.path.d + '")';
+        el.style.offsetRotate = recipe.path.rotate || "auto";
+      } catch (e) {}
+    }
+    if (!el.animate) {
+      return { el: el, anim: null, duration: duration, key: key };
+    }
+    cancelTarget(key);
+    try {
+      var anim = el.animate([kf(recipe && recipe.from), kf(recipe && recipe.to)], {
+        duration: duration || 1,
+        delay: 0,
+        easing: recipe && recipe.spring ? "cubic-bezier(0.22, 1, 0.36, 1)" : (recipe && recipe.easing) || "ease-out",
+        fill: (recipe && recipe.fill) || "both",
+      });
+      anim.pause();
+      running.set(key, anim);
+      return { el: el, anim: anim, duration: duration, key: key };
+    } catch (e) {
+      return { el: el, anim: null, duration: duration, key: key };
+    }
+  }
+
+  function armTape(items, reduced) {
+    var armed = [];
+    items.forEach(function (item) {
+      var el;
+      var key;
+      if (item.kind === "stagger") {
+        var els = qa(item.selector);
+        el = els[item.index];
+        key = item.selector + "#" + item.index;
+      } else {
+        el = q(item.target);
+        key = item.target;
+        if (item.role === "enter" && item.html) {
+          if (el) cancelTarget(item.target);
+          if (el) el = injectHtml(el, item.html);
+        }
+      }
+      if (!el) return;
+      if (item.role === "enter") {
+        el.hidden = false;
+        el.removeAttribute("hidden");
+        el.removeAttribute("aria-hidden");
+      }
+      mark(el, item.role, item.role !== "exit");
+      var armedItem = armEl(el, item.recipe, key, reduced);
+      if (!armedItem) return;
+      armedItem.start = item.start;
+      armedItem.role = item.role;
+      armedItem.after = item.after || (item.role === "exit" ? "remove" : "keep");
+      armed.push(armedItem);
+    });
+    return armed;
+  }
+
+  function applyTape(tape, progress) {
+    var p = clamp01(progress);
+    var span = tape.span || 0;
+    var t = span ? p * span : 0;
+    if (tape.host && tape.host.setAttribute) {
+      tape.host.setAttribute("data-uxm-progress", p.toFixed(3));
+    }
+    (tape.items || []).forEach(function (item) {
+      if (item.anim) {
+        var local = t - (item.start || 0);
+        if (local < 0) local = 0;
+        var cap = item.duration || 0;
+        if (local > cap) local = cap;
+        try {
+          item.anim.currentTime = local;
+        } catch (e) {}
+      }
+      if (item.role === "exit" && p >= 1 && item.el) {
+        applyAfter(item.el, item.after || "keep");
+      }
+    });
+    tape.progress = p;
+  }
+
+  function releaseTape(planId) {
+    var tape = tapes.get(planId);
+    if (!tape) return;
+    if (tape.onScroll) {
+      try {
+        global.removeEventListener("scroll", tape.onScroll);
+      } catch (e) {}
+      if (tape.host && tape.host.removeEventListener) {
+        try {
+          tape.host.removeEventListener("scroll", tape.onScroll);
+        } catch (e) {}
+      }
+    }
+    (tape.items || []).forEach(function (item) {
+      if (item.key) cancelTarget(item.key);
+    });
+    tapes.delete(planId);
+  }
+
+  function attachScrollLoop(tape) {
+    var ticking = false;
+    var raf = global.requestAnimationFrame || function (fn) {
+      return setTimeout(fn, 16);
+    };
+    function measure() {
+      ticking = false;
+      if (!tapes.has(tape.planId)) return;
+      applyTape(tape, measureScrollProgress(tape.host, tape.axis));
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      raf(measure);
+    }
+    tape.onScroll = onScroll;
+    global.addEventListener("scroll", onScroll, { passive: true });
+    if (tape.host && tape.host !== document.documentElement && tape.host.addEventListener) {
+      tape.host.addEventListener("scroll", onScroll, { passive: true });
+    }
+    measure();
+  }
+
+  function scrub(planId, progress) {
+    var tape = tapes.get(planId);
+    if (!tape) return;
+    applyTape(tape, progress);
   }
 
   function springDuration(spring) {
@@ -263,7 +558,7 @@
     });
   }
 
-  function playNode(node, reduced) {
+  function playNode(node, reduced, ctx) {
     if (!node) return Promise.resolve();
     if (node.kind === "track" || node.kind === "stagger" || node.kind === "share") {
       return playTrack(node, reduced);
@@ -271,17 +566,18 @@
     if (node.kind === "group") {
       return playPhase(
         { kind: "phase", mode: node.mode || "wait", children: node.tracks || [] },
-        reduced
+        reduced,
+        ctx
       );
     }
-    if (node.kind === "phase") return playPhase(node, reduced);
-    if (node.kind === "bind") return playBind(node, reduced);
-    if (node.kind === "score") return playScore(node, reduced);
-    if (node.kind === "cue") return playCue(node, reduced);
+    if (node.kind === "phase") return playPhase(node, reduced, ctx);
+    if (node.kind === "bind") return playBind(node, reduced, ctx);
+    if (node.kind === "score") return playScore(node, reduced, ctx);
+    if (node.kind === "cue") return playCue(node, reduced, ctx);
     return Promise.resolve();
   }
 
-  function playPhase(phase, reduced) {
+  function playPhase(phase, reduced, ctx) {
     var kids = phase.children || [];
     var mode = phase.mode || "parallel";
     var staggerMs = phase.stagger_ms || 0;
@@ -292,10 +588,10 @@
             return new Promise(function (res) {
               setTimeout(res, staggerMs);
             }).then(function () {
-              return playNode(child, reduced);
+              return playNode(child, reduced, ctx);
             });
           }
-          return playNode(child, reduced);
+          return playNode(child, reduced, ctx);
         });
       }, Promise.resolve());
     }
@@ -328,49 +624,57 @@
             }));
           }),
         Promise.all(nested.map(function (n) {
-          return playNode(n, reduced);
+          return playNode(n, reduced, ctx);
         })),
       ]);
     }
     return Promise.all(
       kids.map(function (c, i) {
-        if (!staggerMs) return playNode(c, reduced);
+        if (!staggerMs) return playNode(c, reduced, ctx);
         return new Promise(function (res) {
           setTimeout(res, i * staggerMs);
         }).then(function () {
-          return playNode(c, reduced);
+          return playNode(c, reduced, ctx);
         });
       })
     );
   }
 
-  function playBind(node, reduced) {
-    // Bind installs a scrub listener; for one-shot play we run the child fully.
-    // Hosts that want continuous scrub call UxMotion.scrub(planId, progress).
+  function playBind(node, reduced, ctx) {
+    // Soft 1: scroll/progress arm a live 0..1 tape. drag leftover = one-shot child.
+    // Hosts seek with UxMotion.scrub(planId, progress). No gesture listeners.
     var child = node.child;
     if (!child) return Promise.resolve();
-    var host = q(node.target) || document;
-    var planKey = "bind:" + node.target;
-    host.setAttribute("data-uxm-bind", node.input || "scroll");
-    if (node.input === "scroll") {
-      var onScroll = function () {
-        var rect = host.getBoundingClientRect ? host.getBoundingClientRect() : { top: 0, height: 1 };
-        var vh = global.innerHeight || 1;
-        var progress = 1 - Math.min(Math.max((rect.top + rect.height) / (vh + rect.height), 0), 1);
-        host.setAttribute("data-uxm-progress", String(progress.toFixed(3)));
-      };
-      host._uxmScroll = onScroll;
-      global.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
+    var host = q(node.target) || document.documentElement;
+    var planId = (ctx && ctx.planId) || ("bind:" + node.target);
+    if (host.setAttribute) {
+      host.setAttribute("data-uxm-bind", node.input || "scroll");
     }
-    return playNode(child, reduced);
+    if (node.input === "scroll" || node.input === "progress") {
+      releaseTape(planId);
+      var items = [];
+      var span = collectTape(child, 0, items, reduced);
+      var tape = {
+        planId: planId,
+        host: host,
+        input: node.input,
+        axis: node.axis || "y",
+        span: span,
+        items: armTape(items, reduced),
+      };
+      tapes.set(planId, tape);
+      if (node.input === "scroll") attachScrollLoop(tape);
+      else applyTape(tape, 0);
+      return Promise.resolve();
+    }
+    return playNode(child, reduced, ctx);
   }
 
-  function playScore(node, reduced) {
+  function playScore(node, reduced, ctx) {
     var child = node.child;
     if (!child) return Promise.resolve();
     if (node.phase === "hold") {
-      return playNode(child, reduced).then(function () {
+      return playNode(child, reduced, ctx).then(function () {
         // Keep exiting nodes in the map until cue
         scores.set(node.id, { held: true, at: Date.now() });
         document.dispatchEvent(
@@ -378,10 +682,10 @@
         );
       });
     }
-    return playNode(child, reduced);
+    return playNode(child, reduced, ctx);
   }
 
-  function playCue(node, reduced) {
+  function playCue(node, reduced, ctx) {
     var held = scores.get(node.score);
     if (held) {
       scores.delete(node.score);
@@ -389,7 +693,7 @@
         new CustomEvent("ux-motion:score-resolve", { detail: { id: node.score } })
       );
     }
-    if (node.child) return playNode(node.child, reduced);
+    if (node.child) return playNode(node.child, reduced, ctx);
     return Promise.resolve();
   }
 
@@ -416,11 +720,12 @@
 
   function runPlan(plan) {
     var reduced = plan.reduced || "simplify";
+    var ctx = { planId: plan.id };
     if (reduced === "swap" && plan.reduce_tree && prefersReduced()) {
-      return playNode(plan.reduce_tree, "skip");
+      return playNode(plan.reduce_tree, "skip", ctx);
     }
     var body = function () {
-      return playNode(plan.root, reduced);
+      return playNode(plan.root, reduced, ctx);
     };
     if (plan.engine === "view" && document.startViewTransition && !prefersReduced()) {
       try {
@@ -448,6 +753,7 @@
       });
     }
     if (plan.interrupt === "replace") {
+      releaseTape(plan.id);
       var acc = [];
       collectTargets(plan.root, acc);
       acc.forEach(cancelTarget);
@@ -541,6 +847,7 @@
     applyOp: applyOp,
     cancel: cancelAll,
     boot: bootEmbedded,
+    scrub: scrub,
     version: "1.3.0",
   };
 

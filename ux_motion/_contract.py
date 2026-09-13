@@ -22,6 +22,7 @@ CONTRACT = {
         "as_update never drops a track silently.",
         "share is identity continuity; client measures, server only names.",
         "bind turns a plan into a 0..1 tape driven by scroll or drag.",
+        "bind input=scroll is a live tape; UxMotion.scrub / scrub(plan, p) seek it.",
         "score holds exit presence across HTTP Results until the next cue.",
         "layout is stay until measurement is requested via share.",
         "engine=view uses View Transitions when present; engine=spring uses physics.",
@@ -47,4 +48,6 @@ CONTRACT = {
     "after": ("keep", "remove", "hide"),
     "engines": ("presence", "view", "spring"),
     "bind_inputs": ("scroll", "drag", "progress"),
+    "player_exports": ("play", "applyOp", "applyOps", "cancel", "boot", "scrub", "version"),
+    "scrub": "UxMotion.scrub",
 }

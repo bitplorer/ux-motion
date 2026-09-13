@@ -294,10 +294,11 @@ flowchart TB
   Bind["bind input=scroll target=#article"]
   Child["child phase/tracks"]
   Bind --> Child
-  Scroll["window scroll"] --> Progress["progress 0..1"]
+  Scroll["window / host scroll"] --> Progress["progress 0..1"]
   Progress --> Attr["data-uxm-progress"]
+  Progress --> Scrub["UxMotion.scrub / WAAPI currentTime"]
   Child --> Tape["logical schedule shape"]
-  Attr -.->|"host may seek"| Tape
+  Scrub --> Tape
 ```
 
 ---

@@ -80,6 +80,21 @@ Do not pass `html=` on a target you just morphed.
 
 ---
 
+## 3b. Scroll tape (Soft 1 — not a gesture)
+
+`bind_to("scroll", "#article")` is a **0..1 tape**. The player scrubs bound
+plan progress from scroll (`UxMotion.scrub(planId, progress)`). Python
+`scrub(plan, p)` seeks the same logical tape.
+
+This layer does **not** own hover / tap / press / pan / drag listeners or
+Framer `whileHover` / `whileTap` / `whileFocus` / `whileDrag`. Gestures are
+Channel Intent / Behavior `@action`.
+
+**HOLD leftover:** path-morph, wait completeness, Framer variants, drag bind
+as a pointer gesture, motion values / React API.
+
+---
+
 ## 4. Where next
 
 | Goal | Doc |

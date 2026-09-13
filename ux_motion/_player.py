@@ -31,6 +31,18 @@ class Event:
     name: str = ""
 
 
+@dataclass(frozen=True)
+class ScrubFrame:
+    """Logical tape position for a bind plan. Progress is clamped 0..1."""
+
+    progress: float
+    t: int
+    span: int
+    started: tuple[Event, ...]
+    ended: tuple[Event, ...]
+    active: tuple[Event, ...]
+
+
 def _emit_track(node: Mapping[str, Any], t0: int, events: list[Event], counts: Mapping[str, int]) -> int:
     kind = node["kind"]
     role = str(node.get("role") or "enter")
@@ -166,6 +178,29 @@ def interpret(
 def span_ms(plan: Mapping[str, Any], *, counts: Mapping[str, int] | None = None) -> int:
     ev = interpret(plan, counts=counts)
     return max((e.t for e in ev), default=0)
+
+
+def scrub(
+    plan: Mapping[str, Any],
+    progress: float,
+    *,
+    counts: Mapping[str, int] | None = None,
+) -> ScrubFrame:
+    """Seek a plan's logical tape. ``progress`` is 0..1 (clamped).
+
+    Soft 1 lock: ``bind`` input ``scroll`` is this tape, not wall-clock play.
+    ``t = round(progress * span_ms)``. Same Event set as ``interpret``.
+    """
+    ev = interpret(plan, counts=counts)
+    span = max((e.t for e in ev), default=0)
+    raw = float(progress)
+    p = 0.0 if raw < 0.0 else 1.0 if raw > 1.0 else raw
+    t = int(round(p * span)) if span else 0
+    started = tuple(e for e in ev if e.event == "start" and e.t <= t)
+    ended = tuple(e for e in ev if e.event == "end" and e.t <= t)
+    ended_keys = {(e.target, e.role, e.name) for e in ended}
+    active = tuple(e for e in started if (e.target, e.role, e.name) not in ended_keys)
+    return ScrubFrame(progress=p, t=t, span=span, started=started, ended=ended, active=active)
 
 
 def explain(plan: Mapping[str, Any], *, counts: Mapping[str, int] | None = None) -> str:

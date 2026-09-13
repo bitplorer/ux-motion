@@ -9,6 +9,20 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Soft 1 — scroll-scrub lock (2026-09-13)
+
+- `bind` IR KEEP (`input` / `target` / `child` / `until` / `axis`). No new keys.
+- Player: live WAAPI tape for `bind.input === "scroll"` (rAF-coalesced scroll
+  loop drives `currentTime`). `data-uxm-progress` still written.
+- Frozen scrub names: Python `scrub(plan, progress)` → `ScrubFrame`;
+  JS `UxMotion.scrub(planId, progress)`. `CONTRACT["scrub"]` / `player_exports`.
+- Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag` /
+  hover-tap-press-pan-drag listeners. Cap Host not invented; channel stays
+  `transition.*`.
+- **Leftover (HOLD):** Soft 2 path-morph, Soft 3 wait completeness, Framer
+  variants dump, reorder, motion values React API, drag/hover/tap,
+  `whileInView`-as-gesture. `bind.input === "drag"` remains one-shot play.
+
 ### Python floor (2026-09-12)
 
 - `requires-python >= 3.14` (matches compose and ux-dom). Classifiers drop 3.10–3.12.
