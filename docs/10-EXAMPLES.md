@@ -96,6 +96,19 @@ Thin runnable: [../examples/path_morph.py](../examples/path_morph.py).
 `along` stays offset-path. Similar `d` only — player does not normalize
 unlike commands.
 
+## Wait clocks (Soft 3)
+
+```python
+from ux_motion import scene, fade, wait_clocks
+
+plan = scene("nav").exit("#old", fade.exit(ms=100)).enter("#new", fade.enter(ms=80)).plan()
+clock = wait_clocks(plan)
+assert clock.enter_t == clock.exit_end == 100
+```
+
+Thin runnable: [../examples/wait_complete.py](../examples/wait_complete.py).
+Nested groups stay independent. Not an AnimatePresence dump.
+
 ## Spring card
 
 ```python

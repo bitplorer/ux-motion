@@ -139,7 +139,7 @@ This file stays the full product description (explanation). Do not duplicate the
 | `04-COMPOSITION-SEMANTICS.md` | wait / sequence / parallel / nested groups — exact rules |
 | `05-PLAYER-CONTRACT.md` | Reference player + JS player obligations |
 | `06-DESIGN-DECISIONS.md` | Why each design choice; rejected alternatives |
-| `07-ENHANCEMENTS.md` | share, bind, score, spring, along, morph.d, tokens, rewind, patterns |
+| `07-ENHANCEMENTS.md` | share, bind, score, spring, along, morph.d, wait clocks, tokens, rewind, patterns |
 | `08-WIRE-PROTOCOL.md` | Ops, Result shape, classic projection |
 | `09-TESTING.md` | How to run tests; what they guarantee |
 | `10-EXAMPLES.md` | End-to-end recipes for real UI cases |

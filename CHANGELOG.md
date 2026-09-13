@@ -9,6 +9,22 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Soft 3 — wait completeness (2026-09-13)
+
+- Lock wait orchestration: direct `exits` then `stays` then `enters`;
+  `nested` units start at `t0`. Frozen names: bags `exits` / `stays` /
+  `enters` / `nested`; clocks `exit_end` / `stay_end` / `enter_t`;
+  Python `partition_wait` / `wait_clocks` (`WaitBags` / `WaitClock`);
+  JS `partitionWait`. `CONTRACT["wait.bags"]` / `wait.clocks` /
+  `partition_wait`. Missing role is enter. `stagger_ms` does not apply
+  to wait bags.
+- Soft 1 scrub KEEP. Soft 2 `morph.d` KEEP.
+- Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag` /
+  hover-tap-press-pan-drag listeners. Cap Host not invented.
+- **Leftover (HOLD):** Framer variants dump, reorder, motion values
+  React API, drag/hover/tap, `whileInView`-as-gesture.
+  `bind.input === "drag"` remains one-shot play.
+
 ### Soft 2 — SVG path d morph (2026-09-13)
 
 - Additive recipe field `morph.d.{from,to}` (similar SVG path strings).
@@ -18,9 +34,9 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
   commit. Soft 1 scrub KEEP (`UxMotion.scrub` / `applyTape`).
 - Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag` /
   hover-tap-press-pan-drag listeners. Cap Host not invented.
-- **Leftover (HOLD):** Soft 3 wait completeness, Framer variants dump,
-  reorder, motion values React API, drag/hover/tap, `whileInView`-as-gesture.
-  `bind.input === "drag"` remains one-shot play.
+- **Leftover (HOLD):** Soft 3 wait completeness (shipped above), Framer
+  variants dump, reorder, motion values React API, drag/hover/tap,
+  `whileInView`-as-gesture. `bind.input === "drag"` remains one-shot play.
 
 ### Soft 1 — scroll-scrub lock (2026-09-13)
 

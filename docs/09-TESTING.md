@@ -16,6 +16,7 @@ PYTHONPATH=. python -m unittest discover -s tests -v
 | bind | Root kind bind; bookkeeping events |
 | Soft 1 scrub | `scrub(plan, p)` seeks 0..1; player exports `UxMotion.scrub`; no gesture APIs |
 | Soft 2 morph.d | `morph_d` writes `morph.d.{from,to}`; `path` stays along; unknown morph keys ignored |
+| Soft 3 wait | `partition_wait` / `wait_clocks` lock bags + `enter_t`; nested not flattened |
 | spring / along | Recipe carries spring/path |
 | tokens | Presets resolve |
 | rewind | Roles invert; op is transition.rewind |

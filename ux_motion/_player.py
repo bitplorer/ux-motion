@@ -7,7 +7,7 @@ Time is discrete milliseconds. Nested groups are never flattened.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Mapping
+from typing import Any, Iterable, Mapping
 
 from ux_motion._ir import (
     KIND_BIND,
@@ -41,6 +41,32 @@ class ScrubFrame:
     started: tuple[Event, ...]
     ended: tuple[Event, ...]
     active: tuple[Event, ...]
+
+
+WAIT_BAGS = ("exits", "stays", "enters", "nested")
+WAIT_CLOCKS = ("exit_end", "stay_end", "enter_t")
+
+
+@dataclass(frozen=True)
+class WaitBags:
+    """Direct-sibling partition under wait. Nested nodes are not flattened."""
+
+    exits: tuple[Mapping[str, Any], ...]
+    stays: tuple[Mapping[str, Any], ...]
+    enters: tuple[Mapping[str, Any], ...]
+    nested: tuple[Mapping[str, Any], ...]
+
+
+@dataclass(frozen=True)
+class WaitClock:
+    """Wait orchestration clocks. ``enter_t`` is when direct enters start."""
+
+    bags: WaitBags
+    t0: int
+    exit_end: int
+    stay_end: int
+    enter_t: int
+    end: int
 
 
 def _emit_track(node: Mapping[str, Any], t0: int, events: list[Event], counts: Mapping[str, int]) -> int:
@@ -110,6 +136,101 @@ def _play_node(node: Mapping[str, Any], t0: int, events: list[Event], counts: Ma
     return t0
 
 
+def partition_wait(children: Iterable[Mapping[str, Any]]) -> WaitBags:
+    """Split wait siblings into frozen bags. Missing role is enter (IR default)."""
+    exits: list[Mapping[str, Any]] = []
+    stays: list[Mapping[str, Any]] = []
+    enters: list[Mapping[str, Any]] = []
+    nested: list[Mapping[str, Any]] = []
+    for child in children:
+        k = child.get("kind")
+        if k in {KIND_TRACK, KIND_STAGGER}:
+            role = child.get("role") or "enter"
+            if role == "exit":
+                exits.append(child)
+            elif role == "enter":
+                enters.append(child)
+            else:
+                stays.append(child)
+        else:
+            nested.append(child)
+    return WaitBags(
+        exits=tuple(exits),
+        stays=tuple(stays),
+        enters=tuple(enters),
+        nested=tuple(nested),
+    )
+
+
+def _wait_run(
+    kids: list[Mapping[str, Any]],
+    t0: int,
+    events: list[Event],
+    counts: Mapping[str, int],
+) -> WaitClock:
+    bags = partition_wait(kids)
+    exit_end = t0
+    for child in bags.exits:
+        exit_end = max(exit_end, _play_node(child, t0, events, counts))
+    stay_end = exit_end
+    for child in bags.stays:
+        stay_end = max(stay_end, _play_node(child, exit_end, events, counts))
+    nested_end = t0
+    for child in bags.nested:
+        nested_end = max(nested_end, _play_node(child, t0, events, counts))
+    enter_t = stay_end if (bags.exits or bags.stays) else t0
+    enter_end = enter_t
+    for child in bags.enters:
+        enter_end = max(enter_end, _play_node(child, enter_t, events, counts))
+    return WaitClock(
+        bags=bags,
+        t0=t0,
+        exit_end=exit_end,
+        stay_end=stay_end,
+        enter_t=enter_t,
+        end=max(stay_end, nested_end, enter_end),
+    )
+
+
+def _play_wait(
+    kids: list[Mapping[str, Any]],
+    t0: int,
+    events: list[Event],
+    counts: Mapping[str, int],
+) -> int:
+    return _wait_run(kids, t0, events, counts).end
+
+
+def _unwrap_schedule(node: Mapping[str, Any]) -> Mapping[str, Any]:
+    kind = node.get("kind")
+    if kind in {KIND_BIND, KIND_SCORE, KIND_CUE}:
+        child = node.get("child")
+        if child is not None:
+            return _unwrap_schedule(child)
+    return node
+
+
+def _wait_siblings(node: Mapping[str, Any]) -> list[Mapping[str, Any]]:
+    root = _unwrap_schedule(node)
+    kind = root.get("kind")
+    if kind == KIND_GROUP:
+        return list(root.get("tracks") or [])
+    if kind == KIND_PHASE:
+        return list(root.get("children") or [])
+    return [root]
+
+
+def wait_clocks(
+    plan: Mapping[str, Any],
+    *,
+    t0: int = 0,
+    counts: Mapping[str, int] | None = None,
+) -> WaitClock:
+    """Wait bags + clocks for a plan. ``enter_t`` matches interpret enter starts."""
+    frozen = validate_plan(plan)
+    return _wait_run(_wait_siblings(frozen["root"]), t0, [], counts or {})
+
+
 def _play_phase(phase: Mapping[str, Any], t0: int, events: list[Event], counts: Mapping[str, int]) -> int:
     kids = list(phase.get("children") or [])
     mode = phase.get("mode") or "parallel"
@@ -125,36 +246,7 @@ def _play_phase(phase: Mapping[str, Any], t0: int, events: list[Event], counts: 
             t = _play_node(child, start, events, counts)
         return t
     if mode == "wait":
-        exits: list[Mapping[str, Any]] = []
-        stays: list[Mapping[str, Any]] = []
-        enters: list[Mapping[str, Any]] = []
-        nested: list[Mapping[str, Any]] = []
-        for child in kids:
-            k = child.get("kind")
-            if k in {KIND_TRACK, KIND_STAGGER}:
-                role = child.get("role") or "enter"
-                if role == "exit":
-                    exits.append(child)
-                elif role == "enter":
-                    enters.append(child)
-                else:
-                    stays.append(child)
-            else:
-                nested.append(child)
-        exit_end = t0
-        for child in exits:
-            exit_end = max(exit_end, _play_node(child, t0, events, counts))
-        stay_end = exit_end
-        for child in stays:
-            stay_end = max(stay_end, _play_node(child, exit_end, events, counts))
-        nested_end = t0
-        for child in nested:
-            nested_end = max(nested_end, _play_node(child, t0, events, counts))
-        enter_t = stay_end if (exits or stays) else t0
-        enter_end = enter_t
-        for child in enters:
-            enter_end = max(enter_end, _play_node(child, enter_t, events, counts))
-        return max(stay_end, nested_end, enter_end)
+        return _play_wait(kids, t0, events, counts)
     end = t0
     for i, child in enumerate(kids):
         start = t0 + i * stagger_ms

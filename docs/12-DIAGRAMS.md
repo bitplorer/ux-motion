@@ -173,6 +173,10 @@ flowchart TD
   Enters --> EN1["start at stay_end<br/>or t0 if no exits/stays"]
 ```
 
+Frozen Soft 3 names: bags `exits` / `stays` / `enters` / `nested`;
+clocks `exit_end` / `stay_end` / `enter_t` (`partition_wait` /
+`wait_clocks` / JS `partitionWait`).
+
 ---
 
 ## 6. Presence lifecycle (one track)

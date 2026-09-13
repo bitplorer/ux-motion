@@ -2,7 +2,8 @@
 
 ux-motion owns server-authored presence + transition plans (IR v1).
 It is not a product CLI and not an app host. MotionChannel is a contribution.
-Soft LOCK: not a gesture library. Soft 1 KEEP scrub. Soft 2 leftover: path morph.d.
+Soft LOCK: not a gesture library. Soft 1 KEEP scrub. Soft 2 KEEP morph.d.
+Soft 3 KEEP wait completeness.
 """
 from __future__ import annotations
 
@@ -157,4 +158,18 @@ class TestSoftLockNoGestureLibrary(unittest.TestCase):
         self.assertEqual(morph["name"], "morph.d")
         self.assertEqual(morph["morph"]["d"]["from"], "M0,0 L10,0")
         self.assertNotIn("path", morph)
+        self.assertNotIn("whileHover", ux_motion.__all__)
+
+    def test_soft3_wait_completeness_is_owned_here(self) -> None:
+        self.assertEqual(CONTRACT["wait.bags"], ("exits", "stays", "enters", "nested"))
+        self.assertEqual(CONTRACT["wait.clocks"], ("exit_end", "stay_end", "enter_t"))
+        self.assertEqual(CONTRACT["partition_wait"], "partitionWait")
+        import ux_motion
+
+        self.assertIn("partition_wait", ux_motion.__all__)
+        self.assertIn("wait_clocks", ux_motion.__all__)
+        self.assertIn("WaitBags", ux_motion.__all__)
+        self.assertIn("WaitClock", ux_motion.__all__)
+        self.assertIn("WAIT_BAGS", ux_motion.__all__)
+        self.assertIn("WAIT_CLOCKS", ux_motion.__all__)
         self.assertNotIn("whileHover", ux_motion.__all__)

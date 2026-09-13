@@ -93,10 +93,13 @@ Runnable sample: [examples/minimal.py](examples/minimal.py). Five-minute path: [
 | Reference player + JS player | Cap crypto / Intent (`ux-channel`) |
 | `Motion` / `MotionChannel` Document contributions | Product CLI (`ux-compose`) |
 | Soft 1: scroll→progress tape (`scrub` / `UxMotion.scrub`) | Gestures: `whileHover` / `whileTap` / `whileFocus` / `whileDrag`, hover/tap/press/pan/drag listeners |
+| Soft 2: SVG path `d` morph (`morph_d` / `morph.d`) | Reusing `path` for morph |
+| Soft 3: wait bags/clocks (`partition_wait` / `wait_clocks`) | Framer variants / AnimatePresence dump |
 
-**Soft 1 leftover (HOLD):** path-morph, wait completeness, Framer variants,
-drag-as-gesture, motion values / React API. `bind.input` names `drag` |
-`progress` stay on IR; only `scroll` is a live scrub.
+**Soft leftover (HOLD):** Framer variants, drag-as-gesture, motion values /
+React API. Soft 1–3 KEEP (`scrub`, `morph.d`, wait clocks).
+`bind.input` names `drag` | `progress` stay on IR; only `scroll` is a live
+scrub.
 
 ## Audience
 

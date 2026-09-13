@@ -47,7 +47,17 @@ stay_end: enters start
 
 If there are **no** exits and **no** stays, enters start at `t0`.
 
-This is the AnimatePresence insight expressed as data: **exits complete before enters**, without flattening nested choreography.
+Phase `stagger_ms` does **not** apply under `wait` (bags start together).
+Missing `role` on a track/stagger is **enter** (IR default), never stay.
+
+**Frozen completeness names (Soft 3):** bags `exits` / `stays` / `enters` /
+`nested`; clocks `exit_end` / `stay_end` / `enter_t`. Python
+`partition_wait` / `wait_clocks` → `WaitBags` / `WaitClock`. JS
+`partitionWait`. `CONTRACT["wait.bags"]` / `wait.clocks` /
+`partition_wait`.
+
+This is exit-before-enter as data: **exits complete before enters**, without
+flattening nested choreography. Not a Framer AnimatePresence dump.
 
 ---
 
