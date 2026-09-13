@@ -104,6 +104,7 @@ family.exit( same parameters ) -> Recipe
 none(*, ms=0) -> Recipe          # instant / reduced
 snap() -> Recipe                 # none(0)
 along(path_d, *, ms=None, delay=0, easing=None, rotate="auto", opacity_from=0) -> Recipe
+morph_d(from_d, to_d, *, ms=None, delay=0, easing=None, opacity_from=1) -> Recipe
 springy(*, y=None, x=None, scale=None, preset="snappy", ms=None) -> Recipe
 ```
 
@@ -115,9 +116,13 @@ rec.with_duration(ms) -> Recipe
 rec.with_easing(easing) -> Recipe
 rec.with_spring(name="snappy", **params) -> Recipe
 rec.with_path(d, *, rotate="auto") -> Recipe
+rec.with_morph_d(from_d, to_d) -> Recipe
 ```
 
 `Recipe` is a `dict` subclass — JSON-serializable as-is.
+
+`along` sets `path.d` (offset-path). `morph_d` sets `morph.d.{from,to}`
+(SVG path `d` interpolation). The keys are distinct; do not reuse `path`.
 
 ---
 

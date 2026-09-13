@@ -11,6 +11,9 @@
     # Scroll-scrubbed tape
     scene("essay").bind_to("scroll", "#article").enter("#fig", rise.enter()).play()
 
+    # SVG path d morph (similar paths; not offset-path / along)
+    scene("icon").enter("#blob", morph_d("M0,0 L20,0 Z", "M0,20 L20,0 Z")).play()
+
     # Multi-hop across HTTP Results
     scene("leave").as_score("checkout", phase="hold").exit("#cart", fade.exit()).play()
 
@@ -63,7 +66,7 @@ from ux_motion._ops import OP_CANCEL, OP_PLAY, OP_REWIND, as_update, cancel, pla
 from ux_motion._patterns import PATTERNS, list_stagger, modal, multi_hop_arrive, multi_hop_leave, page, shared_page, toast
 from ux_motion._player import Event, ScrubFrame, explain, frames, interpret, scrub, span_ms
 from ux_motion._presence import Presence, region, stamp
-from ux_motion._recipes import Recipe, along, blur, fade, none, rise, scale, slide, snap, springy
+from ux_motion._recipes import Recipe, along, blur, fade, morph_d, none, rise, scale, slide, snap, springy
 from ux_motion._schema import schema
 from ux_motion._tokens import Tokens, tokens
 from ux_motion._wire import dumps, loads
@@ -114,6 +117,7 @@ __all__ = [
     "list_stagger",
     "loads",
     "modal",
+    "morph_d",
     "motion",
     "multi_hop_arrive",
     "multi_hop_leave",

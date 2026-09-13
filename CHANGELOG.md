@@ -9,6 +9,19 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Soft 2 — SVG path d morph (2026-09-13)
+
+- Additive recipe field `morph.d.{from,to}` (similar SVG path strings).
+  Frozen names: recipe `"morph.d"`; Python `morph_d` / `Recipe.with_morph_d`;
+  `CONTRACT["morph.d"]`. `path` stays offset-path (`along`). Keys not reused.
+- Player: thin WAAPI `d: path("…")` interpolation plus `setAttribute("d")`
+  commit. Soft 1 scrub KEEP (`UxMotion.scrub` / `applyTape`).
+- Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag` /
+  hover-tap-press-pan-drag listeners. Cap Host not invented.
+- **Leftover (HOLD):** Soft 3 wait completeness, Framer variants dump,
+  reorder, motion values React API, drag/hover/tap, `whileInView`-as-gesture.
+  `bind.input === "drag"` remains one-shot play.
+
 ### Soft 1 — scroll-scrub lock (2026-09-13)
 
 - `bind` IR KEEP (`input` / `target` / `child` / `until` / `axis`). No new keys.
@@ -19,9 +32,10 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 - Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag` /
   hover-tap-press-pan-drag listeners. Cap Host not invented; channel stays
   `transition.*`.
-- **Leftover (HOLD):** Soft 2 path-morph, Soft 3 wait completeness, Framer
-  variants dump, reorder, motion values React API, drag/hover/tap,
-  `whileInView`-as-gesture. `bind.input === "drag"` remains one-shot play.
+- **Leftover (HOLD):** Soft 2 path-morph (shipped above), Soft 3 wait
+  completeness, Framer variants dump, reorder, motion values React API,
+  drag/hover/tap, `whileInView`-as-gesture. `bind.input === "drag"` remains
+  one-shot play.
 
 ### Python floor (2026-09-12)
 

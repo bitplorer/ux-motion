@@ -80,6 +80,22 @@ scene("reward").enter("#dot", along(
 )).play()
 ```
 
+## SVG path d morph (Soft 2)
+
+```python
+from ux_motion import scene, morph_d
+
+scene("icon").enter("#blob", morph_d(
+    "M0,0 L20,0 L20,20 L0,20 Z",
+    "M10,0 L20,10 L10,20 L0,10 Z",
+    ms=320,
+)).play()
+```
+
+Thin runnable: [../examples/path_morph.py](../examples/path_morph.py).
+`along` stays offset-path. Similar `d` only — player does not normalize
+unlike commands.
+
 ## Spring card
 
 ```python

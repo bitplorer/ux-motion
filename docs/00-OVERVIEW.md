@@ -76,7 +76,7 @@ tests that intentionally exercise internals.
 
 ## Mental model in four objects
 
-1. **Recipe** — how one element moves (from/to opacity, x, y, scale, blur, offset; duration; easing; optional spring; optional path).
+1. **Recipe** — how one element moves (from/to opacity, x, y, scale, blur, offset; duration; easing; optional spring; optional path / morph.d).
 2. **Track / Share / Stagger** — *what* moves (a selector + role + recipe, or a named shared identity).
 3. **Phase / Group** — *when* relative to siblings (`wait` | `sequence` | `parallel`).
 4. **Plan** — the sealed document (`v`, `id`, `root`, interrupt, reduced, engine) that crosses the wire.
@@ -98,7 +98,7 @@ ux-motion/
 │   ├── _ir.py                # validator + all kinds
 │   ├── _api.py               # Scene + functional constructors
 │   ├── _hof.py               # appear / swap / leave / @motion
-│   ├── _recipes.py           # fade/rise/slide/scale/blur/along/springy
+│   ├── _recipes.py           # fade/rise/slide/scale/blur/along/morph_d/springy
 │   ├── _tokens.py            # named duration/easing/distance/spring
 │   ├── _ops.py               # play / update / rewind / cancel
 │   ├── _adapter.py           # send facade
@@ -139,7 +139,7 @@ This file stays the full product description (explanation). Do not duplicate the
 | `04-COMPOSITION-SEMANTICS.md` | wait / sequence / parallel / nested groups — exact rules |
 | `05-PLAYER-CONTRACT.md` | Reference player + JS player obligations |
 | `06-DESIGN-DECISIONS.md` | Why each design choice; rejected alternatives |
-| `07-ENHANCEMENTS.md` | share, bind, score, spring, along, tokens, rewind, patterns |
+| `07-ENHANCEMENTS.md` | share, bind, score, spring, along, morph.d, tokens, rewind, patterns |
 | `08-WIRE-PROTOCOL.md` | Ops, Result shape, classic projection |
 | `09-TESTING.md` | How to run tests; what they guarantee |
 | `10-EXAMPLES.md` | End-to-end recipes for real UI cases |

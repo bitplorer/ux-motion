@@ -198,6 +198,7 @@ Unordered/ordered bag of children (root of most scenes).
   "fill": "both",
   "spring": { "mass": 1.0, "stiffness": 280, "damping": 24 },
   "path": { "d": "M0,0 C…", "rotate": "auto" },
+  "morph": { "d": { "from": "M0,0 L20,0 Z", "to": "M0,20 L20,0 Z" } },
   "engine": "spring"
 }
 ```
@@ -212,7 +213,8 @@ Unordered/ordered bag of children (root of most scenes).
 | `easing` | Non-empty string (CSS easing) |
 | `fill` | `none\|forwards\|backwards\|both` |
 | `spring` | Optional; implies physics path |
-| `path` | Optional; `d` required string (SVG path) |
+| `path` | Optional; `d` required string (SVG path). **offset-path only** (`along`). Do not reuse for morph. |
+| `morph` | Optional Soft 2. `morph.d.from` and `morph.d.to` required non-empty strings when `morph.d` is present (similar path `d`). Unknown morph keys ignored. |
 | `offset` in from/to | 0..1 progress along path |
 
 ## Validation invariants

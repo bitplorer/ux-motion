@@ -132,7 +132,7 @@ Public names are `ux_motion.__all__`. The names product code should hold:
 | Export | Role |
 |--------|------|
 | `scene`, `Scene` | Fluent plan builder |
-| `fade`, `rise`, `slide`, `scale`, `blur`, `snap`, `springy`, `along`, `none` | Recipes |
+| `fade`, `rise`, `slide`, `scale`, `blur`, `snap`, `springy`, `along`, `morph_d`, `none` | Recipes |
 | `appear`, `leave`, `swap`, `sheet`, `notice`, `staggered`, `hop` | Higher-order helpers |
 | `play`, `cancel`, `rewind`, `to_result` | Ops onto a Result |
 | `Motion`, `MotionChannel` | Document contributions |

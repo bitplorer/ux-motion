@@ -1,7 +1,7 @@
 /* ux-motion web.v1.3.0 player — vanilla JS, no framework.
    Schedule contract: same as ux_motion.interpret.
    Supports: presence, share (FLIP), bind (scroll/drag), score (multi-hop),
-   spring, offset-path, reduce_tree swap. */
+   spring, offset-path, path d morph, reduce_tree swap. */
 (function (global) {
   "use strict";
 
@@ -32,7 +32,23 @@
     }
   }
 
-  function kf(side) {
+  function morphD(recipe, side) {
+    var block = recipe && recipe.morph && recipe.morph.d;
+    if (!block) return null;
+    var raw = block[side];
+    if (typeof raw !== "string" || !raw) return null;
+    return 'path("' + raw + '")';
+  }
+
+  function commitMorphD(el, recipe) {
+    var block = recipe && recipe.morph && recipe.morph.d;
+    if (!el || !block || typeof block.to !== "string" || !el.setAttribute) return;
+    try {
+      el.setAttribute("d", block.to);
+    } catch (e) {}
+  }
+
+  function kf(side, recipe, which) {
     side = side || {};
     var x = side.x || 0;
     var y = side.y || 0;
@@ -46,6 +62,8 @@
     };
     if (blur != null) out.filter = "blur(" + blur + "px)";
     if (side.offset != null) out.offsetDistance = Math.round(side.offset * 100) + "%";
+    var d = morphD(recipe, which);
+    if (d) out.d = d;
     return out;
   }
 
@@ -241,7 +259,7 @@
     }
     cancelTarget(key);
     try {
-      var anim = el.animate([kf(recipe && recipe.from), kf(recipe && recipe.to)], {
+      var anim = el.animate([kf(recipe && recipe.from, recipe, "from"), kf(recipe && recipe.to, recipe, "to")], {
         duration: duration || 1,
         delay: 0,
         easing: recipe && recipe.spring ? "cubic-bezier(0.22, 1, 0.36, 1)" : (recipe && recipe.easing) || "ease-out",
@@ -394,7 +412,7 @@
     }
 
     try {
-      var anim = el.animate([kf(recipe.from), kf(recipe.to)], {
+      var anim = el.animate([kf(recipe.from, recipe, "from"), kf(recipe.to, recipe, "to")], {
         duration: duration,
         delay: delay,
         easing: recipe.spring ? "cubic-bezier(0.22, 1, 0.36, 1)" : recipe.easing || "ease-out",
@@ -408,12 +426,14 @@
             anim.commitStyles();
             anim.cancel();
           } catch (e) {}
+          commitMorphD(el, recipe);
         },
         function () {
           running.delete(key);
         }
       );
     } catch (e) {
+      commitMorphD(el, recipe);
       return Promise.resolve();
     }
   }

@@ -56,6 +56,11 @@ def _invert_recipe(recipe: Mapping[str, Any]) -> dict[str, Any]:
         out["name"] = name[: -len(".enter")] + ".exit"
     elif name.endswith(".exit"):
         out["name"] = name[: -len(".exit")] + ".enter"
+    morph = recipe.get("morph")
+    if isinstance(morph, Mapping):
+        d = morph.get("d")
+        if isinstance(d, Mapping) and "from" in d and "to" in d:
+            out["morph"] = {"d": {"from": d["to"], "to": d["from"]}}
     return out
 
 
