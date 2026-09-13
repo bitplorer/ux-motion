@@ -65,7 +65,7 @@ It does **not** own product behavior or DOM construction.
 | [reference/README.md](reference/README.md) | Reference slot → numbered 02–05 / 08 / 11 |
 | [02-IR-SPEC.md](02-IR-SPEC.md) | Every IR field, kind, enum, validation rule |
 | [03-API-REFERENCE.md](03-API-REFERENCE.md) | Every public symbol |
-| [04-COMPOSITION-SEMANTICS.md](04-COMPOSITION-SEMANTICS.md) | wait / sequence / parallel / nested groups |
+| [04-COMPOSITION-SEMANTICS.md](04-COMPOSITION-SEMANTICS.md) | wait / sequence / parallel / nested groups (Soft 3 clocks) |
 | [05-PLAYER-CONTRACT.md](05-PLAYER-CONTRACT.md) | Reference player + JS player obligations |
 | [08-WIRE-PROTOCOL.md](08-WIRE-PROTOCOL.md) | Ops, Result shape, classic projection |
 | [11-GLOSSARY.md](11-GLOSSARY.md) | Terms |

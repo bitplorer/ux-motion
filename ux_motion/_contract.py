@@ -52,4 +52,7 @@ CONTRACT = {
     "player_exports": ("play", "applyOp", "applyOps", "cancel", "boot", "scrub", "version"),
     "scrub": "UxMotion.scrub",
     "morph.d": "morph.d",
+    "wait.bags": ("exits", "stays", "enters", "nested"),
+    "wait.clocks": ("exit_end", "stay_end", "enter_t"),
+    "partition_wait": "partitionWait",
 }

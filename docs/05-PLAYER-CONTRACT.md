@@ -10,6 +10,7 @@ Module: `ux_motion._player`
 |---|---|
 | `interpret(plan, counts=None)` | Pure; deterministic; returns sorted `Event` list |
 | `span_ms` | `max(event.t)` or 0 |
+| `partition_wait` / `wait_clocks` | Soft 3: wait bags + `exit_end` / `stay_end` / `enter_t` |
 | `explain` | Human-readable schedule text |
 | `frames` | SVG strip for CI (no browser) |
 
@@ -66,6 +67,15 @@ For any plan **without** bind/scroll side effects:
 - `input==="drag"`: leftover one-shot child play (no pointer listeners).
 - Frozen seek: `UxMotion.scrub(planId, progress)` and Python `scrub(plan, p)`.
 - Soft LOCK: no `whileHover` / `whileTap` / `whileFocus` / `whileDrag`.
+
+### Wait (Soft 3)
+
+- Direct track/stagger children partition into `exits` / `stays` /
+  `enters`. Other kinds are `nested` and start at `t0`.
+- Missing `role` is enter. `layout` joins stays. Phase `stagger_ms` is
+  ignored under wait.
+- JS `partitionWait` is the same split used by `collectPhase` and
+  `playPhase`. Order of starts/ends matches `interpret` / `wait_clocks`.
 
 ### Score / cue
 

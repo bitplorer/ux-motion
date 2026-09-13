@@ -112,6 +112,27 @@ Soft 1 scrub KEEP. No gesture APIs. No Cap Host.
 
 ---
 
+## 5c. wait completeness (Soft 3)
+
+```python
+from ux_motion import scene, fade, partition_wait, wait_clocks
+
+plan = scene("nav").exit("#old", fade.exit(ms=100)).enter("#new", fade.enter(ms=80)).plan()
+clock = wait_clocks(plan)
+# clock.exit_end == 100; clock.enter_t == 100
+```
+
+**IR:** `phase.mode` / `group.mode` stay `"wait"`. No new keys.
+
+**Bags:** `exits` / `stays` / `enters` / `nested` (`partition_wait` /
+JS `partitionWait`). **Clocks:** `exit_end` / `stay_end` / `enter_t`.
+Missing role is enter. Nested groups are not flattened. Not an
+AnimatePresence dump.
+
+Soft 1 scrub KEEP. Soft 2 `morph.d` KEEP. No gesture APIs. No Cap Host.
+
+---
+
 ## 6. tokens
 
 ```python

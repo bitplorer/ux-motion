@@ -189,6 +189,8 @@ as_html(node) -> str           # alias of render_markup
 interpret(plan, *, counts=None) -> list[Event]
 span_ms(plan, *, counts=None) -> int
 scrub(plan, progress, *, counts=None) -> ScrubFrame  # Soft 1: seek 0..1 tape
+partition_wait(children) -> WaitBags                 # Soft 3: wait bags
+wait_clocks(plan, *, t0=0, counts=None) -> WaitClock # Soft 3: exit_end / stay_end / enter_t
 explain(plan, *, counts=None) -> str
 frames(plan, *, width=640, height=120, counts=None) -> str  # SVG
 schema() -> dict                    # JSON Schema
@@ -227,6 +229,32 @@ class ScrubFrame:
 
 `scrub` is the logical tape. The web player seeks the same 0..1 with
 `UxMotion.scrub(planId, progress)` after `bind.input` is `scroll` or `progress`.
+
+### `WaitBags` / `WaitClock`
+
+```python
+WAIT_BAGS = ("exits", "stays", "enters", "nested")
+WAIT_CLOCKS = ("exit_end", "stay_end", "enter_t")
+
+@dataclass(frozen=True)
+class WaitBags:
+    exits: tuple[Mapping, ...]
+    stays: tuple[Mapping, ...]
+    enters: tuple[Mapping, ...]
+    nested: tuple[Mapping, ...]
+
+@dataclass(frozen=True)
+class WaitClock:
+    bags: WaitBags
+    t0: int
+    exit_end: int
+    stay_end: int
+    enter_t: int
+    end: int
+```
+
+`partition_wait` / `wait_clocks` lock wait completeness. JS name:
+`partitionWait`. See [04-COMPOSITION-SEMANTICS.md](04-COMPOSITION-SEMANTICS.md).
 
 ---
 

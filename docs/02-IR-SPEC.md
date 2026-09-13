@@ -185,6 +185,11 @@ Unordered/ordered bag of children (root of most scenes).
 
 `children` must be non-empty or `PlanError`.
 
+`mode: "wait"` (Soft 3 lock): partition **direct** track/stagger children
+into bags `exits` / `stays` / `enters`; anything else is `nested` and
+starts at `t0`. Clocks: `exit_end`, `stay_end`, `enter_t`. Missing role
+is enter. `stagger_ms` applies to `parallel` / `sequence` only, not wait.
+
 ## Recipe object
 
 ```json

@@ -131,6 +131,23 @@
     return 1 - clamp01((rect.top + h) / (vh + h));
   }
 
+  function partitionWait(kids) {
+    // Soft 3: frozen bags exits/stays/enters/nested. Missing role is enter.
+    var bags = { exits: [], stays: [], enters: [], nested: [] };
+    (kids || []).forEach(function (n) {
+      if (!n) return;
+      if (n.kind === "track" || n.kind === "stagger") {
+        var role = n.role || "enter";
+        if (role === "exit") bags.exits.push(n);
+        else if (role === "enter") bags.enters.push(n);
+        else bags.stays.push(n);
+      } else {
+        bags.nested.push(n);
+      }
+    });
+    return bags;
+  }
+
   function collectTape(node, t0, items, reduced) {
     if (!node) return t0;
     var kind = node.kind;
@@ -206,34 +223,22 @@
       return t;
     }
     if (mode === "wait") {
-      var exits = [];
-      var stays = [];
-      var enters = [];
-      var nested = [];
-      kids.forEach(function (n) {
-        if (n.kind === "track" || n.kind === "stagger") {
-          if (n.role === "exit") exits.push(n);
-          else if (n.role === "enter") enters.push(n);
-          else stays.push(n);
-        } else {
-          nested.push(n);
-        }
-      });
+      var bags = partitionWait(kids);
       var exitEnd = t0;
-      exits.forEach(function (child) {
+      bags.exits.forEach(function (child) {
         exitEnd = Math.max(exitEnd, collectTape(child, t0, items, reduced));
       });
       var stayEnd = exitEnd;
-      stays.forEach(function (child) {
+      bags.stays.forEach(function (child) {
         stayEnd = Math.max(stayEnd, collectTape(child, exitEnd, items, reduced));
       });
       var nestedEnd = t0;
-      nested.forEach(function (child) {
+      bags.nested.forEach(function (child) {
         nestedEnd = Math.max(nestedEnd, collectTape(child, t0, items, reduced));
       });
-      var enterT = exits.length || stays.length ? stayEnd : t0;
+      var enterT = bags.exits.length || bags.stays.length ? stayEnd : t0;
       var enterEnd = enterT;
-      enters.forEach(function (child) {
+      bags.enters.forEach(function (child) {
         enterEnd = Math.max(enterEnd, collectTape(child, enterT, items, reduced));
       });
       return Math.max(stayEnd, nestedEnd, enterEnd);
@@ -616,34 +621,22 @@
       }, Promise.resolve());
     }
     if (mode === "wait") {
-      var exits = [];
-      var stays = [];
-      var enters = [];
-      var nested = [];
-      kids.forEach(function (n) {
-        if (n.kind === "track" || n.kind === "stagger") {
-          if (n.role === "exit") exits.push(n);
-          else if (n.role === "enter") enters.push(n);
-          else stays.push(n);
-        } else {
-          nested.push(n);
-        }
-      });
+      var waitBags = partitionWait(kids);
       return Promise.all([
-        Promise.all(exits.map(function (n) {
+        Promise.all(waitBags.exits.map(function (n) {
           return playTrack(n, reduced);
         }))
           .then(function () {
-            return Promise.all(stays.map(function (n) {
+            return Promise.all(waitBags.stays.map(function (n) {
               return playTrack(n, reduced);
             }));
           })
           .then(function () {
-            return Promise.all(enters.map(function (n) {
+            return Promise.all(waitBags.enters.map(function (n) {
               return playTrack(n, reduced);
             }));
           }),
-        Promise.all(nested.map(function (n) {
+        Promise.all(waitBags.nested.map(function (n) {
           return playNode(n, reduced, ctx);
         })),
       ]);

@@ -11,7 +11,7 @@ Every block is meant to run (or to be the exact fragment you drop into a running
 
 ### Public names in this cookbook
 
-`scene`, `fade`, `rise`, `explain`, `interpret`, `scrub`, `send`, `appear`, `swap`, `slide`, `scale`, `springy`, `blur`, `along`, `morph_d`, `page`, `modal`, `toast`, `list_stagger`, `play`, `cancel`, `rewind`, `dumps`, `loads`, `validate_plan`, `freeze_plan`, `PlanError`, `sequence`, `parallel`, `wait`, `tokens`, `snap`, `none`, `frames`, `span_ms`, `Document`, `Motion`, `MotionChannel`, `morph`
+`scene`, `fade`, `rise`, `explain`, `interpret`, `scrub`, `partition_wait`, `wait_clocks`, `send`, `appear`, `swap`, `slide`, `scale`, `springy`, `blur`, `along`, `morph_d`, `page`, `modal`, `toast`, `list_stagger`, `play`, `cancel`, `rewind`, `dumps`, `loads`, `validate_plan`, `freeze_plan`, `PlanError`, `sequence`, `parallel`, `wait`, `tokens`, `snap`, `none`, `frames`, `span_ms`, `Document`, `Motion`, `MotionChannel`, `morph`
 
 ## Contents
 
@@ -161,7 +161,7 @@ print(roundtrip["id"], validate_plan(roundtrip)["v"])  # v is "1"
 Nested groups are never flattened. The web player must produce the same start/end order for a given plan.
 
 ```python
-from ux_motion import scene, fade, rise, sequence, parallel, wait, play
+from ux_motion import scene, fade, rise, sequence, parallel, wait, wait_clocks, play
 
 exit_bit = scene("x").exit("#old", fade.exit()).plan()
 enter_bit = scene("x").enter("#new", rise.enter()).plan()
@@ -170,6 +170,9 @@ enter_bit = scene("x").enter("#new", rise.enter()).plan()
 print(sequence(exit_bit, enter_bit)["mode"])
 print(parallel(exit_bit, enter_bit)["mode"])
 print(wait(exit_bit, enter_bit)["mode"])
+
+plan = scene("nav").exit("#old", fade.exit(ms=100)).enter("#new", rise.enter(ms=80)).plan()
+print(wait_clocks(plan).enter_t)
 
 # Scene chaining also has .sequence() / .parallel() for subsequent tracks.
 ```

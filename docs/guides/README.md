@@ -5,7 +5,7 @@
 
 | Numbered source | How-to |
 |-----------------|--------|
-| [../07-ENHANCEMENTS.md](../07-ENHANCEMENTS.md) | share, bind, score, spring, along, morph.d, tokens, rewind, patterns |
+| [../07-ENHANCEMENTS.md](../07-ENHANCEMENTS.md) | share, bind, score, spring, along, morph.d, wait clocks, tokens, rewind, patterns |
 | [../09-TESTING.md](../09-TESTING.md) | Run tests; what they guarantee |
 | [../13-VERSIONING.md](../13-VERSIONING.md) | Semver policy, IR vs API, release checklist |
 | [../14-CHANNEL-COMPOSITOR.md](../14-CHANNEL-COMPOSITOR.md) | How to change MotionChannel later |

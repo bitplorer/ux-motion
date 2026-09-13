@@ -64,7 +64,21 @@ from ux_motion._ir import PlanError, validate_plan
 from ux_motion._version import API_VERSION, IR_VERSION, PLAYER_VERSION, __version__
 from ux_motion._ops import OP_CANCEL, OP_PLAY, OP_REWIND, as_update, cancel, play, rewind, rewind_plan, to_result
 from ux_motion._patterns import PATTERNS, list_stagger, modal, multi_hop_arrive, multi_hop_leave, page, shared_page, toast
-from ux_motion._player import Event, ScrubFrame, explain, frames, interpret, scrub, span_ms
+from ux_motion._player import (
+    Event,
+    ScrubFrame,
+    WAIT_BAGS,
+    WAIT_CLOCKS,
+    WaitBags,
+    WaitClock,
+    explain,
+    frames,
+    interpret,
+    partition_wait,
+    scrub,
+    span_ms,
+    wait_clocks,
+)
 from ux_motion._presence import Presence, region, stamp
 from ux_motion._recipes import Recipe, along, blur, fade, morph_d, none, rise, scale, slide, snap, springy
 from ux_motion._schema import schema
@@ -93,6 +107,10 @@ __all__ = [
     "ScrubFrame",
     "Scene",
     "Tokens",
+    "WAIT_BAGS",
+    "WAIT_CLOCKS",
+    "WaitBags",
+    "WaitClock",
     "along",
     "appear",
     "as_html",
@@ -125,6 +143,7 @@ __all__ = [
     "notice",
     "page",
     "parallel",
+    "partition_wait",
     "play",
     "region",
     "render_markup",
@@ -155,6 +174,7 @@ __all__ = [
     "track",
     "validate_plan",
     "wait",
+    "wait_clocks",
 ]
 
 Motion.appear = staticmethod(appear)

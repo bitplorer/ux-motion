@@ -9,7 +9,9 @@
 | **morph.d** | Soft 2: interpolate similar SVG path `d` (`morph_d`). Not `path` / along. |
 | **Phase** | Mode container for children |
 | **Group** | Named phase-like bag under `tracks` |
-| **wait** | Mode: exits before enters for *direct* tracks |
+| **wait** | Mode: exits before enters for *direct* tracks (Soft 3 locked) |
+| **wait bags** | `exits` / `stays` / `enters` / `nested` (`partition_wait`) |
+| **wait clocks** | `exit_end` / `stay_end` / `enter_t` (`wait_clocks`) |
 | **Presence** | Whether a target remains in the DOM and is marked present |
 | **after** | End-of-track DOM fate: keep / remove / hide |
 | **share** | Named identity continuity with client measurement (FLIP) |
