@@ -128,7 +128,7 @@ Start at **[START_HERE.md](START_HERE.md)**. Numbered set begins at **[docs/00-O
 | Tutorial | [START_HERE.md](START_HERE.md) · [docs/10-EXAMPLES.md](docs/10-EXAMPLES.md) |
 | How-to | [docs/guides/SNIPPETS.md](docs/guides/SNIPPETS.md) · [docs/09-TESTING.md](docs/09-TESTING.md) · [docs/14-CHANNEL-COMPOSITOR.md](docs/14-CHANNEL-COMPOSITOR.md) · [docs/07-ENHANCEMENTS.md](docs/07-ENHANCEMENTS.md) |
 | Reference | [docs/02-IR-SPEC.md](docs/02-IR-SPEC.md) · [docs/03-API-REFERENCE.md](docs/03-API-REFERENCE.md) · [docs/08-WIRE-PROTOCOL.md](docs/08-WIRE-PROTOCOL.md) |
-| Explanation | [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md) · [docs/01-ARCHITECTURE.md](docs/01-ARCHITECTURE.md) · [docs/06-DESIGN-DECISIONS.md](docs/06-DESIGN-DECISIONS.md) · [OWNERSHIP.md](OWNERSHIP.md) |
+| Explanation | [docs/PLACE.md](docs/PLACE.md) · [docs/00-OVERVIEW.md](docs/00-OVERVIEW.md) · [docs/01-ARCHITECTURE.md](docs/01-ARCHITECTURE.md) · [docs/06-DESIGN-DECISIONS.md](docs/06-DESIGN-DECISIONS.md) · [OWNERSHIP.md](OWNERSHIP.md) |
 
 Do not cite `Moved (Phase 2 Diátaxis)` stubs as canonical.
 
