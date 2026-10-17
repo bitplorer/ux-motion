@@ -9,7 +9,6 @@ from ux_motion import (
     Recipe,
     appear,
     css_target,
-    fade,
     freeze_plan,
     hop,
     leave,
