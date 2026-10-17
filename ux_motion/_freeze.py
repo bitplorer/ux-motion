@@ -10,12 +10,7 @@ from __future__ import annotations
 from typing import Any, Iterator, Mapping
 
 from ux_motion._ir import (
-    KIND_BIND,
-    KIND_CUE,
-    KIND_GROUP,
-    KIND_PHASE,
     KIND_PLAN,
-    KIND_SCORE,
     validate_plan,
 )
 from ux_motion._render import is_renderable, render_markup

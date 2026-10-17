@@ -9,6 +9,16 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Removed — dead imports (no API change)
+
+- Unused imports in `ux_motion/_api.py` (`rewind_plan`), `ux_motion/_freeze.py`
+  (five `KIND_*` constants) and `ux_motion/_patterns.py` (`Mapping`, `cue`,
+  `score`), plus unused imports in `tests/` and `examples/minimal.py`.
+  The public facade (`ux_motion.__all__`) is unchanged.
+- `tests/test_no_unused_imports.py` (stdlib only) keeps them gone.
+- Version stays 1.3.0: the library, the player JS and `CONTRACT` move in
+  lockstep (docs/13-VERSIONING.md), and nothing in the API or player changed.
+
 ### Docs Soft — Soft 1–3 teaching (2026-09-13)
 
 - Human-readable Soft 1 (`scrub` / `UxMotion.scrub`), Soft 2 (`morph_d` /

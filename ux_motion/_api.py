@@ -21,7 +21,6 @@ from ux_motion._ir import (
 from ux_motion._markup import as_html
 from ux_motion._ops import cancel as emit_cancel
 from ux_motion._ops import play as emit_play
-from ux_motion._ops import rewind_plan
 from ux_motion._recipes import Recipe
 
 
