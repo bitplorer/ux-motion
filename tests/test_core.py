@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import unittest
 
 from ux_motion import (
@@ -18,8 +17,6 @@ from ux_motion import (
     PlanError,
     along,
     as_update,
-    bind,
-    compile_plan,
     cue,
     dumps,
     explain,
@@ -32,9 +29,7 @@ from ux_motion import (
     rise,
     scene,
     schema,
-    score,
     send,
-    share,
     slide,
     span_ms,
     springy,

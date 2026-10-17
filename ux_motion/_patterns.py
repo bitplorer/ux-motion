@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Any, Mapping
+from typing import Any
 
-from ux_motion._api import cue, score, wait
+from ux_motion._api import wait
 from ux_motion._api import scene as build_scene
 from ux_motion._recipes import fade, rise, scale, slide
 from ux_motion._tokens import tokens
