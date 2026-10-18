@@ -9,6 +9,8 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+- **Deps:** optional ``ux-dom`` peer pinned to ``19af869`` (F-14).
+
 ### Removed — dead imports (no API change)
 
 - Unused imports in `ux_motion/_api.py` (`rewind_plan`), `ux_motion/_freeze.py`
