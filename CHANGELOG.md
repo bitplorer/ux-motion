@@ -9,6 +9,20 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Fixed — Idiomorph throw keeps a focused host
+
+`injectHtml` caught an Idiomorph failure, `replaceChild`'d the live host,
+and did not log or rethrow. A focused input was a new node: focus and the
+typed value were gone, and the caller saw a successful morph. If the host
+is focused or contains the focused element, the host now stays (value
+included) and the error is written with `console.error`. An unfocused host
+still falls back to `replaceChild` after that log. Rethrowing would abort
+`applyOp` before the caller can observe the preserved node.
+
+Host-owned escaping is unchanged. The compositor doc no longer says this
+path never uses raw `innerHTML`: the incoming string is parsed with
+`innerHTML`, and the no-element / no-Idiomorph fallbacks assign it too.
+
 ### Fixed — explicit duration 0 stays 0
 
 An explicit recipe `duration` of `0` was rewritten to a default. Python

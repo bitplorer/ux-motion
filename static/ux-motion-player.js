@@ -491,6 +491,19 @@
           restoreFocus: false,
         });
       } catch (err) {
+        // Never swallow. A focused host (or one that contains the focused
+        // element) stays put: replaceChild would drop the caret and the
+        // typed value. Unfocused hosts keep the replaceChild fallback.
+        if (typeof console !== "undefined" && console.error) {
+          console.error("[ux-motion] injectHtml", err);
+        }
+        var active = document.activeElement;
+        var focusInside =
+          active &&
+          active !== document.body &&
+          active !== document.documentElement &&
+          (active === host || (host.contains && host.contains(active)));
+        if (focusInside) return host;
         if (host.parentNode) {
           host.parentNode.replaceChild(incoming, host);
           return incoming;
