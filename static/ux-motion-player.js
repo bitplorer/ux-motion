@@ -170,7 +170,7 @@
     if (kind === "stagger") {
       var recs = node.recipe || {};
       var durationS = recipeDuration(recs, reduced);
-      var gap = node.gap_ms || 40;
+      var gap = node.gap_ms == null ? 40 : node.gap_ms;
       var n = qa(node.selector).length || 3;
       var endS = t0;
       for (var i = 0; i < n; i++) {
@@ -565,7 +565,7 @@
       return Promise.all(
         els.map(function (el, i) {
           var rec = Object.assign({}, node.recipe, {
-            delay: (node.recipe.delay || 0) + i * (node.gap_ms || 40),
+            delay: (node.recipe.delay || 0) + i * (node.gap_ms == null ? 40 : node.gap_ms),
           });
           mark(el, node.role, node.role !== "exit");
           return animateEl(el, rec, node.selector + "#" + i, reduced).then(function () {

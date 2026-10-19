@@ -77,7 +77,8 @@ def _emit_track(node: Mapping[str, Any], t0: int, events: list[Event], counts: M
     if kind == KIND_STAGGER:
         sel = str(node["selector"])
         n = int(counts.get(sel, 3))
-        gap = int(node.get("gap_ms") or 40)
+        raw_gap = node.get("gap_ms")
+        gap = 40 if raw_gap is None else int(raw_gap)
         end = t0
         for i in range(n):
             start = t0 + int(recipe.get("delay") or 0) + i * gap

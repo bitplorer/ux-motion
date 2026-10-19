@@ -9,6 +9,13 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Fixed — explicit stagger gap of 0 stays 0
+
+`stagger_in(gap_ms=0)` was stored as 0 and then widened to 40.
+Python `span_ms` used `gap_ms or 40`. The web player did the same with
+`gap_ms || 40` on the scrub tape and on stagger playback. A missing gap
+is still 40. `0` now stays `0`.
+
 ### Fixed — Idiomorph throw keeps a focused host
 
 `injectHtml` caught an Idiomorph failure, `replaceChild`'d the live host,
