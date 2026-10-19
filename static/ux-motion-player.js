@@ -105,7 +105,7 @@
     if (recipe.spring || recipe.engine === "spring") {
       return skip ? 0 : simplify ? 80 : springDuration(recipe.spring);
     }
-    return skip ? 0 : simplify ? Math.min(recipe.duration || 0, 80) : recipe.duration || 240;
+    return skip ? 0 : simplify ? Math.min(recipe.duration || 0, 80) : recipe.duration ?? 240;
   }
 
   function measureScrollProgress(host, axis) {
@@ -265,6 +265,9 @@
     cancelTarget(key);
     try {
       var anim = el.animate([kf(recipe && recipe.from, recipe, "from"), kf(recipe && recipe.to, recipe, "to")], {
+        // 1ms floor: a paused scrub tape seeks currentTime, and a 0ms effect
+        // is already finished (not seekable). Logical duration from
+        // recipeDuration is unchanged. animateEl passes 0 through.
         duration: duration || 1,
         delay: 0,
         easing: recipe && recipe.spring ? "cubic-bezier(0.22, 1, 0.36, 1)" : (recipe && recipe.easing) || "ease-out",
@@ -404,7 +407,7 @@
     if (recipe.spring || recipe.engine === "spring") {
       duration = skip ? 0 : simplify ? 80 : springDuration(recipe.spring);
     } else {
-      duration = skip ? 0 : simplify ? Math.min(recipe.duration || 0, 80) : recipe.duration || 240;
+      duration = skip ? 0 : simplify ? Math.min(recipe.duration || 0, 80) : recipe.duration ?? 240;
     }
     var delay = skip ? 0 : recipe.delay || 0;
     cancelTarget(key);
@@ -533,7 +536,7 @@
     var inv = {
       from: { x: dx, y: dy, scale: (sx + sy) / 2, opacity: 1 },
       to: { x: 0, y: 0, scale: 1, opacity: 1 },
-      duration: recipe.duration || 320,
+      duration: recipe.duration ?? 320,
       delay: recipe.delay || 0,
       easing: recipe.easing || "cubic-bezier(0.16, 1, 0.3, 1)",
       fill: "both",

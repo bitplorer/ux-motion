@@ -88,7 +88,9 @@ def _emit_track(node: Mapping[str, Any], t0: int, events: list[Event], counts: M
             end = max(end, finish)
         return end
     if kind == KIND_SHARE:
-        duration = int(recipe.get("duration") or 320) + int(recipe.get("delay") or 0)
+        # 0 is a real duration (instant). Default 320 only when unset.
+        raw_duration = recipe.get("duration")
+        duration = (320 if raw_duration is None else int(raw_duration)) + int(recipe.get("delay") or 0)
         leave = str(node["leave"])
         arrive = str(node["arrive"])
         sid = str(node["id"])

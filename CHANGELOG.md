@@ -9,6 +9,22 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Fixed — explicit duration 0 stays 0
+
+An explicit recipe `duration` of `0` was rewritten to a default. Python
+`span_ms` on a share used `duration or 320` (a track already kept 0; 240
+is only the recipe default when duration is unset). The web player used
+`|| 240` for tracks and `|| 320` for share, so `Element.animate` never
+saw 0. Missing duration still defaults to 240 (track / `recipeDuration`)
+or 320 (share when the recipe omits it). `0` now stays `0` on both
+players (`??` in the web player).
+
+`armEl` still passes `duration || 1` into WAAPI. A scrub tape pauses the
+effect and seeks `currentTime`; a 0 ms effect is already finished and is
+not seekable. That 1 ms floor is only the WAAPI timing option. Logical
+duration from `recipeDuration` is unchanged, and `animateEl` (play) passes
+the real duration, including 0.
+
 ### Removed — dead imports (no API change)
 
 - Unused imports in `ux_motion/_api.py` (`rewind_plan`), `ux_motion/_freeze.py`
