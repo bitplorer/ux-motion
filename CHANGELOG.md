@@ -9,6 +9,19 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Fixed — reduced simplify uses the duration default when unset
+
+`Math.min(duration || 0, 80)` turned a missing duration into 0 under
+`prefers-reduced-motion` and `reduced: simplify`. A missing duration now
+uses 240 and then caps at 80, on both playback and the scrub tape. An
+explicit `0` stays `0`.
+
+### Fixed — page exit_ms and enter_ms of 0 stay 0
+
+`page(exit_ms=0, enter_ms=0)` used `ms or token`, so an explicit 0 became
+the exit and enter tokens (220 and 280). Omitted values still use those
+tokens. `0` now stays `0`.
+
 ### Fixed — explicit stagger gap of 0 stays 0
 
 `stagger_in(gap_ms=0)` was stored as 0 and then widened to 40.

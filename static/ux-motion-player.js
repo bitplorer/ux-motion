@@ -105,7 +105,8 @@
     if (recipe.spring || recipe.engine === "spring") {
       return skip ? 0 : simplify ? 80 : springDuration(recipe.spring);
     }
-    return skip ? 0 : simplify ? Math.min(recipe.duration || 0, 80) : recipe.duration == null ? 240 : recipe.duration;
+    var dur = recipe.duration == null ? 240 : recipe.duration;
+    return skip ? 0 : simplify ? Math.min(dur, 80) : dur;
   }
 
   function measureScrollProgress(host, axis) {
@@ -407,7 +408,8 @@
     if (recipe.spring || recipe.engine === "spring") {
       duration = skip ? 0 : simplify ? 80 : springDuration(recipe.spring);
     } else {
-      duration = skip ? 0 : simplify ? Math.min(recipe.duration || 0, 80) : recipe.duration == null ? 240 : recipe.duration;
+      var dur = recipe.duration == null ? 240 : recipe.duration;
+      duration = skip ? 0 : simplify ? Math.min(dur, 80) : dur;
     }
     var delay = skip ? 0 : recipe.delay || 0;
     cancelTarget(key);
