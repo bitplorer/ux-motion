@@ -39,6 +39,10 @@ included) and the error is written with `console.error`. An unfocused host
 still falls back to `replaceChild` after that log. Rethrowing would abort
 `applyOp` before the caller can observe the preserved node.
 
+If Idiomorph throws partway through, the focused element is left as
+Idiomorph left it: old and new content can be mixed. The error goes to
+`console.error`, and the node is not replaced.
+
 Host-owned escaping is unchanged. The compositor doc no longer says this
 path never uses raw `innerHTML`: the incoming string is parsed with
 `innerHTML`, and the no-element / no-Idiomorph fallbacks assign it too.
