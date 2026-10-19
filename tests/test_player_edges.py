@@ -14,7 +14,7 @@ import subprocess
 import unittest
 from pathlib import Path
 
-from ux_motion import fade, scene, span_ms, validate_plan
+from ux_motion import fade, interpret, scene, span_ms, validate_plan
 from ux_motion._player import _emit_track
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -177,3 +177,43 @@ class InjectHtmlTests(unittest.TestCase):
         logged = " ".join(got["errors_surfaced"])
         self.assertIn("idiomorph failed", logged)
         self.assertIsNone(got["thrown"])
+
+
+class GapZeroTests(unittest.TestCase):
+    def test_default_stagger_gap_stays_40(self) -> None:
+        plan = scene("g").stagger_in(".item", fade.enter(ms=10)).plan()
+        starts = [e.t for e in interpret(plan, counts={".item": 3}) if e.event == "start"]
+        self.assertEqual(starts, [0, 40, 80])
+
+    def test_explicit_stagger_gap_zero(self) -> None:
+        plan = scene("g").stagger_in(".item", fade.enter(ms=10), gap_ms=0).plan()
+        self.assertEqual(plan["root"]["children"][0]["gap_ms"], 0)
+        starts = [e.t for e in interpret(plan, counts={".item": 3}) if e.event == "start"]
+        self.assertEqual(starts, [0, 0, 0])
+
+    def test_player_stagger_gap_zero(self) -> None:
+        plan = scene("g").stagger_in(".item", fade.enter(ms=10), gap_ms=0).plan()
+        plan["reduced"] = "honor"
+        got = _node_player(
+            {
+                "probe": "duration",
+                "plans": {"stagger": {"sel": ".item", "plan": plan, "delays": True}},
+            }
+        )
+        self.assertEqual(got["staggerDelays"], [0, 0, 0])
+
+    def test_player_tape_gap_zero(self) -> None:
+        plan = (
+            scene("tape")
+            .bind_to("progress", "#a")
+            .stagger_in(".item", fade.enter(ms=100), gap_ms=0)
+            .plan()
+        )
+        plan["reduced"] = "honor"
+        got = _node_player(
+            {
+                "probe": "duration",
+                "plans": {"tape": {"sel": ".item", "plan": plan, "scrub": 0.5}},
+            }
+        )
+        self.assertEqual(got["tapeTimes"], [50, 50, 50])

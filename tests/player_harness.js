@@ -8,6 +8,7 @@ const fs = require("fs");
 
 const VOID = { input: 1, img: 1, br: 1, hr: 1, meta: 1, link: 1, source: 1 };
 const animCalls = [];
+const currentTimes = [];
 const errors = [];
 
 function Element(tag) {
@@ -132,14 +133,26 @@ Element.prototype.focus = function () {
 
 Element.prototype.animate = function (keyframes, opts) {
   var duration = opts && typeof opts === "object" ? opts.duration : opts;
-  animCalls.push({ id: this.id, duration: duration });
-  return {
+  var delay = opts && typeof opts === "object" && opts.delay != null ? opts.delay : 0;
+  var call = { id: this.id, className: this.attrs.class || "", duration: duration, delay: delay };
+  animCalls.push(call);
+  var clock = { t: 0 };
+  var anim = {
     finished: Promise.resolve(),
     pause: function () {},
     cancel: function () {},
     commitStyles: function () {},
-    currentTime: 0,
   };
+  Object.defineProperty(anim, "currentTime", {
+    get: function () {
+      return clock.t;
+    },
+    set: function (value) {
+      clock.t = value;
+      currentTimes.push({ id: call.id, t: value });
+    },
+  });
+  return anim;
 };
 
 function parseAttrs(raw, el) {
@@ -211,9 +224,14 @@ function walk(node, visit) {
 function queryAll(root, sel) {
   var found = [];
   var id = sel.charAt(0) === "#" ? sel.slice(1) : null;
+  var cls = sel.charAt(0) === "." ? sel.slice(1) : null;
   walk(root, function (node) {
     if (id) {
       if (node.id === id) found.push(node);
+      return;
+    }
+    if (cls) {
+      if ((node.attrs.class || "") === cls) found.push(node);
       return;
     }
     if (node.tagName.toLowerCase() === sel.toLowerCase()) found.push(node);
@@ -250,9 +268,10 @@ document.documentElement = html;
 document.body = body;
 document.activeElement = body;
 
-function mount(tag, id) {
+function mount(tag, id, className) {
   var node = new Element(tag);
-  node.id = id;
+  if (id) node.id = id;
+  if (className) node.setAttribute("class", className);
   body.appendChild(node);
   return node;
 }
@@ -266,6 +285,9 @@ input.id = "q";
 input.value = "typed";
 card.appendChild(input);
 mount("div", "x");
+mount("div", "item0", "item");
+mount("div", "item1", "item");
+mount("div", "item2", "item");
 
 const realError = console.error;
 console.error = function () {
@@ -285,12 +307,23 @@ global.CustomEvent = function CustomEvent(type, init) {
 const playerPath = process.argv[2];
 eval(fs.readFileSync(playerPath, "utf8"));
 
-function durationsFor(sel) {
-  var id = sel.charAt(0) === "#" ? sel.slice(1) : sel;
+function callsFor(sel) {
   return animCalls.filter(function (call) {
-    return call.id === id;
-  }).map(function (call) {
+    if (sel.charAt(0) === "#") return call.id === sel.slice(1);
+    if (sel.charAt(0) === ".") return call.className === sel.slice(1);
+    return call.id === sel;
+  });
+}
+
+function durationsFor(sel) {
+  return callsFor(sel).map(function (call) {
     return call.duration;
+  });
+}
+
+function delaysFor(sel) {
+  return callsFor(sel).map(function (call) {
+    return call.delay;
   });
 }
 
@@ -299,12 +332,22 @@ async function playLabeled(plans) {
   var labels = Object.keys(plans);
   for (var i = 0; i < labels.length; i++) {
     var label = labels[i];
+    var entry = plans[label];
     animCalls.length = 0;
+    currentTimes.length = 0;
     try {
       UxMotion.cancel();
     } catch (err) {}
-    await UxMotion.play(plans[label].plan);
-    out[label] = durationsFor(plans[label].sel);
+    await UxMotion.play(entry.plan);
+    out[label] = durationsFor(entry.sel);
+    if (entry.delays) out[label + "Delays"] = delaysFor(entry.sel);
+    if (entry.scrub != null) {
+      currentTimes.length = 0;
+      UxMotion.scrub(entry.plan.id, entry.scrub);
+      out[label + "Times"] = currentTimes.map(function (row) {
+        return row.t;
+      });
+    }
   }
   return out;
 }
