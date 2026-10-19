@@ -14,7 +14,7 @@ import subprocess
 import unittest
 from pathlib import Path
 
-from ux_motion import fade, interpret, scene, span_ms, validate_plan
+from ux_motion import fade, interpret, page, scene, span_ms, tokens, validate_plan
 from ux_motion._player import _emit_track
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -217,3 +217,18 @@ class GapZeroTests(unittest.TestCase):
             }
         )
         self.assertEqual(got["tapeTimes"], [50, 50, 50])
+
+
+class PageZeroTests(unittest.TestCase):
+    def test_page_defaults_keep_token_durations(self) -> None:
+        plan = page(leave="#old", arrive="#new")
+        durations = {child["role"]: child["recipe"]["duration"] for child in plan["root"]["children"]}
+        self.assertEqual(durations["exit"], tokens.ms("exit"))
+        self.assertEqual(durations["enter"], tokens.ms("enter"))
+
+    def test_page_explicit_zero_durations(self) -> None:
+        plan = page(leave="#old", arrive="#new", exit_ms=0, enter_ms=0)
+        durations = {child["role"]: child["recipe"]["duration"] for child in plan["root"]["children"]}
+        self.assertEqual(durations["exit"], 0)
+        self.assertEqual(durations["enter"], 0)
+        self.assertEqual(span_ms(plan), 0)
