@@ -105,7 +105,8 @@
     if (recipe.spring || recipe.engine === "spring") {
       return skip ? 0 : simplify ? 80 : springDuration(recipe.spring);
     }
-    return skip ? 0 : simplify ? Math.min(recipe.duration || 0, 80) : recipe.duration || 240;
+    var dur = recipe.duration == null ? 240 : recipe.duration;
+    return skip ? 0 : simplify ? Math.min(dur, 80) : dur;
   }
 
   function measureScrollProgress(host, axis) {
@@ -170,7 +171,7 @@
     if (kind === "stagger") {
       var recs = node.recipe || {};
       var durationS = recipeDuration(recs, reduced);
-      var gap = node.gap_ms || 40;
+      var gap = node.gap_ms == null ? 40 : node.gap_ms;
       var n = qa(node.selector).length || 3;
       var endS = t0;
       for (var i = 0; i < n; i++) {
@@ -265,6 +266,9 @@
     cancelTarget(key);
     try {
       var anim = el.animate([kf(recipe && recipe.from, recipe, "from"), kf(recipe && recipe.to, recipe, "to")], {
+        // 1ms floor: a paused scrub tape seeks currentTime, and a 0ms effect
+        // is already finished (not seekable). Logical duration from
+        // recipeDuration is unchanged. animateEl passes 0 through.
         duration: duration || 1,
         delay: 0,
         easing: recipe && recipe.spring ? "cubic-bezier(0.22, 1, 0.36, 1)" : (recipe && recipe.easing) || "ease-out",
@@ -404,7 +408,8 @@
     if (recipe.spring || recipe.engine === "spring") {
       duration = skip ? 0 : simplify ? 80 : springDuration(recipe.spring);
     } else {
-      duration = skip ? 0 : simplify ? Math.min(recipe.duration || 0, 80) : recipe.duration || 240;
+      var dur = recipe.duration == null ? 240 : recipe.duration;
+      duration = skip ? 0 : simplify ? Math.min(dur, 80) : dur;
     }
     var delay = skip ? 0 : recipe.delay || 0;
     cancelTarget(key);
@@ -488,6 +493,19 @@
           restoreFocus: false,
         });
       } catch (err) {
+        // Never swallow. A focused host (or one that contains the focused
+        // element) stays put: replaceChild would drop the caret and the
+        // typed value. Unfocused hosts keep the replaceChild fallback.
+        if (typeof console !== "undefined" && console.error) {
+          console.error("[ux-motion] injectHtml", err);
+        }
+        var active = document.activeElement;
+        var focusInside =
+          active &&
+          active !== document.body &&
+          active !== document.documentElement &&
+          (active === host || (host.contains && host.contains(active)));
+        if (focusInside) return host;
         if (host.parentNode) {
           host.parentNode.replaceChild(incoming, host);
           return incoming;
@@ -533,7 +551,7 @@
     var inv = {
       from: { x: dx, y: dy, scale: (sx + sy) / 2, opacity: 1 },
       to: { x: 0, y: 0, scale: 1, opacity: 1 },
-      duration: recipe.duration || 320,
+      duration: recipe.duration == null ? 320 : recipe.duration,
       delay: recipe.delay || 0,
       easing: recipe.easing || "cubic-bezier(0.16, 1, 0.3, 1)",
       fill: "both",
@@ -549,7 +567,7 @@
       return Promise.all(
         els.map(function (el, i) {
           var rec = Object.assign({}, node.recipe, {
-            delay: (node.recipe.delay || 0) + i * (node.gap_ms || 40),
+            delay: (node.recipe.delay || 0) + i * (node.gap_ms == null ? 40 : node.gap_ms),
           });
           mark(el, node.role, node.role !== "exit");
           return animateEl(el, rec, node.selector + "#" + i, reduced).then(function () {

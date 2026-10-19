@@ -21,8 +21,8 @@ def page(
     """Classic page transition: exit old, then enter new."""
     return (
         build_scene(name)
-        .exit(leave, fade.exit(ms=exit_ms or tokens.ms("exit")), after="hide")
-        .enter(arrive, rise.enter(ms=enter_ms or tokens.ms("enter")))
+        .exit(leave, fade.exit(ms=tokens.ms("exit") if exit_ms is None else exit_ms), after="hide")
+        .enter(arrive, rise.enter(ms=tokens.ms("enter") if enter_ms is None else enter_ms))
         .plan()
     )
 

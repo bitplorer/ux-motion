@@ -9,6 +9,61 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Fixed — reduced simplify uses the duration default when unset
+
+`Math.min(duration || 0, 80)` turned a missing duration into 0 under
+`prefers-reduced-motion` and `reduced: simplify`. A missing duration now
+uses 240 and then caps at 80, on both playback and the scrub tape. An
+explicit `0` stays `0`.
+
+### Fixed — page exit_ms and enter_ms of 0 stay 0
+
+`page(exit_ms=0, enter_ms=0)` used `ms or token`, so an explicit 0 became
+the exit and enter tokens (220 and 280). Omitted values still use those
+tokens. `0` now stays `0`.
+
+### Fixed — explicit stagger gap of 0 stays 0
+
+`stagger_in(gap_ms=0)` was stored as 0 and then widened to 40.
+Python `span_ms` used `gap_ms or 40`. The web player did the same with
+`gap_ms || 40` on the scrub tape and on stagger playback. A missing gap
+is still 40. `0` now stays `0`.
+
+### Fixed — Idiomorph throw keeps a focused host
+
+`injectHtml` caught an Idiomorph failure, `replaceChild`'d the live host,
+and did not log or rethrow. A focused input was a new node: focus and the
+typed value were gone, and the caller saw a successful morph. If the host
+is focused or contains the focused element, the host now stays (value
+included) and the error is written with `console.error`. An unfocused host
+still falls back to `replaceChild` after that log. Rethrowing would abort
+`applyOp` before the caller can observe the preserved node.
+
+If Idiomorph throws partway through, the focused element is left as
+Idiomorph left it: old and new content can be mixed. The error goes to
+`console.error`, and the node is not replaced.
+
+Host-owned escaping is unchanged. The compositor doc no longer says this
+path never uses raw `innerHTML`: the incoming string is parsed with
+`innerHTML`, and the no-element / no-Idiomorph fallbacks assign it too.
+
+### Fixed — explicit duration 0 stays 0
+
+An explicit recipe `duration` of `0` was rewritten to a default. Python
+`span_ms` on a share used `duration or 320` (a track already kept 0; 240
+is only the recipe default when duration is unset). The web player used
+`|| 240` for tracks and `|| 320` for share, so `Element.animate` never
+saw 0. Missing duration still defaults to 240 (track / `recipeDuration`)
+or 320 (share when the recipe omits it). `0` now stays `0` on both
+players. The web player uses `duration == null ? default : duration`
+(ES5; `??` is not used).
+
+`armEl` still passes `duration || 1` into WAAPI. A scrub tape pauses the
+effect and seeks `currentTime`; a 0 ms effect is already finished and is
+not seekable. That 1 ms floor is only the WAAPI timing option. Logical
+duration from `recipeDuration` is unchanged, and `animateEl` (play) passes
+the real duration, including 0.
+
 ### Removed — dead imports (no API change)
 
 - Unused imports in `ux_motion/_api.py` (`rewind_plan`), `ux_motion/_freeze.py`

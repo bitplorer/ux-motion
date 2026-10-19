@@ -39,7 +39,7 @@ document.use(Motion(), MotionChannel())
 |-------|------|
 | `ux_motion.MotionChannel` | `name="ux_motion.channel"`; injects the hook |
 | `ux-motion-channel.js` | `channel:beforeApply` peels `transition.*` into `result._uxMotion`; `channel:afterApply` calls `UxMotion.applyOps` |
-| Player `applyOp("morph")` | Uses `injectHtml` (Idiomorph when host `id` matches), never raw `innerHTML` |
+| Player `applyOp("morph")` | Uses `injectHtml` (Idiomorph when host `id` matches). The incoming string is parsed with `innerHTML`; the no-element and no-Idiomorph paths assign it too. Escaping stays with the host |
 
 Motion **does not** import `ux_channel`. Channel **does not** import
 motion. Event names (`channel:beforeApply` / `afterApply`) are public
