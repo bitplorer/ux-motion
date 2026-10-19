@@ -330,7 +330,6 @@ function morphOnce(focused) {
     });
   } catch (err) {
     thrown = String(err && err.message ? err.message : err);
-    errors.push(thrown);
   }
   var after = document.getElementById("card");
   var active = document.activeElement;

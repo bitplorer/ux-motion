@@ -15,6 +15,7 @@ import unittest
 from pathlib import Path
 
 from ux_motion import fade, scene, span_ms, validate_plan
+from ux_motion._player import _emit_track
 
 ROOT = Path(__file__).resolve().parents[1]
 PLAYER = ROOT / "ux_motion" / "scripts" / "ux-motion-player.js"
@@ -90,6 +91,27 @@ class DurationZeroTests(unittest.TestCase):
         self.assertEqual(share["root"]["children"][0]["recipe"]["duration"], 320)
         self.assertEqual(span_ms(share), 320)
 
+    def test_share_without_recipe_span_uses_player_default(self) -> None:
+        # Author omitted the recipe. span_ms revalidates and stores duration
+        # 320 on the plan; the player fallback is the other copy of that 320.
+        plan = scene("bare").share("hero", leave="#leave", arrive="#arrive").plan()
+        self.assertEqual(span_ms(plan), 320)
+        events: list = []
+        end = _emit_track(
+            {
+                "kind": "share",
+                "id": "hero",
+                "leave": "#leave",
+                "arrive": "#arrive",
+                "recipe": {"name": "share"},
+            },
+            0,
+            events,
+            {},
+        )
+        self.assertEqual(end, 320)
+        self.assertEqual([e.t for e in events if e.event == "end"], [320, 320])
+
     def test_share_span_keeps_explicit_zero(self) -> None:
         self.assertEqual(span_ms(_zero_share()), 0)
 
@@ -144,9 +166,14 @@ class InjectHtmlTests(unittest.TestCase):
         self.assertTrue(got["same_node"], got)
         self.assertTrue(got["focus_kept"], got)
         self.assertEqual(got["input_value"], "typed")
-        self.assertTrue(got["errors_surfaced"] or got["thrown"], got)
+        self._assert_idiomorph_logged(got)
 
     def test_unfocused_idiomorph_throw_still_replaces_and_surfaces(self) -> None:
         got = _node_player({"probe": "morph"})["unfocused"]
         self.assertFalse(got["same_node"], got)
-        self.assertTrue(got["errors_surfaced"] or got["thrown"], got)
+        self._assert_idiomorph_logged(got)
+
+    def _assert_idiomorph_logged(self, got: dict) -> None:
+        logged = " ".join(got["errors_surfaced"])
+        self.assertIn("idiomorph failed", logged)
+        self.assertIsNone(got["thrown"])
