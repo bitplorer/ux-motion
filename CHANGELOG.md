@@ -31,7 +31,8 @@ is only the recipe default when duration is unset). The web player used
 `|| 240` for tracks and `|| 320` for share, so `Element.animate` never
 saw 0. Missing duration still defaults to 240 (track / `recipeDuration`)
 or 320 (share when the recipe omits it). `0` now stays `0` on both
-players (`??` in the web player).
+players. The web player uses `duration == null ? default : duration`
+(ES5; `??` is not used).
 
 `armEl` still passes `duration || 1` into WAAPI. A scrub tape pauses the
 effect and seeks `currentTime`; a 0 ms effect is already finished and is
