@@ -392,6 +392,11 @@ function morphOnce(focused) {
 async function main() {
   var raw = fs.readFileSync(0, "utf8");
   var req = JSON.parse(raw);
+  if (req.reducedMotion) {
+    global.matchMedia = function (query) {
+      return { matches: String(query).indexOf("prefers-reduced-motion") !== -1 };
+    };
+  }
   var result;
   if (req.probe === "duration") {
     result = await playLabeled(req.plans);

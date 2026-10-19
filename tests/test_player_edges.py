@@ -232,3 +232,53 @@ class PageZeroTests(unittest.TestCase):
         self.assertEqual(durations["exit"], 0)
         self.assertEqual(durations["enter"], 0)
         self.assertEqual(span_ms(plan), 0)
+
+
+class SimplifyDurationTests(unittest.TestCase):
+    def _play(self, plan: dict, sel: str = "#a") -> dict:
+        return _node_player(
+            {
+                "probe": "duration",
+                "reducedMotion": True,
+                "plans": {"track": {"sel": sel, "plan": plan}},
+            }
+        )
+
+    def test_simplify_caps_a_long_duration(self) -> None:
+        plan = scene("cap").enter("#a", fade.enter().with_duration(200)).plan()
+        self.assertEqual(self._play(plan)["track"], [80])
+
+    def test_simplify_explicit_zero_stays_zero(self) -> None:
+        plan = scene("zero").enter("#a", fade.enter().with_duration(0)).plan()
+        self.assertEqual(self._play(plan)["track"], [0])
+
+    def test_simplify_omitted_duration_uses_default(self) -> None:
+        plan = _plan(
+            {
+                "kind": "track",
+                "target": "#a",
+                "role": "enter",
+                "recipe": {"name": "custom", "from": {"opacity": 0}, "to": {"opacity": 1}},
+            },
+            "simplify-unset",
+        )
+        plan["reduced"] = "simplify"
+        self.assertEqual(self._play(plan)["track"], [80])
+
+    def test_simplify_tape_omitted_duration_uses_default(self) -> None:
+        plan = _plan(
+            {
+                "kind": "bind",
+                "input": "progress",
+                "target": "#a",
+                "child": {
+                    "kind": "track",
+                    "target": "#a",
+                    "role": "enter",
+                    "recipe": {"name": "custom"},
+                },
+            },
+            "simplify-tape",
+        )
+        plan["reduced"] = "simplify"
+        self.assertEqual(self._play(plan)["track"], [80])
