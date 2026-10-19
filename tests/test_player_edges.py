@@ -145,6 +145,27 @@ class DurationZeroTests(unittest.TestCase):
         self.assertEqual(got["track"], [240])
         self.assertEqual(got["share"], [320])
 
+    def test_player_share_recipe_without_duration_uses_320(self) -> None:
+        # A recipe object is present, so the no-recipe literal is not used.
+        # The 320 beside that read is what Element.animate must see.
+        plan = _plan(
+            {
+                "kind": "share",
+                "id": "hero",
+                "leave": "#leave",
+                "arrive": "#arrive",
+                "recipe": {"name": "share"},
+            },
+            "js-share-no-duration",
+        )
+        got = _node_player(
+            {
+                "probe": "duration",
+                "plans": {"share": {"sel": "#arrive", "plan": plan}},
+            }
+        )
+        self.assertEqual(got["share"], [320])
+
     def test_player_track_and_share_animate_explicit_zero(self) -> None:
         got = _node_player(
             {
@@ -174,7 +195,9 @@ class InjectHtmlTests(unittest.TestCase):
         self._assert_idiomorph_logged(got)
 
     def _assert_idiomorph_logged(self, got: dict) -> None:
-        logged = " ".join(got["errors_surfaced"])
+        self.assertEqual(len(got["errors_surfaced"]), 1, got)
+        logged = got["errors_surfaced"][0]
+        self.assertTrue(logged.startswith("[ux-motion] injectHtml"), logged)
         self.assertIn("idiomorph failed", logged)
         self.assertIsNone(got["thrown"])
 
