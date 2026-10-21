@@ -7,10 +7,10 @@
   "ux-dom": {
    "distinct_names": 6,
    "hard_coupling": [
-    "subclass ux_motion._dom.MotionScene(ux_dom.dom.src.component:Component)",
+    "subclass ux_motion._dom.MotionScene(ux_dom.dom:Component)",
     "subclass ux_motion._dom.MotionScript(ux_dom.dom:script)"
    ],
-   "import_sites": 7,
+   "import_sites": 6,
    "importing_modules": [
     "ux_motion._api",
     "ux_motion._channel",
@@ -44,7 +44,7 @@
      "ux_dom"
     ],
     "names": [
-     "ux_dom.dom.src.component:Component",
+     "ux_dom.dom:Component",
      "ux_dom.dom:script",
      "ux_dom.plugins.csp:resolve_nonce",
      "ux_dom.plugins.csp:stamp_nonce",
@@ -202,7 +202,7 @@
  },
  "external_usage": {
   "ux-dom": [
-   "ux_dom.dom.src.component:Component",
+   "ux_dom.dom:Component",
    "ux_dom.dom:script",
    "ux_dom.plugins.csp:resolve_nonce",
    "ux_dom.plugins.csp:stamp_nonce",

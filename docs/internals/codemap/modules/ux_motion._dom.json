@@ -16,8 +16,7 @@
   "imports_external": {
    "function_level": {
     "ux-dom": [
-     "ux_dom.dom",
-     "ux_dom.dom.src.component"
+     "ux_dom.dom"
     ]
    },
    "module_level": {

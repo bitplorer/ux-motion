@@ -109,5 +109,5 @@ names = [
   "ux_dom.plugins.csp:stamp_nonce",
   "ux_dom.plugins.csp:stamp_tree",
   "ux_dom.plugins.safe_static:SafeStaticFile",
-  "ux_dom.dom.src.component:Component",
+  "ux_dom.dom:Component",
 ]
