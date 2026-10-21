@@ -581,11 +581,13 @@
    "recipes",
    "wire"
   ],
+  "assets": [],
   "channel": [],
   "compile": [
    "freeze",
    "ir"
   ],
+  "contract": [],
   "dom": [
    "freeze",
    "wire"
@@ -618,13 +620,38 @@
   "player": [
    "ir"
   ],
+  "presence": [],
   "recipes": [
    "hof",
    "tokens"
   ],
+  "render": [],
+  "root": [
+   "adapter",
+   "api",
+   "channel",
+   "compile",
+   "contract",
+   "freeze",
+   "hof",
+   "ir",
+   "markup",
+   "ops",
+   "patterns",
+   "player",
+   "presence",
+   "recipes",
+   "render",
+   "schema",
+   "tokens",
+   "version",
+   "wire"
+  ],
   "schema": [
    "contract"
   ],
+  "tokens": [],
+  "version": [],
   "wire": [
    "freeze",
    "ir"

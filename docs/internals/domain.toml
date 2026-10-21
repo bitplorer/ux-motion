@@ -75,6 +75,12 @@ symbols = ["ux_motion:Motion", "ux_motion:MotionChannel"]
 [[non_goals]]
 concept = "dom-construction"
 owner = "ux-dom"
+# "tag" keeps one reviewed warning on purpose: `_dom.motion_tag` builds the
+# opening `<script` itself by overriding ux-dom's private `_render` /
+# `_walk_render_tokens` and calling `_iter_html_attrs`, so it can fill the plan
+# body at SERIALIZE. Import checks cannot see that coupling. Keep the keyword
+# until ux-dom has a public lazy-body render hook. S-tier audit item: "MotionScript
+# private render hooks" (bitplorer/ux-motion#20).
 keywords = ["tag", "element", "sanitize"]
 
 [[non_goals]]
