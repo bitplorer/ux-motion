@@ -1,0 +1,66 @@
+{
+ "README.md": {
+  "claims": [
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:Motion"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:MotionChannel"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:appear"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:fade"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:rise"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:scene"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:swap"
+   },
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion"
+   },
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion.__all__"
+   },
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion/"
+   },
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion/scripts/ux-motion-channel.js"
+   },
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion/scripts/ux-motion-player.js"
+   }
+  ]
+ }
+}

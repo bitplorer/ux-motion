@@ -1,0 +1,100 @@
+{
+ "ux_motion._tokens": {
+  "consumers": [
+   "docs/guides/SNIPPETS.md",
+   "examples/minimal.py",
+   "tests/test_core.py",
+   "tests/test_player_edges.py"
+  ],
+  "doc": "Motion tokens — named timing and distance. Prefer tokens over raw numbers.",
+  "exported_as": [
+   "ux_motion:Tokens",
+   "ux_motion:tokens"
+  ],
+  "features": [
+   "recipes-and-tokens"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._hof",
+    "ux_motion._patterns",
+    "ux_motion._recipes"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "tokens",
+  "path": "ux_motion/_tokens.py",
+  "public": [
+   "Tokens",
+   "tokens"
+  ],
+  "symbols": {
+   "Tokens": {
+    "bases": [],
+    "doc": "Stable design-system values. Override via Tokens.override in hosts if needed.",
+    "kind": "class",
+    "methods": {
+     "as_dict": {
+      "decorators": [
+       "classmethod"
+      ],
+      "doc": "",
+      "kind": "function",
+      "signature": "(cls) -> dict[str, Any]"
+     },
+     "dist": {
+      "decorators": [
+       "classmethod"
+      ],
+      "doc": "",
+      "kind": "function",
+      "signature": "(cls, name: str, default: float=16) -> float"
+     },
+     "ease": {
+      "decorators": [
+       "classmethod"
+      ],
+      "doc": "",
+      "kind": "function",
+      "signature": "(cls, name: str, default: str='ease-out') -> str"
+     },
+     "ms": {
+      "decorators": [
+       "classmethod"
+      ],
+      "doc": "",
+      "kind": "function",
+      "signature": "(cls, name: str, default: int=280) -> int"
+     },
+     "spring_params": {
+      "decorators": [
+       "classmethod"
+      ],
+      "doc": "",
+      "kind": "function",
+      "signature": "(cls, name: str='snappy') -> dict[str, float]"
+     }
+    },
+    "public": true
+   }
+  }
+ }
+}

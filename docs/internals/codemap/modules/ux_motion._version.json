@@ -1,0 +1,51 @@
+{
+ "ux_motion._version": {
+  "consumers": [
+   "docs/13-VERSIONING.md",
+   "tests/resilience/test_ownership_isolation.py",
+   "tests/test_core.py",
+   "tests/test_packaging.py"
+  ],
+  "doc": "Single source of truth for package versions.",
+  "exported_as": [
+   "ux_motion:API_VERSION",
+   "ux_motion:IR_VERSION",
+   "ux_motion:PLAYER_VERSION",
+   "ux_motion:__version__"
+  ],
+  "features": [
+   "plan-ir"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._ir"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "version",
+  "path": "ux_motion/_version.py",
+  "public": [
+   "API_VERSION",
+   "IR_VERSION",
+   "PLAYER_VERSION"
+  ],
+  "symbols": {}
+ }
+}

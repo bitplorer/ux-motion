@@ -1,0 +1,70 @@
+{
+ "ux_motion._render": {
+  "consumers": [
+   "tests/test_core.py"
+  ],
+  "doc": "Official serialize — the same path ux-dom uses on the wire.",
+  "exported_as": [
+   "ux_motion:as_html",
+   "ux_motion:render_markup"
+  ],
+  "features": [
+   "serialize"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._freeze",
+    "ux_motion._markup"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {
+    "ux-dom": [
+     "ux_dom.plugins.csp"
+    ]
+   },
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "render",
+  "path": "ux_motion/_render.py",
+  "public": [
+   "is_renderable",
+   "render_markup"
+  ],
+  "symbols": {
+   "_stamp_if_nonce": {
+    "doc": "Bake a request CSP nonce the same way HTMLResponse does.",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Any) -> Any"
+   },
+   "is_renderable": {
+    "doc": "True when ``value`` can go through ``render_markup`` (not yet a string).",
+    "kind": "function",
+    "public": true,
+    "signature": "(value: Any) -> bool"
+   },
+   "render_markup": {
+    "doc": "Serialize a ux-dom tree (or any renderable) the official way.",
+    "kind": "function",
+    "public": true,
+    "signature": "(node: Any, *, pretty: bool=False) -> str"
+   }
+  }
+ }
+}

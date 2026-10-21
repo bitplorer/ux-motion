@@ -1,0 +1,26 @@
+{
+ "docs/00-OVERVIEW.md": {
+  "claims": [
+   {
+    "kind": "env",
+    "resolved": true,
+    "text": "API_VERSION"
+   },
+   {
+    "kind": "env",
+    "resolved": true,
+    "text": "IR_VERSION"
+   },
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion"
+   },
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion._ir"
+   }
+  ]
+ }
+}

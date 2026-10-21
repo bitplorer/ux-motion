@@ -1,0 +1,127 @@
+{
+ "ux_motion._ops": {
+  "consumers": [
+   "docs/guides/SNIPPETS.md",
+   "tests/test_core.py",
+   "tests/test_soft2_path_morph.py"
+  ],
+  "doc": "What a plan becomes on the wire.",
+  "exported_as": [
+   "ux_motion:OP_CANCEL",
+   "ux_motion:OP_PLAY",
+   "ux_motion:OP_REWIND",
+   "ux_motion:as_update",
+   "ux_motion:cancel",
+   "ux_motion:play",
+   "ux_motion:rewind",
+   "ux_motion:rewind_plan",
+   "ux_motion:to_result"
+  ],
+  "features": [
+   "result-ops"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._adapter",
+    "ux_motion._api"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._freeze",
+    "ux_motion._ir"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "ops",
+  "path": "ux_motion/_ops.py",
+  "public": [
+   "OP_CANCEL",
+   "OP_PLAY",
+   "OP_REWIND",
+   "as_update",
+   "cancel",
+   "play",
+   "rewind",
+   "rewind_plan",
+   "to_result"
+  ],
+  "symbols": {
+   "_invert_node": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any]) -> dict[str, Any]"
+   },
+   "_invert_recipe": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(recipe: Mapping[str, Any]) -> dict[str, Any]"
+   },
+   "_op": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(op_type: str, **fields: Any) -> dict[str, Any]"
+   },
+   "_walk": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], acc: list[dict[str, Any]]) -> None"
+   },
+   "as_update": {
+    "doc": "Same scene, no motion — just the DOM change.",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any]) -> list[dict[str, Any]]"
+   },
+   "cancel": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan_id: str | None=None, *, meta: Mapping[str, Any] | None=None) -> list[dict[str, Any]]"
+   },
+   "play": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], *, meta: Mapping[str, Any] | None=None) -> list[dict[str, Any]]"
+   },
+   "rewind": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], *, meta: Mapping[str, Any] | None=None) -> list[dict[str, Any]]"
+   },
+   "rewind_plan": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any]) -> dict[str, Any]"
+   },
+   "to_result": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(ops: Sequence[Mapping[str, Any]], *, ok: bool=True, action: str | None=None) -> dict[str, Any]"
+   }
+  }
+ }
+}

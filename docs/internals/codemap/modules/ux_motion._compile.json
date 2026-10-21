@@ -1,0 +1,52 @@
+{
+ "ux_motion._compile": {
+  "consumers": [],
+  "doc": "Compile raw authoring trees into canonical IR.",
+  "exported_as": [
+   "ux_motion:compile_plan"
+  ],
+  "features": [
+   "scene-builder"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._api"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._freeze",
+    "ux_motion._ir"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "compile",
+  "path": "ux_motion/_compile.py",
+  "public": [
+   "compile_plan"
+  ],
+  "symbols": {
+   "compile_plan": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], *, freeze: bool=False) -> dict[str, Any]"
+   }
+  }
+ }
+}

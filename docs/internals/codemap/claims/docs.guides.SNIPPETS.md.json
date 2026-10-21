@@ -1,0 +1,201 @@
+{
+ "docs/guides/SNIPPETS.md": {
+  "claims": [
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:Motion"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:MotionChannel"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:PlanError"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:along"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:appear"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:blur"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:cancel"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:dumps"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:explain"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:fade"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:frames"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:freeze_plan"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:interpret"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:list_stagger"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:loads"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:modal"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:morph_d"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:none"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:page"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:parallel"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:partition_wait"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:play"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:rewind"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:rise"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:scale"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:scene"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:scrub"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:send"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:sequence"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:slide"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:snap"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:span_ms"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:springy"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:swap"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:toast"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:tokens"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:validate_plan"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:wait"
+   },
+   {
+    "kind": "import",
+    "resolved": true,
+    "text": "ux_motion:wait_clocks"
+   }
+  ]
+ }
+}

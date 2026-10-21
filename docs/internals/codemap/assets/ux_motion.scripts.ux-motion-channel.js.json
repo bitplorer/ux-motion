@@ -1,0 +1,22 @@
+{
+ "ux_motion/scripts/ux-motion-channel.js": {
+  "consumers": [
+   "docs/01-ARCHITECTURE.md",
+   "docs/03-API-REFERENCE.md",
+   "docs/06-DESIGN-DECISIONS.md",
+   "docs/14-CHANNEL-COMPOSITOR.md",
+   "docs/plans/2026-09-12-tip-67ff3f0-clarity-maturity.md",
+   "tests/resilience/test_ownership_isolation.py",
+   "tests/test_core.py",
+   "tests/test_packaging.py"
+  ],
+  "features": [
+   "channel-compositor"
+  ],
+  "layer": "assets",
+  "path": "ux_motion/scripts/ux-motion-channel.js",
+  "referenced_by": [
+   "ux_motion._channel"
+  ]
+ }
+}

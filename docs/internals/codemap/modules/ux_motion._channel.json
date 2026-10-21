@@ -1,0 +1,85 @@
+{
+ "ux_motion._channel": {
+  "consumers": [
+   "docs/14-CHANNEL-COMPOSITOR.md",
+   "docs/guides/SNIPPETS.md",
+   "docs/plans/2026-09-12-tip-67ff3f0-clarity-maturity.md",
+   "tests/resilience/test_ownership_isolation.py",
+   "tests/test_core.py"
+  ],
+  "doc": "MotionChannel — Document contribution for Channel Result compositing.",
+  "exported_as": [
+   "ux_motion:MotionChannel"
+  ],
+  "features": [
+   "channel-compositor"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {
+    "ux-dom": [
+     "ux_dom.dom",
+     "ux_dom.plugins.safe_static"
+    ]
+   },
+   "module_level": {
+    "stdlib": [
+     "__future__"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "channel",
+  "path": "ux_motion/_channel.py",
+  "public": [
+   "MotionChannel"
+  ],
+  "symbols": {
+   "MotionChannel": {
+    "bases": [],
+    "doc": "Contribution. ``name`` carries the owner: motion, channel compositor.",
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, *, src: str | None=None, serve: str='package_mount') -> None"
+     },
+     "artifacts": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self)"
+     },
+     "document_body": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self)"
+     },
+     "document_head": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self)"
+     },
+     "served_files": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self)"
+     }
+    },
+    "public": true
+   }
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "docs/01-ARCHITECTURE.md": {
+  "claims": [
+   {
+    "kind": "env",
+    "resolved": true,
+    "text": "API_VERSION"
+   },
+   {
+    "kind": "env",
+    "resolved": true,
+    "text": "IR_VERSION"
+   },
+   {
+    "kind": "env",
+    "resolved": true,
+    "text": "PLAYER_VERSION"
+   }
+  ]
+ }
+}

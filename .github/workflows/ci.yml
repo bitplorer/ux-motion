@@ -20,3 +20,5 @@ jobs:
           pip install -e .
       - name: Unit tests
         run: PYTHONPATH=. python -m unittest discover -s tests -v
+      - name: Check code map is fresh
+        run: python scripts/codemap.py --check

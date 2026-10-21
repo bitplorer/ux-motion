@@ -1,0 +1,396 @@
+{
+ "ux_motion._api": {
+  "consumers": [
+   "docs/07-ENHANCEMENTS.md",
+   "docs/10-EXAMPLES.md",
+   "docs/guides/SNIPPETS.md",
+   "examples/minimal.py",
+   "examples/path_morph.py",
+   "examples/scroll_scrub.py",
+   "examples/wait_complete.py",
+   "tests/resilience/test_ownership_isolation.py",
+   "tests/test_core.py",
+   "tests/test_hof.py",
+   "tests/test_player_edges.py",
+   "tests/test_render_model.py",
+   "tests/test_soft1_scrub.py",
+   "tests/test_soft2_path_morph.py",
+   "tests/test_soft3_wait.py"
+  ],
+  "doc": "Fluent builders. These are the only objects product code should hold.",
+  "exported_as": [
+   "ux_motion:Scene",
+   "ux_motion:bind",
+   "ux_motion:cue",
+   "ux_motion:group",
+   "ux_motion:parallel",
+   "ux_motion:scene",
+   "ux_motion:score",
+   "ux_motion:sequence",
+   "ux_motion:share",
+   "ux_motion:stagger",
+   "ux_motion:track",
+   "ux_motion:wait"
+  ],
+  "features": [
+   "browser-player",
+   "scene-builder"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._hof",
+    "ux_motion._patterns"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {
+    "ux-dom": [
+     "ux_dom.dom",
+     "ux_dom.plugins.safe_static"
+    ]
+   },
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing",
+     "uuid"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [
+    "ux_motion._dom",
+    "ux_motion._freeze",
+    "ux_motion._wire"
+   ],
+   "module_level": [
+    "ux_motion._adapter",
+    "ux_motion._compile",
+    "ux_motion._ir",
+    "ux_motion._markup",
+    "ux_motion._ops",
+    "ux_motion._recipes"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "api",
+  "path": "ux_motion/_api.py",
+  "public": [
+   "Motion",
+   "Scene",
+   "bind",
+   "cue",
+   "group",
+   "parallel",
+   "scene",
+   "score",
+   "sequence",
+   "share",
+   "stagger",
+   "track",
+   "wait"
+  ],
+  "symbols": {
+   "Motion": {
+    "bases": [],
+    "doc": "Document runtime + namespace facade.",
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, *, src: str | None=None, serve: str='package_mount') -> None"
+     },
+     "artifacts": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self)"
+     },
+     "document_body": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self)"
+     },
+     "document_head": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self)"
+     },
+     "served_files": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self)"
+     }
+    },
+    "public": true
+   },
+   "Scene": {
+    "bases": [],
+    "doc": "Composable scene. Internals may change; method names are frozen.",
+    "kind": "class",
+    "methods": {
+     "__html__": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> str"
+     },
+     "__init__": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, sid: str | None=None) -> None"
+     },
+     "__iter__": {
+      "doc": "Flatten into a ux-dom Component so ``dom_tag.add`` accepts a Scene.",
+      "kind": "function",
+      "signature": "(self)"
+     },
+     "__render__": {
+      "doc": "Official serialize — same method HTMLResponse / UxDomRenderer call.",
+      "kind": "function",
+      "signature": "(self, indent: str='  ', pretty: bool=True) -> str"
+     },
+     "__repr__": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> str"
+     },
+     "__str__": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> str"
+     },
+     "_add": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, node: dict[str, Any]) -> None"
+     },
+     "_flush_group": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> None"
+     },
+     "also": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, *nodes: Mapping[str, Any]) -> 'Scene'"
+     },
+     "as_score": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, sid: str, *, phase: str='now') -> 'Scene'"
+     },
+     "bind_to": {
+      "doc": "Mark this whole scene as a scrubbable tape (scroll is a live player seek).",
+      "kind": "function",
+      "signature": "(self, input_name: str, target: str, *, until: str | None=None, axis: str | None=None) -> 'Scene'"
+     },
+     "cancel_ops": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> list[dict[str, Any]]"
+     },
+     "engine": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, name: str) -> 'Scene'"
+     },
+     "enter": {
+      "doc": "``html`` stays a ux-dom tree until official serialize (``__render__`` / wire).",
+      "kind": "function",
+      "signature": "(self, target: str, recipe: Mapping[str, Any], *, after: str='keep', html: Any=None) -> 'Scene'"
+     },
+     "exit": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, target: str, recipe: Mapping[str, Any], *, after: str='remove', html: Any=None) -> 'Scene'"
+     },
+     "interrupt": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, policy: str) -> 'Scene'"
+     },
+     "iter_markup": {
+      "doc": "Live ``html`` values still on this scene (trees or strings).",
+      "kind": "function",
+      "signature": "(self)"
+     },
+     "named": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, name: str, mode: str='wait') -> 'Scene'"
+     },
+     "on_complete": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, action: str) -> 'Scene'"
+     },
+     "ops": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> list[dict[str, Any]]"
+     },
+     "parallel": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> 'Scene'"
+     },
+     "plan": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> dict[str, Any]"
+     },
+     "play": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, *, also_update: bool=False, action: str | None=None) -> dict[str, Any]"
+     },
+     "reduced": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, policy: str) -> 'Scene'"
+     },
+     "rewind": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, *, action: str | None=None) -> dict[str, Any]"
+     },
+     "sequence": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> 'Scene'"
+     },
+     "share": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, sid: str, *, leave: str, arrive: str, recipe: Mapping[str, Any] | None=None) -> 'Scene'"
+     },
+     "stagger_in": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, selector: str, recipe: Mapping[str, Any], *, gap_ms: int=40) -> 'Scene'"
+     },
+     "stagger_out": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, selector: str, recipe: Mapping[str, Any], *, gap_ms: int=30) -> 'Scene'"
+     },
+     "stay": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, target: str, recipe: Mapping[str, Any]) -> 'Scene'"
+     },
+     "tag": {
+      "doc": "ux-dom Component face so ``div(scene)`` / ``document`` accept this scene.",
+      "kind": "function",
+      "signature": "(self)"
+     },
+     "update": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, *, action: str | None=None) -> dict[str, Any]"
+     },
+     "wait": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> 'Scene'"
+     },
+     "when_reduce": {
+      "doc": "Alternate tree for reduced motion when reduced='swap'.",
+      "kind": "function",
+      "signature": "(self, *nodes: Mapping[str, Any]) -> 'Scene'"
+     }
+    },
+    "public": true
+   },
+   "_as_markup": {
+    "doc": "Keep trees as trees. Strings pass through. Nothing is serialized here.",
+    "kind": "function",
+    "public": false,
+    "signature": "(html: Any) -> Any | None"
+   },
+   "_as_recipe": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(recipe: Mapping[str, Any] | Recipe) -> dict[str, Any]"
+   },
+   "_phase": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(mode: str, children: Iterable[Mapping[str, Any]], stagger_ms: int=0) -> dict[str, Any]"
+   },
+   "bind": {
+    "doc": "Turn a subtree into a 0..1 tape driven by scroll, drag, or progress.",
+    "kind": "function",
+    "public": true,
+    "signature": "(input_name: str, target: str, child: Mapping[str, Any], *, until: str | None=None, axis: str | None=None) -> dict[str, Any]"
+   },
+   "cue": {
+    "doc": "Resolve a held score — typically the enter half of a multi-hop transition.",
+    "kind": "function",
+    "public": true,
+    "signature": "(score_id: str, child: Mapping[str, Any] | None=None) -> dict[str, Any]"
+   },
+   "group": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(name: str, *children: Mapping[str, Any], mode: str='wait', tracks: Sequence[Mapping[str, Any]] | None=None) -> dict[str, Any]"
+   },
+   "parallel": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(*children: Mapping[str, Any], stagger_ms: int=0) -> dict[str, Any]"
+   },
+   "scene": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(sid: str | None=None) -> Scene"
+   },
+   "score": {
+    "doc": "Hold presence across HTTP Results until a matching cue arrives.",
+    "kind": "function",
+    "public": true,
+    "signature": "(sid: str, child: Mapping[str, Any], *, phase: str='now') -> dict[str, Any]"
+   },
+   "sequence": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(*children: Mapping[str, Any]) -> dict[str, Any]"
+   },
+   "share": {
+    "doc": "Named identity continuity. Client measures leave→arrive (FLIP).",
+    "kind": "function",
+    "public": true,
+    "signature": "(sid: str, *, leave: str, arrive: str, recipe: Mapping[str, Any] | None=None) -> dict[str, Any]"
+   },
+   "stagger": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(selector: str, recipe: Mapping[str, Any], *, role: str='enter', gap_ms: int=40, after: str='keep') -> dict[str, Any]"
+   },
+   "track": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(target: str, recipe: Mapping[str, Any], *, role: str='enter', after: str | None=None, html: Any=None, name: str | None=None) -> dict[str, Any]"
+   },
+   "wait": {
+    "doc": "Direct exit tracks finish before direct enter tracks. Nested groups stay independent.",
+    "kind": "function",
+    "public": true,
+    "signature": "(*children: Mapping[str, Any]) -> dict[str, Any]"
+   }
+  }
+ }
+}

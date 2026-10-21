@@ -17,8 +17,7 @@ from typing import Any
 
 def motion_tag(scene: Any) -> Any:
     try:
-        from ux_dom.dom import script
-        from ux_dom.dom.src.component import Component
+        from ux_dom.dom import Component, script
     except ImportError as exc:
         raise ImportError(
             "Scene.tag() requires ux-dom (pip install ux-dom). "

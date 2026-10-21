@@ -39,3 +39,80 @@ include = ["ux_motion*"]
 
 [tool.setuptools.package-data]
 ux_motion = ["py.typed", "scripts/*.js"]
+
+[tool.codemap]
+packages = ["ux_motion"]
+out_dir = "docs/internals/codemap"
+assets = ["ux_motion/scripts/*.js"]
+features = "docs/internals/features.toml"
+domain = "docs/internals/domain.toml"
+narrative = ["docs/01-ARCHITECTURE.md"]
+# Docs whose reference-style claims are indexed and resolved against the code
+# (findings only, never failed; see "Doc claims" in ux-dom's CODEMAP.md).
+claims_docs = [
+  "README.md",
+  "AGENTS.md",
+  "OWNERSHIP.md",
+  "START_HERE.md",
+  "CONTRIBUTING.md",
+  "SECURITY.md",
+  "docs",
+]
+# History and projection: they name retired or planned code on purpose.
+claims_exclude = ["docs/plans", "docs/06-DESIGN-DECISIONS.md"]
+# The map's own doc names modules only to describe the map.
+self_files = ["docs/internals/CODEMAP.md"]
+
+[tool.codemap.consumers]
+docs = [".md"]
+examples = [".py"]
+tests = [".py", ".js"]
+
+[tool.codemap.public_api]
+rule = "all_or_derived"
+packages = ["ux_motion"]
+
+# One layer per module, so layer_rules below can carry the "Dependency graph
+# (allowed imports)" in docs/01-ARCHITECTURE.md edge for edge.
+[tool.codemap.layers]
+"ux_motion" = "root"
+"ux_motion._adapter" = "adapter"
+"ux_motion._api" = "api"
+"ux_motion._channel" = "channel"
+"ux_motion._compile" = "compile"
+"ux_motion._contract" = "contract"
+"ux_motion._dom" = "dom"
+"ux_motion._freeze" = "freeze"
+"ux_motion._hof" = "hof"
+"ux_motion._ir" = "ir"
+"ux_motion._markup" = "markup"
+"ux_motion._ops" = "ops"
+"ux_motion._patterns" = "patterns"
+"ux_motion._player" = "player"
+"ux_motion._presence" = "presence"
+"ux_motion._recipes" = "recipes"
+"ux_motion._render" = "render"
+"ux_motion._schema" = "schema"
+"ux_motion._tokens" = "tokens"
+"ux_motion._version" = "version"
+"ux_motion._wire" = "wire"
+"ux_motion.scripts" = "assets"
+
+# docs/01-ARCHITECTURE.md "Dependency graph (allowed imports)". A module the
+# graph does not list has no rule; the root re-exports everything.
+[tool.codemap.layer_rules]
+api = ["adapter", "compile", "dom", "freeze", "ir", "markup", "ops", "recipes", "wire"]
+adapter = ["freeze", "ops"]
+ops = ["freeze", "ir"]
+player = ["ir"]
+patterns = ["api", "recipes", "tokens"]
+hof = ["api", "ir", "recipes", "tokens"]
+recipes = ["hof", "tokens"]
+schema = ["contract"]
+wire = ["freeze", "ir"]
+compile = ["freeze", "ir"]
+freeze = ["ir", "render"]
+markup = ["render"]
+ir = ["version"]
+dom = ["freeze", "wire"]
+channel = []

@@ -1,0 +1,180 @@
+{
+ "ux_motion._ir": {
+  "consumers": [
+   "docs/00-OVERVIEW.md",
+   "docs/guides/SNIPPETS.md",
+   "tests/resilience/test_ownership_isolation.py",
+   "tests/test_core.py",
+   "tests/test_player_edges.py",
+   "tests/test_soft1_scrub.py",
+   "tests/test_soft2_path_morph.py",
+   "tests/test_soft3_wait.py"
+  ],
+  "doc": "Plan IR v1 — append-only data shapes.",
+  "exported_as": [
+   "ux_motion:PlanError",
+   "ux_motion:validate_plan"
+  ],
+  "features": [
+   "plan-ir"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._api",
+    "ux_motion._compile",
+    "ux_motion._freeze",
+    "ux_motion._hof",
+    "ux_motion._ops",
+    "ux_motion._player",
+    "ux_motion._wire"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._version"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "ir",
+  "path": "ux_motion/_ir.py",
+  "public": [
+   "AFTERS",
+   "BIND_INPUTS",
+   "ENGINES",
+   "INTERRUPTS",
+   "KINDS",
+   "KIND_BIND",
+   "KIND_CUE",
+   "KIND_GROUP",
+   "KIND_PHASE",
+   "KIND_PLAN",
+   "KIND_SCORE",
+   "KIND_SHARE",
+   "KIND_STAGGER",
+   "KIND_TRACK",
+   "MODES",
+   "PlanError",
+   "RECIPE_PROPS",
+   "REDUCED",
+   "ROLES",
+   "validate_plan",
+   "validate_recipe"
+  ],
+  "symbols": {
+   "PlanError": {
+    "bases": [
+     "ValueError"
+    ],
+    "doc": "Invalid plan IR.",
+    "kind": "class",
+    "methods": {},
+    "public": true
+   },
+   "_float": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(obj: Mapping[str, Any], key: str, default: float | None=None) -> float | None"
+   },
+   "_int": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(obj: Mapping[str, Any], key: str, default: int=0, lo: int=0) -> int"
+   },
+   "_opt_str": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(obj: Mapping[str, Any], key: str) -> str | None"
+   },
+   "_req_str": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(obj: Mapping[str, Any], key: str, ctx: str) -> str"
+   },
+   "_validate_bind": {
+    "doc": "Bind a plan (or subtree) to scroll/drag/progress — becomes a 0..1 tape.",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], ctx: str) -> dict[str, Any]"
+   },
+   "_validate_cue": {
+    "doc": "Cue resolves a score held on the client.",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], ctx: str) -> dict[str, Any]"
+   },
+   "_validate_group": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], ctx: str) -> dict[str, Any]"
+   },
+   "_validate_node": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], ctx: str) -> dict[str, Any]"
+   },
+   "_validate_phase": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], ctx: str) -> dict[str, Any]"
+   },
+   "_validate_score": {
+    "doc": "Multi-hop presence: hold exiting nodes until a later cue Result arrives.",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], ctx: str) -> dict[str, Any]"
+   },
+   "_validate_share": {
+    "doc": "Shared presence: named identity the client measures (FLIP).",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], ctx: str) -> dict[str, Any]"
+   },
+   "_validate_stagger": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], ctx: str) -> dict[str, Any]"
+   },
+   "_validate_track": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], ctx: str) -> dict[str, Any]"
+   },
+   "validate_plan": {
+    "doc": "Return a cleaned, canonical plan dict. Raises PlanError.",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any]) -> dict[str, Any]"
+   },
+   "validate_recipe": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(recipe: Mapping[str, Any], ctx: str='recipe') -> dict[str, Any]"
+   }
+  }
+ }
+}

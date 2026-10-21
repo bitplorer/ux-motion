@@ -1,0 +1,30 @@
+{
+ "ux_motion.scripts": {
+  "consumers": [],
+  "doc": "Package-owned player bytes for Document.use(Motion()).",
+  "exported_as": [],
+  "features": [
+   "browser-player"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {},
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [],
+   "type_checking": []
+  },
+  "is_public": true,
+  "layer": "assets",
+  "path": "ux_motion/scripts/__init__.py",
+  "public": [],
+  "symbols": {}
+ }
+}

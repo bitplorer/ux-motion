@@ -1,0 +1,113 @@
+# Domain charter (curated): what ux-motion is the single source of truth for,
+# the narrow public surface higher libraries build on, what it must not own,
+# and which lower libraries (and which of their public names) it may use.
+# scripts/codemap.py validates every reference and folds the charter into
+# codemap/index.json. A new import of another distribution, or of a name not
+# listed under its depends_on entry, fails `codemap.py --check`, so coupling is
+# a conscious edit here. Sources: AGENTS.md, OWNERSHIP.md,
+# docs/01-ARCHITECTURE.md, docs/06-DESIGN-DECISIONS.md. See CODEMAP.md.
+
+domain = "ux-motion is the single source of truth for presence and transition plans as data: the IR v1 Plan, its schedule contract and the transition.* ops that carry it."
+
+# Everything product code may touch is on the facade; `_`-modules are private
+# (AGENTS.md: never import `ux_motion._ir` and friends from product code).
+public_api = [
+  "ux_motion:scene",
+  "ux_motion:Scene",
+  "ux_motion:track",
+  "ux_motion:share",
+  "ux_motion:bind",
+  "ux_motion:score",
+  "ux_motion:cue",
+  "ux_motion:wait",
+  "ux_motion:Recipe",
+  "ux_motion:fade",
+  "ux_motion:rise",
+  "ux_motion:slide",
+  "ux_motion:scale",
+  "ux_motion:morph_d",
+  "ux_motion:tokens",
+  "ux_motion:appear",
+  "ux_motion:swap",
+  "ux_motion:send",
+  "ux_motion:play",
+  "ux_motion:as_update",
+  "ux_motion:dumps",
+  "ux_motion:loads",
+  "ux_motion:validate_plan",
+  "ux_motion:PlanError",
+  "ux_motion:Motion",
+  "ux_motion:MotionChannel",
+  "ux_motion:CONTRACT",
+  "ux_motion:IR_VERSION",
+  "ux_motion:API_VERSION",
+]
+
+[[owns]]
+concept = "motion-ir"
+modules = ["ux_motion._ir", "ux_motion._contract", "ux_motion._schema"]
+symbols = ["ux_motion:validate_plan", "ux_motion:CONTRACT", "ux_motion:IR_VERSION"]
+
+[[owns]]
+concept = "motion-authoring"
+modules = ["ux_motion._api", "ux_motion._recipes", "ux_motion._tokens", "ux_motion._hof", "ux_motion._patterns"]
+symbols = ["ux_motion:Scene", "ux_motion:Recipe", "ux_motion:appear"]
+
+[[owns]]
+concept = "motion-schedule"
+modules = ["ux_motion._player"]
+symbols = ["ux_motion:interpret", "ux_motion:scrub", "ux_motion:partition_wait"]
+
+[[owns]]
+concept = "transition-ops"
+modules = ["ux_motion._ops", "ux_motion._adapter", "ux_motion._wire"]
+symbols = ["ux_motion:play", "ux_motion:rewind", "ux_motion:as_update", "ux_motion:send"]
+
+[[owns]]
+concept = "motion-player-runtime"
+modules = ["ux_motion.scripts", "ux_motion._channel"]
+symbols = ["ux_motion:Motion", "ux_motion:MotionChannel"]
+
+# Concepts ux-motion must NOT own (AGENTS.md / OWNERSHIP.md layer cut, D17
+# Soft LOCK). `keywords` drive a warning-only heuristic: any module or
+# top-level symbol whose name contains one as a whole word is listed under
+# `non_goal_warnings` in index.json.
+[[non_goals]]
+concept = "dom-construction"
+owner = "ux-dom"
+keywords = ["tag", "element", "sanitize"]
+
+[[non_goals]]
+concept = "intent-cap-result"
+owner = "ux-channel"
+keywords = ["cap", "intent", "codec", "idiomorph"]
+
+[[non_goals]]
+concept = "product-behavior"
+owner = "ux-behavior"
+keywords = ["action", "dispatch", "behavior"]
+
+[[non_goals]]
+concept = "gestures"
+owner = "ux-channel / ux-behavior"
+keywords = ["hover", "tap", "press", "pan", "gesture", "pointer"]
+
+[[non_goals]]
+concept = "product-lifecycle"
+owner = "ux-compose"
+keywords = ["cli", "scaffold", "deploy", "router"]
+
+# Lower libraries ux-motion may use, and exactly which of their names.
+# Soft dependency: imported lazily inside functions; the package has no
+# install-time dependencies.
+[[depends_on]]
+distribution = "ux-dom"
+imports = "ux_dom"
+names = [
+  "ux_dom.dom:script",
+  "ux_dom.plugins.csp:resolve_nonce",
+  "ux_dom.plugins.csp:stamp_nonce",
+  "ux_dom.plugins.csp:stamp_tree",
+  "ux_dom.plugins.safe_static:SafeStaticFile",
+  "ux_dom.dom:Component",
+]

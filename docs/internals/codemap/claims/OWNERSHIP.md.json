@@ -1,0 +1,11 @@
+{
+ "OWNERSHIP.md": {
+  "claims": [
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion.__all__"
+   }
+  ]
+ }
+}

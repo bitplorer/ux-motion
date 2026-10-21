@@ -1,0 +1,16 @@
+{
+ "docs/14-CHANNEL-COMPOSITOR.md": {
+  "claims": [
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion.MotionChannel"
+   },
+   {
+    "kind": "module",
+    "resolved": false,
+    "text": "ux_motion.channel"
+   }
+  ]
+ }
+}

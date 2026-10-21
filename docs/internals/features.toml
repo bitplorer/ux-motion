@@ -1,0 +1,181 @@
+# Features registry (curated). scripts/codemap.py validates every reference:
+# modules and assets must be mapped, ``symbols`` (``module:Name`` or
+# ``module:Class.method``) must resolve, and ``tests`` / ``docs`` paths must
+# exist (``path::Class::test`` nodes are checked too). The validated entries are
+# folded into codemap/index.json, and each module shard lists its features.
+# Edit this file in the same PR that moves a feature. See CODEMAP.md.
+
+[[feature]]
+id = "plan-ir"
+purpose = "IR v1: validate and canonicalize every node kind; additive fields only, unknown kinds and over-cap durations refused."
+modules = ["ux_motion._ir", "ux_motion._contract", "ux_motion._schema", "ux_motion._version"]
+symbols = [
+  "ux_motion._ir:validate_plan",
+  "ux_motion._ir:validate_recipe",
+  "ux_motion._ir:PlanError",
+  "ux_motion._contract:CONTRACT",
+  "ux_motion._schema:schema",
+]
+tests = [
+  "tests/test_core.py::CoreTests::test_versions",
+  "tests/test_core.py::CoreTests::test_schema",
+  "tests/test_core.py::CoreTests::test_unknown_kind_rejected",
+  "tests/test_core.py::CoreTests::test_duration_cap",
+]
+docs = ["docs/02-IR-SPEC.md", "docs/13-VERSIONING.md"]
+
+[[feature]]
+id = "scene-builder"
+purpose = "Fluent Scene and functional constructors (track, stagger, share, bind, score, cue, phases) that author a Plan."
+modules = ["ux_motion._api", "ux_motion._compile"]
+symbols = [
+  "ux_motion._api:Scene",
+  "ux_motion._api:scene",
+  "ux_motion._api:track",
+  "ux_motion._api:share",
+  "ux_motion._api:bind",
+  "ux_motion._api:score",
+  "ux_motion._api:cue",
+  "ux_motion._api:wait",
+  "ux_motion._api:Scene.plan",
+  "ux_motion._compile:compile_plan",
+]
+tests = [
+  "tests/test_core.py::CoreTests::test_share",
+  "tests/test_core.py::CoreTests::test_bind",
+  "tests/test_core.py::CoreTests::test_score_and_cue",
+]
+docs = ["docs/03-API-REFERENCE.md", "docs/04-COMPOSITION-SEMANTICS.md"]
+
+[[feature]]
+id = "recipes-and-tokens"
+purpose = "Named Recipe families (fade, slide, scale, rise, blur) and specials (along, morph_d, springy) on design-system tokens."
+modules = ["ux_motion._recipes", "ux_motion._tokens"]
+symbols = [
+  "ux_motion._recipes:Recipe",
+  "ux_motion._recipes:fade",
+  "ux_motion._recipes:along",
+  "ux_motion._recipes:morph_d",
+  "ux_motion._recipes:springy",
+  "ux_motion._tokens:Tokens",
+  "ux_motion._tokens:tokens",
+]
+tests = [
+  "tests/test_core.py::CoreTests::test_spring_recipe",
+  "tests/test_core.py::CoreTests::test_along_path",
+  "tests/test_core.py::CoreTests::test_tokens",
+  "tests/test_soft2_path_morph.py",
+]
+docs = ["docs/03-API-REFERENCE.md", "docs/07-ENHANCEMENTS.md"]
+
+[[feature]]
+id = "drop-in-hofs"
+purpose = "Higher-order functions that turn ux-dom trees into a live Scene (appear, swap, sheet, hop); trees stay trees until serialize."
+modules = ["ux_motion._hof"]
+symbols = [
+  "ux_motion._hof:appear",
+  "ux_motion._hof:swap",
+  "ux_motion._hof:motion",
+  "ux_motion._hof:hop",
+  "ux_motion._hof:apply_family",
+  "ux_motion._hof:HOFS",
+]
+tests = ["tests/test_hof.py"]
+docs = ["docs/03-API-REFERENCE.md", "docs/guides/SNIPPETS.md"]
+
+[[feature]]
+id = "patterns"
+purpose = "Multi-track choreographies (page, modal, toast, list stagger, shared page, multi-hop) as sugar over the same IR."
+modules = ["ux_motion._patterns"]
+symbols = ["ux_motion._patterns:page", "ux_motion._patterns:modal", "ux_motion._patterns:PATTERNS"]
+tests = ["tests/test_core.py::CoreTests::test_patterns"]
+docs = ["docs/03-API-REFERENCE.md", "docs/10-EXAMPLES.md"]
+
+[[feature]]
+id = "serialize"
+purpose = "Official serialize: freeze tree-valued html fields through stamp_tree + __render__ only at the wire."
+modules = ["ux_motion._render", "ux_motion._freeze", "ux_motion._markup"]
+symbols = [
+  "ux_motion._render:render_markup",
+  "ux_motion._freeze:freeze_plan",
+  "ux_motion._markup:as_html",
+  "ux_motion._api:Scene.__render__",
+]
+tests = ["tests/test_render_model.py", "tests/test_core.py::CoreTests::test_as_html_coerces_renderable"]
+docs = ["docs/01-ARCHITECTURE.md"]
+
+[[feature]]
+id = "result-ops"
+purpose = "Plan to transition.* ops and Results: play, cancel, rewind (inverted plan) and the classic as_update projection."
+modules = ["ux_motion._ops", "ux_motion._adapter", "ux_motion._wire"]
+symbols = [
+  "ux_motion._ops:play",
+  "ux_motion._ops:rewind",
+  "ux_motion._ops:as_update",
+  "ux_motion._ops:to_result",
+  "ux_motion._adapter:Send",
+  "ux_motion._adapter:send",
+  "ux_motion._wire:dumps",
+  "ux_motion._wire:loads",
+]
+tests = [
+  "tests/test_core.py::CoreTests::test_rewind",
+  "tests/test_core.py::CoreTests::test_send_play_update",
+  "tests/test_core.py::CoreTests::test_roundtrip",
+]
+docs = ["docs/08-WIRE-PROTOCOL.md"]
+
+[[feature]]
+id = "reference-player"
+purpose = "Deterministic Python schedule (the contract the JS player must match): interpret, explain, SVG frames, scrub, wait bags and clocks."
+modules = ["ux_motion._player"]
+symbols = [
+  "ux_motion._player:interpret",
+  "ux_motion._player:explain",
+  "ux_motion._player:frames",
+  "ux_motion._player:scrub",
+  "ux_motion._player:partition_wait",
+  "ux_motion._player:wait_clocks",
+]
+tests = [
+  "tests/test_core.py::CoreTests::test_explain",
+  "tests/test_core.py::CoreTests::test_frames_svg",
+  "tests/test_soft1_scrub.py",
+  "tests/test_soft3_wait.py",
+]
+docs = ["docs/05-PLAYER-CONTRACT.md", "docs/04-COMPOSITION-SEMANTICS.md"]
+
+[[feature]]
+id = "browser-player"
+purpose = "Vanilla JS player that executes plans in the browser, served by Document.use(Motion())."
+modules = ["ux_motion.scripts", "ux_motion._api"]
+assets = ["ux_motion/scripts/ux-motion-player.js"]
+symbols = ["ux_motion._api:Motion"]
+tests = ["tests/test_player_edges.py", "tests/test_packaging.py"]
+docs = ["docs/05-PLAYER-CONTRACT.md"]
+
+[[feature]]
+id = "channel-compositor"
+purpose = "MotionChannel Document contribution: peel transition.* off a Channel Result, let Channel morph, then play."
+modules = ["ux_motion._channel"]
+assets = ["ux_motion/scripts/ux-motion-channel.js"]
+symbols = ["ux_motion._channel:MotionChannel"]
+tests = ["tests/test_core.py::CoreTests::test_motion_channel_is_a_contribution", "tests/test_packaging.py"]
+docs = ["docs/14-CHANNEL-COMPOSITOR.md"]
+
+[[feature]]
+id = "ux-dom-face"
+purpose = "A Scene placed in a ux-dom tree renders as a Component whose only child is the plan script."
+modules = ["ux_motion._dom", "ux_motion._wire"]
+symbols = ["ux_motion._dom:motion_tag", "ux_motion._wire:encode_plan_script", "ux_motion._api:Scene.__iter__"]
+tests = ["tests/test_render_model.py"]
+docs = ["docs/01-ARCHITECTURE.md"]
+
+[[feature]]
+id = "presence"
+purpose = "Server-side presence helpers: stamp a uid onto markup, render a region, track the Presence set."
+modules = ["ux_motion._presence"]
+symbols = ["ux_motion._presence:stamp", "ux_motion._presence:region", "ux_motion._presence:Presence"]
+# No test exercises these helpers yet (finding for the S-tier audit).
+tests = []
+docs = ["docs/03-API-REFERENCE.md"]

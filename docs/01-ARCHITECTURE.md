@@ -46,7 +46,9 @@
 | `_contract.py` | `CONTRACT` dict: laws, enums, op names | Change without release note |
 | `_ir.py` | Validate + canonicalize every node kind | Know about HTTP or DOM |
 | `_compile.py` | BUILD: `compile_plan` validates; trees stay trees | Stringify html |
+| `_version.py` | `__version__`, `API_VERSION`, `IR_VERSION`, `PLAYER_VERSION` (single source) | Be repeated as literals elsewhere |
 | `_render.py` | Official serialize (`stamp_tree` + `__render__`) | A second stringify |
+| `_markup.py` | `as_html`, the public alias of `render_markup` | Coerce at `enter()` |
 | `_freeze.py` | SERIALIZE: walk `html` fields through `_render` | Mutate the authoring plan |
 | `_api.py` | Fluent `Scene` + functional `track`/`share`/…; `Scene.__render__` | Emit channel ops itself (except via send) |
 | `_recipes.py` | Named Recipe factories | Validate full plans |
@@ -56,6 +58,7 @@
 | `_player.py` | Deterministic schedule; explain; SVG frames | Touch real DOM |
 | `_patterns.py` | Multi-track choreographies (selectors → plan) | Introduce new IR kinds |
 | `_hof.py` | Drop-in HOFs (trees → live Scene) | Stringify html; freeze |
+| `_dom.py` | `motion_tag`: the Component face `Scene.__iter__` yields | Re-parent scene trees |
 | `_schema.py` | JSON Schema document of IR | Runtime validation (IR does that) |
 | `_presence.py` | `stamp` / `region` / server-side Presence set | Animate |
 | `_wire.py` | JSON dumps/loads with validation on load | Pretty-print as semantic change |
@@ -69,17 +72,21 @@
 __init__
   → everything public
 
-_api → _adapter, _compile, _ir, _ops, _recipes
+_api → _adapter, _compile, _ir, _markup, _ops, _recipes
+       deferred: _dom, _freeze, _wire (Scene.__iter__ / Scene.__render__)
 _adapter → _freeze, _ops
 _ops → _freeze, _ir
 _player → _ir
 _patterns → _api, _recipes, _tokens
 _hof → _api, _ir, _recipes, _tokens
 _recipes → _tokens
+       deferred: _hof (a family called on a tree, `rise(tree)`)
 _schema → _contract
 _wire → _freeze, _ir
 _compile → _freeze, _ir
 _freeze → _ir, _render
+_markup → _render
+_ir → _version
 _dom → _freeze, _wire   (optional; requires ux-dom)
 _channel → (none)      (Document contribution; soft ux_dom in methods)
 

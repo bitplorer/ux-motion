@@ -1,0 +1,213 @@
+{
+ "ux_motion._player": {
+  "consumers": [
+   "docs/05-PLAYER-CONTRACT.md",
+   "docs/07-ENHANCEMENTS.md",
+   "docs/10-EXAMPLES.md",
+   "docs/guides/SNIPPETS.md",
+   "examples/minimal.py",
+   "examples/scroll_scrub.py",
+   "examples/wait_complete.py",
+   "tests/resilience/test_ownership_isolation.py",
+   "tests/test_core.py",
+   "tests/test_player_edges.py",
+   "tests/test_soft1_scrub.py",
+   "tests/test_soft2_path_morph.py",
+   "tests/test_soft3_wait.py"
+  ],
+  "doc": "Reference player — the decades contract.",
+  "exported_as": [
+   "ux_motion:Event",
+   "ux_motion:ScrubFrame",
+   "ux_motion:WAIT_BAGS",
+   "ux_motion:WAIT_CLOCKS",
+   "ux_motion:WaitBags",
+   "ux_motion:WaitClock",
+   "ux_motion:explain",
+   "ux_motion:frames",
+   "ux_motion:interpret",
+   "ux_motion:partition_wait",
+   "ux_motion:scrub",
+   "ux_motion:span_ms",
+   "ux_motion:wait_clocks"
+  ],
+  "features": [
+   "reference-player"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "dataclasses",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._ir"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "player",
+  "path": "ux_motion/_player.py",
+  "public": [
+   "Event",
+   "ScrubFrame",
+   "WAIT_BAGS",
+   "WAIT_CLOCKS",
+   "WaitBags",
+   "WaitClock",
+   "explain",
+   "frames",
+   "interpret",
+   "partition_wait",
+   "scrub",
+   "span_ms",
+   "wait_clocks"
+  ],
+  "symbols": {
+   "Event": {
+    "bases": [],
+    "decorators": [
+     "dataclass(frozen=True)"
+    ],
+    "doc": "",
+    "kind": "class",
+    "methods": {},
+    "public": true
+   },
+   "ScrubFrame": {
+    "bases": [],
+    "decorators": [
+     "dataclass(frozen=True)"
+    ],
+    "doc": "Logical tape position for a bind plan. Progress is clamped 0..1.",
+    "kind": "class",
+    "methods": {},
+    "public": true
+   },
+   "WaitBags": {
+    "bases": [],
+    "decorators": [
+     "dataclass(frozen=True)"
+    ],
+    "doc": "Direct-sibling partition under wait. Nested nodes are not flattened.",
+    "kind": "class",
+    "methods": {},
+    "public": true
+   },
+   "WaitClock": {
+    "bases": [],
+    "decorators": [
+     "dataclass(frozen=True)"
+    ],
+    "doc": "Wait orchestration clocks. ``enter_t`` is when direct enters start.",
+    "kind": "class",
+    "methods": {},
+    "public": true
+   },
+   "_emit_track": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], t0: int, events: list[Event], counts: Mapping[str, int]) -> int"
+   },
+   "_play_node": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any], t0: int, events: list[Event], counts: Mapping[str, int]) -> int"
+   },
+   "_play_phase": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(phase: Mapping[str, Any], t0: int, events: list[Event], counts: Mapping[str, int]) -> int"
+   },
+   "_play_wait": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(kids: list[Mapping[str, Any]], t0: int, events: list[Event], counts: Mapping[str, int]) -> int"
+   },
+   "_unwrap_schedule": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any]) -> Mapping[str, Any]"
+   },
+   "_wait_run": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(kids: list[Mapping[str, Any]], t0: int, events: list[Event], counts: Mapping[str, int]) -> WaitClock"
+   },
+   "_wait_siblings": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Mapping[str, Any]) -> list[Mapping[str, Any]]"
+   },
+   "_xml": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(s: str) -> str"
+   },
+   "explain": {
+    "doc": "Human schedule. Same order as the reference player.",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], *, counts: Mapping[str, int] | None=None) -> str"
+   },
+   "frames": {
+    "doc": "Headless SVG schedule strip for CI / docs. No browser required.",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], *, width: int=640, height: int=120, counts: Mapping[str, int] | None=None) -> str"
+   },
+   "interpret": {
+    "doc": "Deterministic start/end schedule. Sorted by (t, event, target).",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], *, counts: Mapping[str, int] | None=None) -> list[Event]"
+   },
+   "partition_wait": {
+    "doc": "Split wait siblings into frozen bags. Missing role is enter (IR default).",
+    "kind": "function",
+    "public": true,
+    "signature": "(children: Iterable[Mapping[str, Any]]) -> WaitBags"
+   },
+   "scrub": {
+    "doc": "Seek a plan's logical tape. ``progress`` is 0..1 (clamped).",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], progress: float, *, counts: Mapping[str, int] | None=None) -> ScrubFrame"
+   },
+   "span_ms": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], *, counts: Mapping[str, int] | None=None) -> int"
+   },
+   "wait_clocks": {
+    "doc": "Wait bags + clocks for a plan. ``enter_t`` matches interpret enter starts.",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], *, t0: int=0, counts: Mapping[str, int] | None=None) -> WaitClock"
+   }
+  }
+ }
+}
