@@ -58,10 +58,8 @@
    "dom-construction": {
     "keywords": [
      "element",
-     "escape",
-     "htmltags",
      "sanitize",
-     "svgtags"
+     "tag"
     ],
     "owner": "ux-dom"
    },
@@ -711,7 +709,9 @@
  "narrative_docs": [
   "docs/01-ARCHITECTURE.md"
  ],
- "non_goal_warnings": [],
+ "non_goal_warnings": [
+  "dom-construction: ux_motion._dom:motion_tag"
+ ],
  "packages": {
   "ux_motion": "ux_motion"
  },
