@@ -9,6 +9,14 @@ The **plan IR** uses a separate major (`IR_VERSION` / plan field `v`). See `docs
 
 ## Unreleased
 
+### Removed — the `xhtml` render parameter
+
+ux-dom removed its `xhtml` render mode (bitplorer/ux-dom#87), so its walk
+no longer passes `xhtml` to a node's `_render` / `_walk_render_tokens`. The
+plan script's hooks and `Scene.__render__` drop it too; a plan script inside
+a ux-dom tree raised `TypeError` on `__async_render__`. Needs a ux-dom with
+that change.
+
 ### Fixed — reduced simplify uses the duration default when unset
 
 `Math.min(duration || 0, 80)` turned a missing duration into 0 under

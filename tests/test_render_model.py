@@ -105,6 +105,20 @@ class UxDomTreeTests(unittest.TestCase):
         self.assertIn("embed", html)
         self.assertIn("Hi", html)
 
+    def test_scene_in_tree_streams_like_render(self) -> None:
+        # ux-dom's async walk calls the plan script's hooks; they take no
+        # ``xhtml`` (removed in ux-dom #87).
+        import asyncio
+
+        tree = self.section("Hi", id="view")
+        sc = scene("embed").enter("#view", fade.enter(ms=40), html=tree)
+        host = self.div(sc, id="host")
+
+        async def stream() -> str:
+            return "".join([t async for t in host.__async_render__(pretty=False)])
+
+        self.assertEqual(asyncio.run(stream()), host.__render__(pretty=False))
+
     def test_document_use_motion(self) -> None:
         from ux_dom import Document
         from ux_motion import Motion
