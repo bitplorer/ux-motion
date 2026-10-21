@@ -1,0 +1,42 @@
+{
+ "ux_motion._markup": {
+  "consumers": [],
+  "doc": "Public alias for official serialize.",
+  "exported_as": [],
+  "features": [
+   "serialize"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._api"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._render"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "markup",
+  "path": "ux_motion/_markup.py",
+  "public": [
+   "as_html",
+   "render_markup"
+  ],
+  "symbols": {}
+ }
+}

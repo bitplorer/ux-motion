@@ -1,0 +1,53 @@
+{
+ "ux_motion._schema": {
+  "consumers": [
+   "tests/test_core.py",
+   "tests/test_soft2_path_morph.py"
+  ],
+  "doc": "JSON Schema for IR v1 — so other languages can author against the contract.",
+  "exported_as": [
+   "ux_motion:schema"
+  ],
+  "features": [
+   "plan-ir"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._contract"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "schema",
+  "path": "ux_motion/_schema.py",
+  "public": [
+   "schema"
+  ],
+  "symbols": {
+   "schema": {
+    "doc": "Draft-07 style schema of the plan IR. Additive fields remain valid.",
+    "kind": "function",
+    "public": true,
+    "signature": "() -> dict[str, Any]"
+   }
+  }
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "docs/05-PLAYER-CONTRACT.md": {
+  "claims": [
+   {
+    "kind": "module",
+    "resolved": true,
+    "text": "ux_motion._player"
+   }
+  ]
+ }
+}

@@ -79,6 +79,7 @@ It does **not** own product behavior or DOM construction.
 |-----|----------|
 | [internals/README.md](internals/README.md) | Explanation slot → 00 / 01 / 12 |
 | [internals/c4.md](internals/c4.md) | C4-style context / containers |
+| [internals/CODEMAP.md](internals/CODEMAP.md) | Generated code map (`codemap/`): layers, features, domain charter |
 | [../OWNERSHIP.md](../OWNERSHIP.md) | Layer cut + Soft leftover (HOLD) |
 | [00-OVERVIEW.md](00-OVERVIEW.md) | Full product description |
 | [01-ARCHITECTURE.md](01-ARCHITECTURE.md) | Layers, modules, dependency graph, data flow |

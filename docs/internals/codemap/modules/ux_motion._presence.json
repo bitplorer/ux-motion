@@ -1,0 +1,97 @@
+{
+ "ux_motion._presence": {
+  "consumers": [],
+  "doc": "Presence helpers — stamp stable ids the player can hold across morphs.",
+  "exported_as": [
+   "ux_motion:Presence",
+   "ux_motion:region",
+   "ux_motion:stamp"
+  ],
+  "features": [
+   "presence"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "html",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "presence",
+  "path": "ux_motion/_presence.py",
+  "public": [
+   "Presence",
+   "region",
+   "stamp"
+  ],
+  "symbols": {
+   "Presence": {
+    "bases": [],
+    "doc": "Server-side presence map for tests and multi-hop scores.",
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> None"
+     },
+     "all": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> Iterable[str]"
+     },
+     "clear": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self) -> None"
+     },
+     "drop": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, uid: str) -> None"
+     },
+     "is_present": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, uid: str) -> bool"
+     },
+     "mark": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, uid: str) -> None"
+     }
+    },
+    "public": true
+   },
+   "region": {
+    "doc": "A presence host with a stable id.",
+    "kind": "function",
+    "public": true,
+    "signature": "(uid: str, body: str='', *, cls: str='', tag: str='div') -> str"
+   },
+   "stamp": {
+    "doc": "Inject data-uxm-id onto the first open tag.",
+    "kind": "function",
+    "public": true,
+    "signature": "(html: str, uid: str) -> str"
+   }
+  }
+ }
+}

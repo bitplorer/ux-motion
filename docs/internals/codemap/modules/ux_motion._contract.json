@@ -1,0 +1,47 @@
+{
+ "ux_motion._contract": {
+  "consumers": [
+   "tests/resilience/test_ownership_isolation.py",
+   "tests/test_core.py",
+   "tests/test_soft1_scrub.py",
+   "tests/test_soft2_path_morph.py",
+   "tests/test_soft3_wait.py"
+  ],
+  "doc": "Frozen product contract. Changing this file is a breaking release.",
+  "exported_as": [
+   "ux_motion:CONTRACT"
+  ],
+  "features": [
+   "plan-ir"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._schema"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "contract",
+  "path": "ux_motion/_contract.py",
+  "public": [
+   "CONTRACT"
+  ],
+  "symbols": {}
+ }
+}

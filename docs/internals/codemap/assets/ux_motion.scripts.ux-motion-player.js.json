@@ -1,0 +1,26 @@
+{
+ "ux_motion/scripts/ux-motion-player.js": {
+  "consumers": [
+   "docs/01-ARCHITECTURE.md",
+   "docs/03-API-REFERENCE.md",
+   "docs/05-PLAYER-CONTRACT.md",
+   "docs/08-WIRE-PROTOCOL.md",
+   "docs/13-VERSIONING.md",
+   "tests/resilience/test_ownership_isolation.py",
+   "tests/test_packaging.py",
+   "tests/test_player_edges.py",
+   "tests/test_render_model.py",
+   "tests/test_soft1_scrub.py",
+   "tests/test_soft2_path_morph.py",
+   "tests/test_soft3_wait.py"
+  ],
+  "features": [
+   "browser-player"
+  ],
+  "layer": "assets",
+  "path": "ux_motion/scripts/ux-motion-player.js",
+  "referenced_by": [
+   "ux_motion._api"
+  ]
+ }
+}

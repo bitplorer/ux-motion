@@ -1,0 +1,75 @@
+{
+ "ux_motion._wire": {
+  "consumers": [
+   "docs/guides/SNIPPETS.md",
+   "tests/test_core.py",
+   "tests/test_render_model.py"
+  ],
+  "doc": "JSON is the shared language for a plan on the wire.",
+  "exported_as": [
+   "ux_motion:dumps",
+   "ux_motion:loads"
+  ],
+  "features": [
+   "result-ops",
+   "ux-dom-face"
+  ],
+  "imported_by": {
+   "function_level": [
+    "ux_motion._api",
+    "ux_motion._dom"
+   ],
+   "module_level": [
+    "ux_motion"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "json",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._freeze",
+    "ux_motion._ir"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "wire",
+  "path": "ux_motion/_wire.py",
+  "public": [
+   "dumps",
+   "encode_plan_script",
+   "loads"
+  ],
+  "symbols": {
+   "dumps": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Any, *, indent: int | None=2) -> str"
+   },
+   "encode_plan_script": {
+    "doc": "HTML form of a frozen plan — the string HTMLResponse / a tree walk emit.",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any], *, pretty: bool=False) -> str"
+   },
+   "loads": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(text: str) -> dict[str, Any]"
+   }
+  }
+ }
+}

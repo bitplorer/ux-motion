@@ -1,0 +1,89 @@
+{
+ "ux_motion._freeze": {
+  "consumers": [
+   "docs/guides/SNIPPETS.md",
+   "tests/test_core.py",
+   "tests/test_hof.py",
+   "tests/test_render_model.py"
+  ],
+  "doc": "Freeze an authoring plan into wire IR (all html fields are strings).",
+  "exported_as": [
+   "ux_motion:freeze_plan"
+  ],
+  "features": [
+   "serialize"
+  ],
+  "imported_by": {
+   "function_level": [
+    "ux_motion._api",
+    "ux_motion._dom"
+   ],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._adapter",
+    "ux_motion._compile",
+    "ux_motion._ops",
+    "ux_motion._wire"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._ir",
+    "ux_motion._render"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "freeze",
+  "path": "ux_motion/_freeze.py",
+  "public": [
+   "freeze_plan",
+   "iter_markup",
+   "plan_has_trees"
+  ],
+  "symbols": {
+   "_freeze_html": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(value: Any) -> str"
+   },
+   "_freeze_node": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Any) -> Any"
+   },
+   "freeze_plan": {
+    "doc": "Serialize every ``html`` field, then validate the wire IR.",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any] | Any) -> dict[str, Any]"
+   },
+   "iter_markup": {
+    "doc": "Yield live ``html`` values (trees or strings) still on the authoring plan.",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any] | Any) -> Iterator[Any]"
+   },
+   "plan_has_trees": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(plan: Mapping[str, Any] | Any) -> bool"
+   }
+  }
+ }
+}

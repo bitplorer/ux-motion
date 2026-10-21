@@ -1,0 +1,54 @@
+{
+ "ux_motion._dom": {
+  "consumers": [],
+  "doc": "Scene as a ux-dom tree node.",
+  "exported_as": [],
+  "features": [
+   "ux-dom-face"
+  ],
+  "imported_by": {
+   "function_level": [
+    "ux_motion._api"
+   ],
+   "module_level": [],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {
+    "ux-dom": [
+     "ux_dom.dom",
+     "ux_dom.dom.src.component"
+    ]
+   },
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [
+    "ux_motion._freeze",
+    "ux_motion._wire"
+   ],
+   "module_level": [],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "dom",
+  "path": "ux_motion/_dom.py",
+  "public": [
+   "motion_tag"
+  ],
+  "symbols": {
+   "motion_tag": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(scene: Any) -> Any"
+   }
+  }
+ }
+}

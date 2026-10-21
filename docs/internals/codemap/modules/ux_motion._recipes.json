@@ -1,0 +1,189 @@
+{
+ "ux_motion._recipes": {
+  "consumers": [
+   "docs/07-ENHANCEMENTS.md",
+   "docs/10-EXAMPLES.md",
+   "docs/guides/SNIPPETS.md",
+   "examples/minimal.py",
+   "examples/path_morph.py",
+   "examples/scroll_scrub.py",
+   "examples/wait_complete.py",
+   "tests/resilience/test_ownership_isolation.py",
+   "tests/test_core.py",
+   "tests/test_hof.py",
+   "tests/test_player_edges.py",
+   "tests/test_render_model.py",
+   "tests/test_soft1_scrub.py",
+   "tests/test_soft2_path_morph.py",
+   "tests/test_soft3_wait.py"
+  ],
+  "doc": "Named recipes. A name must look like what it does.",
+  "exported_as": [
+   "ux_motion:Recipe",
+   "ux_motion:along",
+   "ux_motion:blur",
+   "ux_motion:fade",
+   "ux_motion:morph_d",
+   "ux_motion:none",
+   "ux_motion:rise",
+   "ux_motion:scale",
+   "ux_motion:slide",
+   "ux_motion:snap",
+   "ux_motion:springy"
+  ],
+  "features": [
+   "recipes-and-tokens"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._api",
+    "ux_motion._hof",
+    "ux_motion._patterns"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [
+    "ux_motion._hof"
+   ],
+   "module_level": [
+    "ux_motion._tokens"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "recipes",
+  "path": "ux_motion/_recipes.py",
+  "public": [
+   "Recipe",
+   "along",
+   "blur",
+   "fade",
+   "morph_d",
+   "none",
+   "rise",
+   "scale",
+   "slide",
+   "snap",
+   "springy"
+  ],
+  "symbols": {
+   "Recipe": {
+    "bases": [
+     "dict"
+    ],
+    "doc": "A serializable animation recipe (from/to + timing + optional physics/path).",
+    "kind": "class",
+    "methods": {
+     "with_delay": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, ms: int) -> 'Recipe'"
+     },
+     "with_duration": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, ms: int) -> 'Recipe'"
+     },
+     "with_easing": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, easing: str) -> 'Recipe'"
+     },
+     "with_morph_d": {
+      "doc": "Interpolate SVG path ``d`` (similar paths). Does not reuse ``path``.",
+      "kind": "function",
+      "signature": "(self, from_d: str, to_d: str) -> 'Recipe'"
+     },
+     "with_path": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, d: str, *, rotate: str='auto') -> 'Recipe'"
+     },
+     "with_spring": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, name: str='snappy', **params: float) -> 'Recipe'"
+     }
+    },
+    "public": true
+   },
+   "_Family": {
+    "bases": [],
+    "doc": "Parametric enter/exit pair. Defaults make the name true.",
+    "kind": "class",
+    "methods": {
+     "__call__": {
+      "doc": "Drop-in HOF: ``rise(tree)`` → Scene. ``rise()`` / ``rise(ms=180)`` → Recipe.",
+      "kind": "function",
+      "signature": "(self, node=None, /, **kwargs)"
+     },
+     "__init__": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, name: str, *, enter: dict[str, float] | None=None, exit: dict[str, float] | None=None) -> None"
+     },
+     "enter": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, *, y: float | None=None, x: float | None=None, scale: float | None=None, opacity: float | None=None, blur: float | None=None, ms: int | None=None, delay: int=0, easing: str | None=None, rotate: float=0) -> Recipe"
+     },
+     "exit": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, *, y: float | None=None, x: float | None=None, scale: float | None=None, opacity: float | None=None, blur: float | None=None, ms: int | None=None, delay: int=0, easing: str | None=None, rotate: float=0) -> Recipe"
+     }
+    },
+    "public": false
+   },
+   "_recipe": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(name: str, *, frm: dict[str, float] | None=None, to: dict[str, float] | None=None, duration: int=240, delay: int=0, easing: str='ease-out', fill: str='both', **extra: Any) -> Recipe"
+   },
+   "along": {
+    "doc": "Move along an SVG path (offset-path). The river.ai origin story.",
+    "kind": "function",
+    "public": true,
+    "signature": "(path_d: str, *, ms: int | None=None, delay: int=0, easing: str | None=None, rotate: str='auto', opacity_from: float=0) -> Recipe"
+   },
+   "morph_d": {
+    "doc": "Morph SVG path ``d`` between similar paths. Not offset-path (see ``along``).",
+    "kind": "function",
+    "public": true,
+    "signature": "(from_d: str, to_d: str, *, ms: int | None=None, delay: int=0, easing: str | None=None, opacity_from: float=1) -> Recipe"
+   },
+   "none": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "(*, ms: int=0) -> Recipe"
+   },
+   "snap": {
+    "doc": "",
+    "kind": "function",
+    "public": true,
+    "signature": "() -> Recipe"
+   },
+   "springy": {
+    "doc": "Enter with spring physics.",
+    "kind": "function",
+    "public": true,
+    "signature": "(*, y: float | None=None, x: float | None=None, scale: float | None=None, preset: str='snappy', ms: int | None=None) -> Recipe"
+   }
+  }
+ }
+}

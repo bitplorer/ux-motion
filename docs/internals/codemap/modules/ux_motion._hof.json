@@ -1,0 +1,190 @@
+{
+ "ux_motion._hof": {
+  "consumers": [
+   "docs/guides/SNIPPETS.md",
+   "tests/test_hof.py"
+  ],
+  "doc": "Drop-in higher-order motion. Always return a live Scene.",
+  "exported_as": [
+   "ux_motion:HOFS",
+   "ux_motion:appear",
+   "ux_motion:css_target",
+   "ux_motion:hop",
+   "ux_motion:hop_arrive",
+   "ux_motion:hop_leave",
+   "ux_motion:leave",
+   "ux_motion:motion",
+   "ux_motion:notice",
+   "ux_motion:sheet",
+   "ux_motion:staggered",
+   "ux_motion:swap"
+  ],
+  "features": [
+   "drop-in-hofs"
+  ],
+  "imported_by": {
+   "function_level": [
+    "ux_motion._recipes"
+   ],
+   "module_level": [
+    "ux_motion"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._api",
+    "ux_motion._ir",
+    "ux_motion._recipes",
+    "ux_motion._tokens"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "hof",
+  "path": "ux_motion/_hof.py",
+  "public": [
+   "HOFS",
+   "appear",
+   "apply_family",
+   "css_target",
+   "hop",
+   "hop_arrive",
+   "hop_leave",
+   "leave",
+   "motion",
+   "notice",
+   "sheet",
+   "staggered",
+   "swap"
+  ],
+  "symbols": {
+   "_Hop": {
+    "bases": [],
+    "doc": "",
+    "kind": "class",
+    "methods": {},
+    "public": false
+   },
+   "_apply_share": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(builder: Scene, share: Any) -> None"
+   },
+   "_as_recipe": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(using: Any, *, role: str='enter') -> Mapping[str, Any]"
+   },
+   "_attr": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Any, key: str) -> Any"
+   },
+   "_child_selector": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(host: str, children: str) -> str"
+   },
+   "_children": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Any) -> list[Any]"
+   },
+   "_find_id": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(node: Any, *, prefix: str | None=None, cls: str | None=None) -> str | None"
+   },
+   "_sel_html": {
+    "doc": "``(selector, html_or_None)``. Strings are selectors only.",
+    "kind": "function",
+    "public": false,
+    "signature": "(value: Any) -> tuple[str, Any | None]"
+   },
+   "appear": {
+    "doc": "Enter a tree. Target is ``into`` or the tree's ``id``.",
+    "kind": "function",
+    "public": true,
+    "signature": "(tree: Any=None, /, *, into: str | None=None, using: Any=None, stagger: str | None=None, gap_ms: int | None=None, name: str='appear') -> Scene"
+   },
+   "apply_family": {
+    "doc": "``rise(tree)`` → Scene. ``rise()`` / ``rise(ms=180)`` → Recipe.",
+    "kind": "function",
+    "public": true,
+    "signature": "(family: Any, node: Any=None, /, *, into: str | None=None, stagger: str | None=None, gap_ms: int | None=None, after: str='keep', role: str='enter', name: str | None=None, **recipe_kw: Any) -> Scene | Recipe"
+   },
+   "css_target": {
+    "doc": "CSS selector for a tree, string, or ``#id``.",
+    "kind": "function",
+    "public": true,
+    "signature": "(node: Any) -> str"
+   },
+   "hop_arrive": {
+    "doc": "Second Result of a multi-hop: cue the score and enter.",
+    "kind": "function",
+    "public": true,
+    "signature": "(score_id: str, target: Any, /, *, using: Any=None, name: str='hop-arrive') -> Scene"
+   },
+   "hop_leave": {
+    "doc": "First Result of a multi-hop: exit and hold under a score.",
+    "kind": "function",
+    "public": true,
+    "signature": "(score_id: str, target: Any, /, *, using: Any=None, name: str='hop-leave') -> Scene"
+   },
+   "leave": {
+    "doc": "Exit a host (selector or tree).",
+    "kind": "function",
+    "public": true,
+    "signature": "(target: Any, /, *, using: Any=None, after: str='hide', name: str='leave') -> Scene"
+   },
+   "motion": {
+    "doc": "Decorator: view function → Scene.",
+    "kind": "function",
+    "public": true,
+    "signature": "(fn: Callable[..., Any] | None=None, /, *, into: str | None=None, using: Any=None, stagger: str | None=None, name: str | None=None) -> Any"
+   },
+   "notice": {
+    "doc": "Toast. Animates the inner ``#toast-*`` (or the tree's own id).",
+    "kind": "function",
+    "public": true,
+    "signature": "(tree: Any, /, *, show: bool=True, name: str='notice') -> Scene"
+   },
+   "sheet": {
+    "doc": "Modal: overlay fade + panel scale. Overlay/panel may be trees.",
+    "kind": "function",
+    "public": true,
+    "signature": "(overlay: Any, panel: Any='#sheet-panel', /, *, open_: bool=True, name: str='sheet') -> Scene"
+   },
+   "staggered": {
+    "doc": "Stagger children of a host (tree or selector). Host html is kept if given.",
+    "kind": "function",
+    "public": true,
+    "signature": "(host: Any, children: str='.tile', /, *, using: Any=None, gap_ms: int | None=None, enter: bool=True, name: str='list') -> Scene"
+   },
+   "swap": {
+    "doc": "Replace ``host`` with ``tree`` (page change). Optional stagger + FLIP share.",
+    "kind": "function",
+    "public": true,
+    "signature": "(host: Any, tree: Any, /, *, using: Any=None, stagger: str | None=None, gap_ms: int | None=None, share: Any=None, name: str='swap') -> Scene"
+   }
+  }
+ }
+}

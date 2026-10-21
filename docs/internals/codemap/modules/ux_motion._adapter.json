@@ -1,0 +1,88 @@
+{
+ "ux_motion._adapter": {
+  "consumers": [
+   "docs/10-EXAMPLES.md",
+   "docs/guides/SNIPPETS.md",
+   "examples/minimal.py",
+   "examples/path_morph.py",
+   "examples/scroll_scrub.py",
+   "tests/test_core.py"
+  ],
+  "doc": "How a plan leaves the server.",
+  "exported_as": [
+   "ux_motion:send"
+  ],
+  "features": [
+   "result-ops"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion",
+    "ux_motion._api"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._freeze",
+    "ux_motion._ops"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "adapter",
+  "path": "ux_motion/_adapter.py",
+  "public": [
+   "Send",
+   "send"
+  ],
+  "symbols": {
+   "Send": {
+    "bases": [],
+    "doc": "The thing you call when a scene is ready to leave the server.",
+    "kind": "class",
+    "methods": {
+     "cancel": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, plan_id: str | None=None, *, action: str | None=None) -> dict[str, Any]"
+     },
+     "play": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, plan: Mapping[str, Any] | Any, *, also_update: bool=False, action: str | None=None) -> dict[str, Any]"
+     },
+     "rewind": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, plan: Mapping[str, Any] | Any, *, action: str | None=None) -> dict[str, Any]"
+     },
+     "update": {
+      "doc": "",
+      "kind": "function",
+      "signature": "(self, plan: Mapping[str, Any] | Any, *, action: str | None=None) -> dict[str, Any]"
+     }
+    },
+    "public": true
+   },
+   "_as_plan": {
+    "doc": "",
+    "kind": "function",
+    "public": false,
+    "signature": "(plan: Any) -> Mapping[str, Any]"
+   }
+  }
+ }
+}

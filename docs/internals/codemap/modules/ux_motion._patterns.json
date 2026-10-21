@@ -1,0 +1,107 @@
+{
+ "ux_motion._patterns": {
+  "consumers": [
+   "docs/10-EXAMPLES.md",
+   "docs/guides/SNIPPETS.md",
+   "tests/test_core.py",
+   "tests/test_player_edges.py"
+  ],
+  "doc": "Full choreographies — not single recipes. Reusable presence patterns.",
+  "exported_as": [
+   "ux_motion:PATTERNS",
+   "ux_motion:list_stagger",
+   "ux_motion:modal",
+   "ux_motion:multi_hop_arrive",
+   "ux_motion:multi_hop_leave",
+   "ux_motion:page",
+   "ux_motion:shared_page",
+   "ux_motion:toast"
+  ],
+  "features": [
+   "patterns"
+  ],
+  "imported_by": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion"
+   ],
+   "type_checking": []
+  },
+  "imports_external": {
+   "function_level": {},
+   "module_level": {
+    "stdlib": [
+     "__future__",
+     "typing"
+    ]
+   },
+   "type_checking": {}
+  },
+  "imports_internal": {
+   "function_level": [],
+   "module_level": [
+    "ux_motion._api",
+    "ux_motion._recipes",
+    "ux_motion._tokens"
+   ],
+   "type_checking": []
+  },
+  "is_public": false,
+  "layer": "patterns",
+  "path": "ux_motion/_patterns.py",
+  "public": [
+   "PATTERNS",
+   "list_stagger",
+   "modal",
+   "multi_hop_arrive",
+   "multi_hop_leave",
+   "page",
+   "shared_page",
+   "toast"
+  ],
+  "symbols": {
+   "list_stagger": {
+    "doc": "Staggered list enter or exit.",
+    "kind": "function",
+    "public": true,
+    "signature": "(*, selector: str, name: str='list', enter: bool=True, gap_ms: int | None=None) -> dict[str, Any]"
+   },
+   "modal": {
+    "doc": "Modal open/close with overlay fade + panel scale.",
+    "kind": "function",
+    "public": true,
+    "signature": "(*, overlay: str, panel: str, name: str='modal', open_: bool=True) -> dict[str, Any]"
+   },
+   "multi_hop_arrive": {
+    "doc": "Second Result of a multi-hop: cue the score and enter.",
+    "kind": "function",
+    "public": true,
+    "signature": "(*, score_id: str, arrive: str, name: str='hop-arrive') -> dict[str, Any]"
+   },
+   "multi_hop_leave": {
+    "doc": "First Result of a multi-hop: exit and hold under a score.",
+    "kind": "function",
+    "public": true,
+    "signature": "(*, score_id: str, leave: str, name: str='hop-leave') -> dict[str, Any]"
+   },
+   "page": {
+    "doc": "Classic page transition: exit old, then enter new.",
+    "kind": "function",
+    "public": true,
+    "signature": "(*, leave: str, arrive: str, name: str='page', exit_ms: int | None=None, enter_ms: int | None=None) -> dict[str, Any]"
+   },
+   "shared_page": {
+    "doc": "Page change with a shared hero element (FLIP).",
+    "kind": "function",
+    "public": true,
+    "signature": "(*, share_id: str, leave_img: str, arrive_img: str, leave_page: str, arrive_page: str, name: str='shared-page') -> dict[str, Any]"
+   },
+   "toast": {
+    "doc": "Toast slide from the edge.",
+    "kind": "function",
+    "public": true,
+    "signature": "(*, target: str, name: str='toast', show: bool=True) -> dict[str, Any]"
+   }
+  }
+ }
+}

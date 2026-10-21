@@ -1,0 +1,786 @@
+{
+ "assets": {
+  "ux_motion/scripts/ux-motion-channel.js": "assets",
+  "ux_motion/scripts/ux-motion-player.js": "assets"
+ },
+ "coupling": {
+  "ux-dom": {
+   "distinct_names": 6,
+   "hard_coupling": [
+    "subclass ux_motion._dom.MotionScene(ux_dom.dom.src.component:Component)",
+    "subclass ux_motion._dom.MotionScript(ux_dom.dom:script)"
+   ],
+   "import_sites": 7,
+   "importing_modules": [
+    "ux_motion._api",
+    "ux_motion._channel",
+    "ux_motion._dom",
+    "ux_motion._render"
+   ],
+   "port_candidates": []
+  }
+ },
+ "cycles_module_level": [],
+ "doc_claims": {
+  "code_ahead": [
+   "public_api ux_motion:HOFS",
+   "public_api ux_motion:PATTERNS",
+   "public_api ux_motion:hop_arrive",
+   "public_api ux_motion:hop_leave"
+  ],
+  "docs_ahead": [
+   "docs/14-CHANNEL-COMPOSITOR.md: module `ux_motion.channel`"
+  ],
+  "summary": {
+   "claims": 114,
+   "docs": 31,
+   "unresolved": 1
+  }
+ },
+ "domain": {
+  "depends_on": {
+   "ux-dom": {
+    "imports": [
+     "ux_dom"
+    ],
+    "names": [
+     "ux_dom.dom.src.component:Component",
+     "ux_dom.dom:script",
+     "ux_dom.plugins.csp:resolve_nonce",
+     "ux_dom.plugins.csp:stamp_nonce",
+     "ux_dom.plugins.csp:stamp_tree",
+     "ux_dom.plugins.safe_static:SafeStaticFile"
+    ]
+   }
+  },
+  "domain": "ux-motion is the single source of truth for presence and transition plans as data: the IR v1 Plan, its schedule contract and the transition.* ops that carry it.",
+  "non_goals": {
+   "dom-construction": {
+    "keywords": [
+     "element",
+     "sanitize",
+     "tag"
+    ],
+    "owner": "ux-dom"
+   },
+   "gestures": {
+    "keywords": [
+     "gesture",
+     "hover",
+     "pan",
+     "pointer",
+     "press",
+     "tap"
+    ],
+    "owner": "ux-channel / ux-behavior"
+   },
+   "intent-cap-result": {
+    "keywords": [
+     "cap",
+     "codec",
+     "idiomorph",
+     "intent"
+    ],
+    "owner": "ux-channel"
+   },
+   "product-behavior": {
+    "keywords": [
+     "action",
+     "behavior",
+     "dispatch"
+    ],
+    "owner": "ux-behavior"
+   },
+   "product-lifecycle": {
+    "keywords": [
+     "cli",
+     "deploy",
+     "router",
+     "scaffold"
+    ],
+    "owner": "ux-compose"
+   }
+  },
+  "owns": {
+   "motion-authoring": {
+    "modules": [
+     "ux_motion._api",
+     "ux_motion._hof",
+     "ux_motion._patterns",
+     "ux_motion._recipes",
+     "ux_motion._tokens"
+    ],
+    "symbols": [
+     "ux_motion:Recipe",
+     "ux_motion:Scene",
+     "ux_motion:appear"
+    ]
+   },
+   "motion-ir": {
+    "modules": [
+     "ux_motion._contract",
+     "ux_motion._ir",
+     "ux_motion._schema"
+    ],
+    "symbols": [
+     "ux_motion:CONTRACT",
+     "ux_motion:IR_VERSION",
+     "ux_motion:validate_plan"
+    ]
+   },
+   "motion-player-runtime": {
+    "modules": [
+     "ux_motion._channel",
+     "ux_motion.scripts"
+    ],
+    "symbols": [
+     "ux_motion:Motion",
+     "ux_motion:MotionChannel"
+    ]
+   },
+   "motion-schedule": {
+    "modules": [
+     "ux_motion._player"
+    ],
+    "symbols": [
+     "ux_motion:interpret",
+     "ux_motion:partition_wait",
+     "ux_motion:scrub"
+    ]
+   },
+   "transition-ops": {
+    "modules": [
+     "ux_motion._adapter",
+     "ux_motion._ops",
+     "ux_motion._wire"
+    ],
+    "symbols": [
+     "ux_motion:as_update",
+     "ux_motion:play",
+     "ux_motion:rewind",
+     "ux_motion:send"
+    ]
+   }
+  },
+  "public_api": [
+   "ux_motion:API_VERSION",
+   "ux_motion:CONTRACT",
+   "ux_motion:IR_VERSION",
+   "ux_motion:Motion",
+   "ux_motion:MotionChannel",
+   "ux_motion:PlanError",
+   "ux_motion:Recipe",
+   "ux_motion:Scene",
+   "ux_motion:appear",
+   "ux_motion:as_update",
+   "ux_motion:bind",
+   "ux_motion:cue",
+   "ux_motion:dumps",
+   "ux_motion:fade",
+   "ux_motion:loads",
+   "ux_motion:morph_d",
+   "ux_motion:play",
+   "ux_motion:rise",
+   "ux_motion:scale",
+   "ux_motion:scene",
+   "ux_motion:score",
+   "ux_motion:send",
+   "ux_motion:share",
+   "ux_motion:slide",
+   "ux_motion:swap",
+   "ux_motion:tokens",
+   "ux_motion:track",
+   "ux_motion:validate_plan",
+   "ux_motion:wait"
+  ]
+ },
+ "entry_points": {
+  "asgi": [],
+  "entry_points": {},
+  "main_modules": [],
+  "scripts": {}
+ },
+ "external_usage": {
+  "ux-dom": [
+   "ux_dom.dom.src.component:Component",
+   "ux_dom.dom:script",
+   "ux_dom.plugins.csp:resolve_nonce",
+   "ux_dom.plugins.csp:stamp_nonce",
+   "ux_dom.plugins.csp:stamp_tree",
+   "ux_dom.plugins.safe_static:SafeStaticFile"
+  ]
+ },
+ "features": {
+  "browser-player": {
+   "assets": [
+    "ux_motion/scripts/ux-motion-player.js"
+   ],
+   "docs": [
+    "docs/05-PLAYER-CONTRACT.md"
+   ],
+   "modules": [
+    "ux_motion._api",
+    "ux_motion.scripts"
+   ],
+   "purpose": "Vanilla JS player that executes plans in the browser, served by Document.use(Motion()).",
+   "symbols": [
+    "ux_motion._api:Motion"
+   ],
+   "tests": [
+    "tests/test_packaging.py",
+    "tests/test_player_edges.py"
+   ]
+  },
+  "channel-compositor": {
+   "assets": [
+    "ux_motion/scripts/ux-motion-channel.js"
+   ],
+   "docs": [
+    "docs/14-CHANNEL-COMPOSITOR.md"
+   ],
+   "modules": [
+    "ux_motion._channel"
+   ],
+   "purpose": "MotionChannel Document contribution: peel transition.* off a Channel Result, let Channel morph, then play.",
+   "symbols": [
+    "ux_motion._channel:MotionChannel"
+   ],
+   "tests": [
+    "tests/test_core.py::CoreTests::test_motion_channel_is_a_contribution",
+    "tests/test_packaging.py"
+   ]
+  },
+  "drop-in-hofs": {
+   "docs": [
+    "docs/03-API-REFERENCE.md",
+    "docs/guides/SNIPPETS.md"
+   ],
+   "modules": [
+    "ux_motion._hof"
+   ],
+   "purpose": "Higher-order functions that turn ux-dom trees into a live Scene (appear, swap, sheet, hop); trees stay trees until serialize.",
+   "symbols": [
+    "ux_motion._hof:HOFS",
+    "ux_motion._hof:appear",
+    "ux_motion._hof:apply_family",
+    "ux_motion._hof:hop",
+    "ux_motion._hof:motion",
+    "ux_motion._hof:swap"
+   ],
+   "tests": [
+    "tests/test_hof.py"
+   ]
+  },
+  "patterns": {
+   "docs": [
+    "docs/03-API-REFERENCE.md",
+    "docs/10-EXAMPLES.md"
+   ],
+   "modules": [
+    "ux_motion._patterns"
+   ],
+   "purpose": "Multi-track choreographies (page, modal, toast, list stagger, shared page, multi-hop) as sugar over the same IR.",
+   "symbols": [
+    "ux_motion._patterns:PATTERNS",
+    "ux_motion._patterns:modal",
+    "ux_motion._patterns:page"
+   ],
+   "tests": [
+    "tests/test_core.py::CoreTests::test_patterns"
+   ]
+  },
+  "plan-ir": {
+   "docs": [
+    "docs/02-IR-SPEC.md",
+    "docs/13-VERSIONING.md"
+   ],
+   "modules": [
+    "ux_motion._contract",
+    "ux_motion._ir",
+    "ux_motion._schema",
+    "ux_motion._version"
+   ],
+   "purpose": "IR v1: validate and canonicalize every node kind; additive fields only, unknown kinds and over-cap durations refused.",
+   "symbols": [
+    "ux_motion._contract:CONTRACT",
+    "ux_motion._ir:PlanError",
+    "ux_motion._ir:validate_plan",
+    "ux_motion._ir:validate_recipe",
+    "ux_motion._schema:schema"
+   ],
+   "tests": [
+    "tests/test_core.py::CoreTests::test_duration_cap",
+    "tests/test_core.py::CoreTests::test_schema",
+    "tests/test_core.py::CoreTests::test_unknown_kind_rejected",
+    "tests/test_core.py::CoreTests::test_versions"
+   ]
+  },
+  "presence": {
+   "docs": [
+    "docs/03-API-REFERENCE.md"
+   ],
+   "modules": [
+    "ux_motion._presence"
+   ],
+   "purpose": "Server-side presence helpers: stamp a uid onto markup, render a region, track the Presence set.",
+   "symbols": [
+    "ux_motion._presence:Presence",
+    "ux_motion._presence:region",
+    "ux_motion._presence:stamp"
+   ],
+   "tests": []
+  },
+  "recipes-and-tokens": {
+   "docs": [
+    "docs/03-API-REFERENCE.md",
+    "docs/07-ENHANCEMENTS.md"
+   ],
+   "modules": [
+    "ux_motion._recipes",
+    "ux_motion._tokens"
+   ],
+   "purpose": "Named Recipe families (fade, slide, scale, rise, blur) and specials (along, morph_d, springy) on design-system tokens.",
+   "symbols": [
+    "ux_motion._recipes:Recipe",
+    "ux_motion._recipes:along",
+    "ux_motion._recipes:fade",
+    "ux_motion._recipes:morph_d",
+    "ux_motion._recipes:springy",
+    "ux_motion._tokens:Tokens",
+    "ux_motion._tokens:tokens"
+   ],
+   "tests": [
+    "tests/test_core.py::CoreTests::test_along_path",
+    "tests/test_core.py::CoreTests::test_spring_recipe",
+    "tests/test_core.py::CoreTests::test_tokens",
+    "tests/test_soft2_path_morph.py"
+   ]
+  },
+  "reference-player": {
+   "docs": [
+    "docs/04-COMPOSITION-SEMANTICS.md",
+    "docs/05-PLAYER-CONTRACT.md"
+   ],
+   "modules": [
+    "ux_motion._player"
+   ],
+   "purpose": "Deterministic Python schedule (the contract the JS player must match): interpret, explain, SVG frames, scrub, wait bags and clocks.",
+   "symbols": [
+    "ux_motion._player:explain",
+    "ux_motion._player:frames",
+    "ux_motion._player:interpret",
+    "ux_motion._player:partition_wait",
+    "ux_motion._player:scrub",
+    "ux_motion._player:wait_clocks"
+   ],
+   "tests": [
+    "tests/test_core.py::CoreTests::test_explain",
+    "tests/test_core.py::CoreTests::test_frames_svg",
+    "tests/test_soft1_scrub.py",
+    "tests/test_soft3_wait.py"
+   ]
+  },
+  "result-ops": {
+   "docs": [
+    "docs/08-WIRE-PROTOCOL.md"
+   ],
+   "modules": [
+    "ux_motion._adapter",
+    "ux_motion._ops",
+    "ux_motion._wire"
+   ],
+   "purpose": "Plan to transition.* ops and Results: play, cancel, rewind (inverted plan) and the classic as_update projection.",
+   "symbols": [
+    "ux_motion._adapter:Send",
+    "ux_motion._adapter:send",
+    "ux_motion._ops:as_update",
+    "ux_motion._ops:play",
+    "ux_motion._ops:rewind",
+    "ux_motion._ops:to_result",
+    "ux_motion._wire:dumps",
+    "ux_motion._wire:loads"
+   ],
+   "tests": [
+    "tests/test_core.py::CoreTests::test_rewind",
+    "tests/test_core.py::CoreTests::test_roundtrip",
+    "tests/test_core.py::CoreTests::test_send_play_update"
+   ]
+  },
+  "scene-builder": {
+   "docs": [
+    "docs/03-API-REFERENCE.md",
+    "docs/04-COMPOSITION-SEMANTICS.md"
+   ],
+   "modules": [
+    "ux_motion._api",
+    "ux_motion._compile"
+   ],
+   "purpose": "Fluent Scene and functional constructors (track, stagger, share, bind, score, cue, phases) that author a Plan.",
+   "symbols": [
+    "ux_motion._api:Scene",
+    "ux_motion._api:Scene.plan",
+    "ux_motion._api:bind",
+    "ux_motion._api:cue",
+    "ux_motion._api:scene",
+    "ux_motion._api:score",
+    "ux_motion._api:share",
+    "ux_motion._api:track",
+    "ux_motion._api:wait",
+    "ux_motion._compile:compile_plan"
+   ],
+   "tests": [
+    "tests/test_core.py::CoreTests::test_bind",
+    "tests/test_core.py::CoreTests::test_score_and_cue",
+    "tests/test_core.py::CoreTests::test_share"
+   ]
+  },
+  "serialize": {
+   "docs": [
+    "docs/01-ARCHITECTURE.md"
+   ],
+   "modules": [
+    "ux_motion._freeze",
+    "ux_motion._markup",
+    "ux_motion._render"
+   ],
+   "purpose": "Official serialize: freeze tree-valued html fields through stamp_tree + __render__ only at the wire.",
+   "symbols": [
+    "ux_motion._api:Scene.__render__",
+    "ux_motion._freeze:freeze_plan",
+    "ux_motion._markup:as_html",
+    "ux_motion._render:render_markup"
+   ],
+   "tests": [
+    "tests/test_core.py::CoreTests::test_as_html_coerces_renderable",
+    "tests/test_render_model.py"
+   ]
+  },
+  "ux-dom-face": {
+   "docs": [
+    "docs/01-ARCHITECTURE.md"
+   ],
+   "modules": [
+    "ux_motion._dom",
+    "ux_motion._wire"
+   ],
+   "purpose": "A Scene placed in a ux-dom tree renders as a Component whose only child is the plan script.",
+   "symbols": [
+    "ux_motion._api:Scene.__iter__",
+    "ux_motion._dom:motion_tag",
+    "ux_motion._wire:encode_plan_script"
+   ],
+   "tests": [
+    "tests/test_render_model.py"
+   ]
+  }
+ },
+ "generator": {
+  "name": "codemap",
+  "sha256": "b8fc853ee27b634ac463b630ef3935419a136b806f6ee80779eb116753c1dd84",
+  "version": "2.0.0"
+ },
+ "layer_exceptions": [],
+ "layer_graph": {
+  "adapter": [
+   "freeze",
+   "ops"
+  ],
+  "api": [
+   "adapter",
+   "compile",
+   "dom",
+   "freeze",
+   "ir",
+   "markup",
+   "ops",
+   "recipes",
+   "wire"
+  ],
+  "compile": [
+   "freeze",
+   "ir"
+  ],
+  "dom": [
+   "freeze",
+   "wire"
+  ],
+  "freeze": [
+   "ir",
+   "render"
+  ],
+  "hof": [
+   "api",
+   "ir",
+   "recipes",
+   "tokens"
+  ],
+  "ir": [
+   "version"
+  ],
+  "markup": [
+   "render"
+  ],
+  "ops": [
+   "freeze",
+   "ir"
+  ],
+  "patterns": [
+   "api",
+   "recipes",
+   "tokens"
+  ],
+  "player": [
+   "ir"
+  ],
+  "recipes": [
+   "hof",
+   "tokens"
+  ],
+  "root": [
+   "adapter",
+   "api",
+   "channel",
+   "compile",
+   "contract",
+   "freeze",
+   "hof",
+   "ir",
+   "markup",
+   "ops",
+   "patterns",
+   "player",
+   "presence",
+   "recipes",
+   "render",
+   "schema",
+   "tokens",
+   "version",
+   "wire"
+  ],
+  "schema": [
+   "contract"
+  ],
+  "wire": [
+   "freeze",
+   "ir"
+  ]
+ },
+ "layer_rules": {
+  "adapter": [
+   "freeze",
+   "ops"
+  ],
+  "api": [
+   "adapter",
+   "compile",
+   "dom",
+   "freeze",
+   "ir",
+   "markup",
+   "ops",
+   "recipes",
+   "wire"
+  ],
+  "channel": [],
+  "compile": [
+   "freeze",
+   "ir"
+  ],
+  "dom": [
+   "freeze",
+   "wire"
+  ],
+  "freeze": [
+   "ir",
+   "render"
+  ],
+  "hof": [
+   "api",
+   "ir",
+   "recipes",
+   "tokens"
+  ],
+  "ir": [
+   "version"
+  ],
+  "markup": [
+   "render"
+  ],
+  "ops": [
+   "freeze",
+   "ir"
+  ],
+  "patterns": [
+   "api",
+   "recipes",
+   "tokens"
+  ],
+  "player": [
+   "ir"
+  ],
+  "recipes": [
+   "hof",
+   "tokens"
+  ],
+  "schema": [
+   "contract"
+  ],
+  "wire": [
+   "freeze",
+   "ir"
+  ]
+ },
+ "layer_violations": [],
+ "layers": {
+  "ux_motion": "root",
+  "ux_motion._adapter": "adapter",
+  "ux_motion._api": "api",
+  "ux_motion._channel": "channel",
+  "ux_motion._compile": "compile",
+  "ux_motion._contract": "contract",
+  "ux_motion._dom": "dom",
+  "ux_motion._freeze": "freeze",
+  "ux_motion._hof": "hof",
+  "ux_motion._ir": "ir",
+  "ux_motion._markup": "markup",
+  "ux_motion._ops": "ops",
+  "ux_motion._patterns": "patterns",
+  "ux_motion._player": "player",
+  "ux_motion._presence": "presence",
+  "ux_motion._recipes": "recipes",
+  "ux_motion._render": "render",
+  "ux_motion._schema": "schema",
+  "ux_motion._tokens": "tokens",
+  "ux_motion._version": "version",
+  "ux_motion._wire": "wire",
+  "ux_motion.scripts": "assets"
+ },
+ "modules": {
+  "ux_motion": "root",
+  "ux_motion._adapter": "adapter",
+  "ux_motion._api": "api",
+  "ux_motion._channel": "channel",
+  "ux_motion._compile": "compile",
+  "ux_motion._contract": "contract",
+  "ux_motion._dom": "dom",
+  "ux_motion._freeze": "freeze",
+  "ux_motion._hof": "hof",
+  "ux_motion._ir": "ir",
+  "ux_motion._markup": "markup",
+  "ux_motion._ops": "ops",
+  "ux_motion._patterns": "patterns",
+  "ux_motion._player": "player",
+  "ux_motion._presence": "presence",
+  "ux_motion._recipes": "recipes",
+  "ux_motion._render": "render",
+  "ux_motion._schema": "schema",
+  "ux_motion._tokens": "tokens",
+  "ux_motion._version": "version",
+  "ux_motion._wire": "wire",
+  "ux_motion.scripts": "assets"
+ },
+ "narrative_docs": [
+  "docs/01-ARCHITECTURE.md"
+ ],
+ "non_goal_warnings": [
+  "dom-construction: ux_motion._dom:motion_tag"
+ ],
+ "packages": {
+  "ux_motion": "ux_motion"
+ },
+ "projects": [
+  "pyproject.toml"
+ ],
+ "public_api": {
+  "ux_motion": {
+   "API_VERSION": "ux_motion._version",
+   "CONTRACT": "ux_motion._contract",
+   "Event": "ux_motion._player",
+   "HOFS": "ux_motion._hof",
+   "IR_VERSION": "ux_motion._version",
+   "Motion": "ux_motion",
+   "MotionChannel": "ux_motion._channel",
+   "OP_CANCEL": "ux_motion._ops",
+   "OP_PLAY": "ux_motion._ops",
+   "OP_REWIND": "ux_motion._ops",
+   "PATTERNS": "ux_motion._patterns",
+   "PLAYER_VERSION": "ux_motion._version",
+   "PlanError": "ux_motion._ir",
+   "Presence": "ux_motion._presence",
+   "Recipe": "ux_motion._recipes",
+   "Scene": "ux_motion._api",
+   "ScrubFrame": "ux_motion._player",
+   "Tokens": "ux_motion._tokens",
+   "WAIT_BAGS": "ux_motion._player",
+   "WAIT_CLOCKS": "ux_motion._player",
+   "WaitBags": "ux_motion._player",
+   "WaitClock": "ux_motion._player",
+   "__version__": "ux_motion._version",
+   "along": "ux_motion._recipes",
+   "appear": "ux_motion._hof",
+   "as_html": "ux_motion._render",
+   "as_update": "ux_motion._ops",
+   "bind": "ux_motion._api",
+   "blur": "ux_motion._recipes",
+   "cancel": "ux_motion._ops",
+   "compile_plan": "ux_motion._compile",
+   "css_target": "ux_motion._hof",
+   "cue": "ux_motion._api",
+   "dumps": "ux_motion._wire",
+   "explain": "ux_motion._player",
+   "fade": "ux_motion._recipes",
+   "frames": "ux_motion._player",
+   "freeze_plan": "ux_motion._freeze",
+   "group": "ux_motion._api",
+   "hop": "ux_motion._hof",
+   "hop_arrive": "ux_motion._hof",
+   "hop_leave": "ux_motion._hof",
+   "interpret": "ux_motion._player",
+   "leave": "ux_motion._hof",
+   "list_stagger": "ux_motion._patterns",
+   "loads": "ux_motion._wire",
+   "modal": "ux_motion._patterns",
+   "morph_d": "ux_motion._recipes",
+   "motion": "ux_motion._hof",
+   "multi_hop_arrive": "ux_motion._patterns",
+   "multi_hop_leave": "ux_motion._patterns",
+   "none": "ux_motion._recipes",
+   "notice": "ux_motion._hof",
+   "page": "ux_motion._patterns",
+   "parallel": "ux_motion._api",
+   "partition_wait": "ux_motion._player",
+   "play": "ux_motion._ops",
+   "region": "ux_motion._presence",
+   "render_markup": "ux_motion._render",
+   "rewind": "ux_motion._ops",
+   "rewind_plan": "ux_motion._ops",
+   "rise": "ux_motion._recipes",
+   "scale": "ux_motion._recipes",
+   "scene": "ux_motion._api",
+   "schema": "ux_motion._schema",
+   "score": "ux_motion._api",
+   "scrub": "ux_motion._player",
+   "send": "ux_motion._adapter",
+   "sequence": "ux_motion._api",
+   "share": "ux_motion._api",
+   "shared_page": "ux_motion._patterns",
+   "sheet": "ux_motion._hof",
+   "slide": "ux_motion._recipes",
+   "snap": "ux_motion._recipes",
+   "span_ms": "ux_motion._player",
+   "springy": "ux_motion._recipes",
+   "stagger": "ux_motion._api",
+   "staggered": "ux_motion._hof",
+   "stamp": "ux_motion._presence",
+   "swap": "ux_motion._hof",
+   "to_result": "ux_motion._ops",
+   "toast": "ux_motion._patterns",
+   "tokens": "ux_motion._tokens",
+   "track": "ux_motion._api",
+   "validate_plan": "ux_motion._ir",
+   "wait": "ux_motion._api",
+   "wait_clocks": "ux_motion._player"
+  }
+ },
+ "schema": 2
+}
