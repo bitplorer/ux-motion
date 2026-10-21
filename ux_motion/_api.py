@@ -348,7 +348,7 @@ class Scene:
         """
         yield self.tag()
 
-    def __render__(self, indent: str = "  ", pretty: bool = True, xhtml: bool = False) -> str:
+    def __render__(self, indent: str = "  ", pretty: bool = True) -> str:
         """Official serialize — same method HTMLResponse / UxDomRenderer call.
 
         Freezes html trees through ``__render__``, then emits a script tag

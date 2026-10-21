@@ -38,7 +38,7 @@ def motion_tag(scene: Any) -> Any:
 
             return encode_plan_script(freeze_plan(self._motion_scene), pretty=False)
 
-        def _render(self, sb, indent_level=0, indent_str="  ", pretty=True, xhtml=False, _seen=None):
+        def _render(self, sb, indent_level=0, indent_str="  ", pretty=True, _seen=None):
             payload = self._serialized()
             open_bits = ["<script"]
             for tok in self._iter_html_attrs(indent_level, indent_str, pretty):
@@ -49,8 +49,8 @@ def motion_tag(scene: Any) -> Any:
             sb.append("".join(open_bits) + inner)
             return sb
 
-        def _walk_render_tokens(self, indent_level, indent_str, pretty, xhtml, _seen=None):
-            yield from self._render([], indent_level, indent_str, pretty, xhtml, _seen=_seen)
+        def _walk_render_tokens(self, indent_level, indent_str, pretty, _seen=None):
+            yield from self._render([], indent_level, indent_str, pretty, _seen=_seen)
 
     class MotionScene(Component):
         def __init__(self, owner: Any, *args: Any, **kwargs: Any) -> None:
