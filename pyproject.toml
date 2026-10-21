@@ -98,9 +98,14 @@ packages = ["ux_motion"]
 "ux_motion._wire" = "wire"
 "ux_motion.scripts" = "assets"
 
-# docs/01-ARCHITECTURE.md "Dependency graph (allowed imports)". A module the
-# graph does not list has no rule; the root re-exports everything.
+# docs/01-ARCHITECTURE.md "Dependency graph (allowed imports)", edge for edge.
+# Every layer has a rule; the root lists each module it re-exports from.
 [tool.codemap.layer_rules]
+root = [
+  "adapter", "api", "channel", "compile", "contract", "freeze", "hof", "ir",
+  "markup", "ops", "patterns", "player", "presence", "recipes", "render",
+  "schema", "tokens", "version", "wire",
+]
 api = ["adapter", "compile", "dom", "freeze", "ir", "markup", "ops", "recipes", "wire"]
 adapter = ["freeze", "ops"]
 ops = ["freeze", "ir"]
@@ -116,3 +121,9 @@ markup = ["render"]
 ir = ["version"]
 dom = ["freeze", "wire"]
 channel = []
+contract = []
+presence = []
+render = []
+tokens = []
+version = []
+assets = []

@@ -89,6 +89,9 @@ _markup → _render
 _ir → _version
 _dom → _freeze, _wire   (optional; requires ux-dom)
 _channel → (none)      (Document contribution; soft ux_dom in methods)
+_render → (none)       (soft ux_dom.plugins.csp in methods)
+_contract, _presence, _tokens, _version → (none)
+scripts (player bytes) → (none)
 
 Forbidden cycles: _ir must not import _api, _ops, _player, _adapter.
 ```

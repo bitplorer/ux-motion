@@ -75,7 +75,10 @@ symbols = ["ux_motion:Motion", "ux_motion:MotionChannel"]
 [[non_goals]]
 concept = "dom-construction"
 owner = "ux-dom"
-keywords = ["tag", "element", "sanitize"]
+# Not "tag": `Scene.tag()` / `_dom.motion_tag` is the sanctioned ux-dom face
+# (01-ARCHITECTURE.md "Two phases"); it composes ux-dom's public Component and
+# script instead of building tags of its own.
+keywords = ["htmltags", "svgtags", "element", "sanitize", "escape"]
 
 [[non_goals]]
 concept = "intent-cap-result"

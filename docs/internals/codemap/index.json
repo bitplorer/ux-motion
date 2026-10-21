@@ -58,8 +58,10 @@
    "dom-construction": {
     "keywords": [
      "element",
+     "escape",
+     "htmltags",
      "sanitize",
-     "tag"
+     "svgtags"
     ],
     "owner": "ux-dom"
    },
@@ -581,11 +583,13 @@
    "recipes",
    "wire"
   ],
+  "assets": [],
   "channel": [],
   "compile": [
    "freeze",
    "ir"
   ],
+  "contract": [],
   "dom": [
    "freeze",
    "wire"
@@ -618,13 +622,38 @@
   "player": [
    "ir"
   ],
+  "presence": [],
   "recipes": [
    "hof",
    "tokens"
   ],
+  "render": [],
+  "root": [
+   "adapter",
+   "api",
+   "channel",
+   "compile",
+   "contract",
+   "freeze",
+   "hof",
+   "ir",
+   "markup",
+   "ops",
+   "patterns",
+   "player",
+   "presence",
+   "recipes",
+   "render",
+   "schema",
+   "tokens",
+   "version",
+   "wire"
+  ],
   "schema": [
    "contract"
   ],
+  "tokens": [],
+  "version": [],
   "wire": [
    "freeze",
    "ir"
@@ -682,9 +711,7 @@
  "narrative_docs": [
   "docs/01-ARCHITECTURE.md"
  ],
- "non_goal_warnings": [
-  "dom-construction: ux_motion._dom:motion_tag"
- ],
+ "non_goal_warnings": [],
  "packages": {
   "ux_motion": "ux_motion"
  },
